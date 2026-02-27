@@ -180,6 +180,51 @@
     </div>
 </section>
 
+<?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if(isset($homepageAbout) && $homepageAbout && $homepageAbout->is_active): ?>
+<section class="bg-white py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
+            
+            <div>
+                <h2 class="text-3xl font-bold text-gray-900 mb-6"><?php echo e($homepageAbout->title); ?></h2>
+                <div class="text-gray-600 leading-relaxed prose prose-lg max-w-none">
+                    <?php echo nl2br(e($homepageAbout->description ?? '')); ?>
+
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-2 gap-4" style="grid-template-rows: auto 1fr;">
+                
+                <div class="row-span-2 min-h-[300px]">
+                    <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($homepageAbout->image_1): ?>
+                    <img src="<?php echo e($homepageAbout->image_1_url); ?>" alt="" class="w-full h-full min-h-[300px] object-cover rounded-xl" />
+                    <?php else: ?>
+                    <div class="w-full h-full min-h-[300px] bg-gray-200 rounded-xl flex items-center justify-center text-gray-400">Main image</div>
+                    <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+                </div>
+                
+                <div>
+                    <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($homepageAbout->highlight_text || $homepageAbout->highlight_subtext): ?>
+                    <div class="bg-gray-900 text-white rounded-xl px-6 py-8 text-center">
+                        <span class="text-4xl font-bold block"><?php echo e($homepageAbout->highlight_text); ?></span>
+                        <span class="text-4xl font-bold block"><?php echo e($homepageAbout->highlight_subtext); ?></span>
+                    </div>
+                    <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+                </div>
+                
+                <div class="self-end">
+                    <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($homepageAbout->image_2): ?>
+                    <img src="<?php echo e($homepageAbout->image_2_url); ?>" alt="" class="w-full h-40 sm:h-48 object-cover rounded-xl" />
+                    <?php else: ?>
+                    <div class="w-full h-40 sm:h-48 bg-gray-200 rounded-xl flex items-center justify-center text-gray-400">Image 2</div>
+                    <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+
 <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
     <h2 class="text-3xl font-bold text-gray-900 text-center mb-10">Why Choose Us</h2>
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">

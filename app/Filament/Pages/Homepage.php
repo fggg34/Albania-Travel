@@ -2,6 +2,7 @@
 
 namespace App\Filament\Pages;
 
+use App\Models\HomepageAbout;
 use App\Models\HomepageHero;
 use App\Models\TourInfoPoint;
 use Filament\Actions\Action;
@@ -56,9 +57,27 @@ class Homepage extends Page
             'icon' => $p->icon,
         ])->toArray();
 
+        $about = HomepageAbout::first() ?? new HomepageAbout([
+            'title' => 'About Us',
+            'description' => '',
+            'is_active' => true,
+        ]);
+        if (! $about->exists) {
+            $about->save();
+        }
+
         $this->getSchema('homepageForm')->fill(array_merge($hero->only([
             'title', 'subtitle', 'banner_type', 'banner_image', 'banner_video', 'cta_text', 'is_active',
-        ]), ['tour_info_points' => $tourInfoPoints]));
+        ]), [
+            'tour_info_points' => $tourInfoPoints,
+            'about_title' => $about->title,
+            'about_description' => $about->description,
+            'about_image_1' => $about->image_1,
+            'about_image_2' => $about->image_2,
+            'about_highlight_text' => $about->highlight_text,
+            'about_highlight_subtext' => $about->highlight_subtext,
+            'about_is_active' => $about->is_active,
+        ]));
     }
 
     public function homepageForm(Schema $schema): Schema
@@ -143,6 +162,45 @@ class Homepage extends Page
                                     ->addActionLabel('Add point')
                                     ->columnSpanFull(),
                             ]),
+                        SchemaSection::make('About Us')
+                            ->description('Two-column section under categories: left = title + description, right = main image + highlight box + second image.')
+                            ->collapsible()
+                            ->schema([
+                                TextInput::make('about_title')
+                                    ->label('Title')
+                                    ->default('About Us')
+                                    ->maxLength(255),
+                                Textarea::make('about_description')
+                                    ->label('Description')
+                                    ->rows(4)
+                                    ->columnSpanFull(),
+                                FileUpload::make('about_image_1')
+                                    ->label('Main image (left of right column)')
+                                    ->image()
+                                    ->disk('public')
+                                    ->directory('homepage-about')
+                                    ->visibility('public')
+                                    ->imagePreviewHeight(150),
+                                FileUpload::make('about_image_2')
+                                    ->label('Secondary image (bottom right)')
+                                    ->image()
+                                    ->disk('public')
+                                    ->directory('homepage-about')
+                                    ->visibility('public')
+                                    ->imagePreviewHeight(150),
+                                TextInput::make('about_highlight_text')
+                                    ->label('Highlight box – top line')
+                                    ->placeholder('e.g. +10 years')
+                                    ->maxLength(100),
+                                TextInput::make('about_highlight_subtext')
+                                    ->label('Highlight box – bottom line')
+                                    ->placeholder('e.g. Experience')
+                                    ->maxLength(100),
+                                Toggle::make('about_is_active')
+                                    ->label('Show this section')
+                                    ->default(true),
+                            ])
+                            ->columns(2),
                     ]),
             ]);
     }
@@ -174,8 +232,23 @@ class Homepage extends Page
             $hero = new HomepageHero();
         }
 
-        $hero->fill(array_diff_key($data, array_flip(['tour_info_points'])));
+        $hero->fill(array_diff_key($data, array_flip(['tour_info_points', 'about_title', 'about_description', 'about_image_1', 'about_image_2', 'about_highlight_text', 'about_highlight_subtext', 'about_is_active'])));
         $hero->save();
+
+        // Save About Us section
+        $about = HomepageAbout::first() ?? new HomepageAbout();
+        $img1 = $data['about_image_1'] ?? null;
+        $img2 = $data['about_image_2'] ?? null;
+        $about->fill([
+            'title' => $data['about_title'] ?? 'About Us',
+            'description' => $data['about_description'] ?? null,
+            'image_1' => is_array($img1) ? ($img1[0] ?? null) : $img1,
+            'image_2' => is_array($img2) ? ($img2[0] ?? null) : $img2,
+            'highlight_text' => $data['about_highlight_text'] ?? null,
+            'highlight_subtext' => $data['about_highlight_subtext'] ?? null,
+            'is_active' => $data['about_is_active'] ?? true,
+        ]);
+        $about->save();
 
         // Sync tour info points
         TourInfoPoint::query()->delete();
