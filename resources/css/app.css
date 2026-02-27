@@ -1,0 +1,137 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Tom Select custom styling for booking sidebar */
+.booking-guests-select .ts-wrapper {
+  display: block;
+}
+.booking-guests-select .ts-wrapper.single .ts-control {
+  padding-left: 2.5rem;
+  border-radius: 0.5rem;
+  border-color: #d1d5db;
+  min-height: 2.5rem;
+}
+.booking-guests-select .ts-wrapper.focus .ts-control {
+  border-color: #f59e0b;
+  box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.2);
+}
+.booking-guests-select .ts-dropdown {
+  border-radius: 0.5rem;
+  border-color: #d1d5db;
+}
+
+/* Hide the search input – dropdown only, no text input */
+.booking-guests-select .ts-control input {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+.flatpickr-wrapper {
+  width: 100%;
+}
+
+/* Tour gallery: <640px = 1 col; 640-1023px = simple 2-col (2x2); >=1024px = left large (row span 2) + right nested (top 2 small, bottom 1 wide) */
+@media (min-width: 640px) and (max-width: 1023px) {
+  .tour-gallery-right {
+    display: contents;
+  }
+}
+@media (min-width: 1024px) {
+  .tour-gallery-grid {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: repeat(2, minmax(0, 1fr));
+    height: 485px;
+  }
+  .tour-gallery-grid > a:first-child {
+    grid-row: span 2;
+  }
+  .tour-gallery-right {
+    display: grid;
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 16px;
+  }
+  .tour-gallery-right > *:last-child {
+    grid-column: 1 / -1;
+  }
+}
+
+/* Blog post content spacing */
+.blog-content p {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+.blog-content p:first-child {
+  margin-top: 0;
+}
+.blog-content p:last-child {
+  margin-bottom: 0;
+}
+.blog-content h1,
+.blog-content h2,
+.blog-content h3,
+.blog-content h4,
+.blog-content h5,
+.blog-content h6 {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+.blog-content h1:first-child,
+.blog-content h2:first-child,
+.blog-content h3:first-child,
+.blog-content h4:first-child,
+.blog-content h5:first-child,
+.blog-content h6:first-child {
+  margin-top: 0;
+}
+.blog-content ul {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  padding-left: 1.5rem;
+  list-style-type: disc;
+}
+.blog-content ol {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  padding-left: 1.5rem;
+  list-style-type: decimal;
+}
+.blog-content li {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+.blog-content blockquote {
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+  padding: 1rem 1.5rem;
+}
+.blog-content img {
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+.blog-content hr {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+.blog-content pre,
+.blog-content code {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+/* Hide scrollbar for horizontal sliders */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
