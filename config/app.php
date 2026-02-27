@@ -67,8 +67,6 @@ return [
 
     'filament_admin_path' => env('FILAMENT_ADMIN_PATH', '_panel'),
 
-    'coming_soon' => (bool) env('COMING_SOON', false),
-
     /*
     |--------------------------------------------------------------------------
     | Application Timezone

@@ -95,7 +95,6 @@ Edit `.env` for production:
 - `APP_ENV=production`
 - `APP_DEBUG=false`
 - `APP_URL=https://albaniatravelbysonilakosta.com` (your domain)
-- `COMING_SOON=true` – Show "Coming Soon" to visitors; admins see full site. Set `false` when ready to launch.
 - `DB_*` – your cPanel database credentials
 
 ---
