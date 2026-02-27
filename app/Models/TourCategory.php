@@ -27,6 +27,14 @@ class TourCategory extends Model
         ];
     }
 
+    public function getImageUrlAttribute(): ?string
+    {
+        if (empty($this->image)) {
+            return null;
+        }
+        return '/storage/' . ltrim($this->image, '/');
+    }
+
     public function getSlugOptions(): SlugOptions
     {
         return SlugOptions::create()

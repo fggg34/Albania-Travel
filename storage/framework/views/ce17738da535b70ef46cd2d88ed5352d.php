@@ -171,9 +171,20 @@
         <h2 class="text-3xl font-bold text-gray-900 text-center mb-10">Categories</h2>
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
             <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::openLoop(); ?><?php endif; ?><?php $__currentLoopData = $categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $cat): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::startLoop($loop->index); ?><?php endif; ?>
-                <a href="<?php echo e(route('tours.index', ['category' => $cat->slug])); ?>" class="block p-6 bg-white rounded-xl shadow hover:shadow-md text-center transition">
-                    <h3 class="font-semibold text-gray-900"><?php echo e($cat->name); ?></h3>
-                    <p class="text-sm text-gray-500 mt-1"><?php echo e(Str::limit(strip_tags($cat->description ?? ''), 40)); ?></p>
+                <a href="<?php echo e(route('tours.index', ['category' => $cat->slug])); ?>" class="block bg-white rounded-xl shadow hover:shadow-md text-center transition overflow-hidden">
+                    <div class="aspect-[4/3] w-full overflow-hidden bg-gray-100">
+                        <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($cat->image_url): ?>
+                        <img src="<?php echo e($cat->image_url); ?>" alt="<?php echo e($cat->name); ?>" class="w-full h-full object-cover" loading="lazy" />
+                        <?php else: ?>
+                        <div class="w-full h-full flex items-center justify-center text-gray-400">
+                            <i class="fa-solid fa-compass text-4xl"></i>
+                        </div>
+                        <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-semibold text-gray-900"><?php echo e($cat->name); ?></h3>
+                        <p class="text-sm text-gray-500 mt-1"><?php echo e(Str::limit(strip_tags($cat->description ?? ''), 40)); ?></p>
+                    </div>
                 </a>
             <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::endLoop(); ?><?php endif; ?><?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::closeLoop(); ?><?php endif; ?>
         </div>

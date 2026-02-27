@@ -39,6 +39,8 @@ class TourCategoryResource extends Resource
                 FileUpload::make('image')
                     ->label('Category image')
                     ->image()
+                    ->disk('public')
+                    ->directory('categories')
                     ->imagePreviewHeight('200')
                     ->panelAspectRatio('16/10')
                     ->panelLayout('integrated'),

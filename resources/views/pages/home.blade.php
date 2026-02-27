@@ -109,9 +109,20 @@
         <h2 class="text-3xl font-bold text-gray-900 text-center mb-10">Categories</h2>
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
             @foreach($categories as $cat)
-                <a href="{{ route('tours.index', ['category' => $cat->slug]) }}" class="block p-6 bg-white rounded-xl shadow hover:shadow-md text-center transition">
-                    <h3 class="font-semibold text-gray-900">{{ $cat->name }}</h3>
-                    <p class="text-sm text-gray-500 mt-1">{{ Str::limit(strip_tags($cat->description ?? ''), 40) }}</p>
+                <a href="{{ route('tours.index', ['category' => $cat->slug]) }}" class="block bg-white rounded-xl shadow hover:shadow-md text-center transition overflow-hidden">
+                    <div class="aspect-[4/3] w-full overflow-hidden bg-gray-100">
+                        @if($cat->image_url)
+                        <img src="{{ $cat->image_url }}" alt="{{ $cat->name }}" class="w-full h-full object-cover" loading="lazy" />
+                        @else
+                        <div class="w-full h-full flex items-center justify-center text-gray-400">
+                            <i class="fa-solid fa-compass text-4xl"></i>
+                        </div>
+                        @endif
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-semibold text-gray-900">{{ $cat->name }}</h3>
+                        <p class="text-sm text-gray-500 mt-1">{{ Str::limit(strip_tags($cat->description ?? ''), 40) }}</p>
+                    </div>
                 </a>
             @endforeach
         </div>
