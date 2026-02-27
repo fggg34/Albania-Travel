@@ -7,6 +7,7 @@ use App\Models\City;
 use App\Models\HomepageHero;
 use App\Models\Tour;
 use App\Models\TourCategory;
+use App\Models\TourInfoPoint;
 
 class HomeController extends Controller
 {
@@ -42,6 +43,8 @@ class HomeController extends Controller
             ->limit(3)
             ->get();
 
-        return view('pages.home', compact('hero', 'cities', 'featuredTours', 'wishlistedIds', 'destinationCities', 'categories', 'latestPosts'));
+        $tourInfoPoints = TourInfoPoint::ordered()->get();
+
+        return view('pages.home', compact('hero', 'cities', 'featuredTours', 'wishlistedIds', 'destinationCities', 'categories', 'latestPosts', 'tourInfoPoints'));
     }
 }

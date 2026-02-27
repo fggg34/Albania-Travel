@@ -31,6 +31,31 @@
 @endsection
 
 @section('content')
+{{-- Tour Info Points (under hero) --}}
+@if(isset($tourInfoPoints) && $tourInfoPoints->isNotEmpty())
+<section class="bg-slate-50/80 py-12 md:py-[20px] border-b border-slate-200/60" style="background-color: #F0F6F3;">
+    <div class="mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-10">
+            @foreach($tourInfoPoints as $point)
+            <div class="flex items-start gap-4">
+                <div class="flex-shrink-0 w-16 h-16 rounded-full bg-white flex items-center justify-center overflow-hidden">
+                    @if($point->icon)
+                    <img src="{{ $point->icon_url }}" alt="" class="w-full h-full object-contain" />
+                    @else
+                    <svg class="w-8 h-8 text-violet-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                    @endif
+                </div>
+                <div class="flex-1 min-w-0">
+                    <h3 class="font-bold text-lg" style="color: #41235A;">{{ $point->title }}</h3>
+                    <p class="text-slate-500 text-sm mt-1 leading-relaxed">{{ $point->description }}</p>
+                </div>
+            </div>
+            @endforeach
+        </div>
+    </div>
+</section>
+@endif
+
 {{-- Featured Tours Slider (4 per view, right arrow) --}}
 @if($featuredTours->isNotEmpty())
 <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16" x-data="homeSlider({ fixedSlideBy: 4 })">

@@ -1,0 +1,1 @@
+<?php echo e($item->getLivewireKey()); ?>.item<?php /**PATH /Users/kevinhitaj/Desktop/Projects/TOURS Second/storage/framework/views/cc3ebb42b9a128417173e66c4304c441.blade.php ENDPATH**/ ?>

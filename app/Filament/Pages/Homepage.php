@@ -3,6 +3,7 @@
 namespace App\Filament\Pages;
 
 use App\Models\HomepageHero;
+use App\Models\TourInfoPoint;
 use Filament\Actions\Action;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
@@ -13,6 +14,7 @@ use Filament\Schemas\Components\Section as SchemaSection;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
@@ -48,9 +50,15 @@ class Homepage extends Page
             $hero->save();
         }
 
-        $this->getSchema('homepageForm')->fill($hero->only([
+        $tourInfoPoints = TourInfoPoint::ordered()->get()->map(fn ($p) => [
+            'title' => $p->title,
+            'description' => $p->description,
+            'icon' => $p->icon,
+        ])->toArray();
+
+        $this->getSchema('homepageForm')->fill(array_merge($hero->only([
             'title', 'subtitle', 'banner_type', 'banner_image', 'banner_video', 'cta_text', 'is_active',
-        ]));
+        ]), ['tour_info_points' => $tourInfoPoints]));
     }
 
     public function homepageForm(Schema $schema): Schema
@@ -108,6 +116,33 @@ class Homepage extends Page
                                     ->default(true)
                                     ->helperText('When active, this hero is displayed on the homepage.'),
                             ]),
+                        SchemaSection::make('Tour Info Points')
+                            ->description('Info blocks shown under the hero (icon, title, description). Order determines display order.')
+                            ->collapsible()
+                            ->schema([
+                                Repeater::make('tour_info_points')
+                                    ->schema([
+                                        FileUpload::make('icon')
+                                            ->label('Icon image')
+                                            ->image()
+                                            ->disk('public')
+                                            ->directory('tour-info-points')
+                                            ->visibility('public')
+                                            ->imagePreviewHeight(80)
+                                            ->columnSpanFull(),
+                                        TextInput::make('title')
+                                            ->required()
+                                            ->maxLength(255),
+                                        Textarea::make('description')
+                                            ->rows(2)
+                                            ->columnSpanFull(),
+                                    ])
+                                    ->defaultItems(0)
+                                    ->reorderable()
+                                    ->reorderableWithButtons()
+                                    ->addActionLabel('Add point')
+                                    ->columnSpanFull(),
+                            ]),
                     ]),
             ]);
     }
@@ -139,8 +174,22 @@ class Homepage extends Page
             $hero = new HomepageHero();
         }
 
-        $hero->fill($data);
+        $hero->fill(array_diff_key($data, array_flip(['tour_info_points'])));
         $hero->save();
+
+        // Sync tour info points
+        TourInfoPoint::query()->delete();
+        $points = $data['tour_info_points'] ?? [];
+        foreach ($points as $index => $item) {
+            $icon = $item['icon'] ?? null;
+            $icon = is_array($icon) ? ($icon[0] ?? null) : $icon;
+            TourInfoPoint::create([
+                'title' => $item['title'] ?? '',
+                'description' => $item['description'] ?? null,
+                'icon' => $icon,
+                'sort_order' => $index,
+            ]);
+        }
 
         Notification::make()->title('Homepage saved.')->success()->send();
     }
