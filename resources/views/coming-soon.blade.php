@@ -74,7 +74,6 @@
         <div class="line"></div>
         <h1>Coming Soon</h1>
         <p>We're putting the finishing touches on an amazing experience. Check back soon.</p>
-        <a href="{{ url(config('app.filament_admin_path', 'backend')) }}" class="login">Admin Login</a>
     </div>
 </body>
 </html>
