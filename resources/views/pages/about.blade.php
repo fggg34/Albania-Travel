@@ -10,7 +10,7 @@
 @section('content')
 
 {{-- HERO --}}
-<section class="relative min-h-[85vh] flex items-center justify-center overflow-hidden">
+<!-- <section class="relative min-h-[85vh] flex items-center justify-center overflow-hidden">
     <div class="absolute inset-0 bg-cover bg-center scale-105"
          style="background-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1600&q=80');"></div>
     <div class="absolute inset-0 bg-gradient-to-b from-black/40 via-[#0D9488]/50 to-[#0D9488]/70"></div>
@@ -32,15 +32,17 @@
             </a>
         </div>
     </div>
-</section>
+</section> -->
 
 {{-- STORY --}}
-<section class="py-24 bg-[#FDFDF5]">
+<section class="py-24 bg-[#FDFDF5] max-h-[75vh] overflow-hidden">
     <div class="max-w-7xl mx-auto px-6">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
-            <div class="relative group">
-                <div class="absolute -inset-4 bg-teal-100/50 rounded-[2rem] rotate-2 transition group-hover:rotate-1"></div>
-                <div class="relative rounded-2xl overflow-hidden shadow-2xl aspect-[4/5] bg-gray-200">
+            <div class="relative w-full aspect-[4/5] max-h-[55vh]">
+                {{-- Decorative shape (same size as image) --}}
+                <div class="absolute inset-0 bg-teal-100/50 rounded-[2rem]"></div>
+                {{-- Image fills the same area --}}
+                <div class="absolute inset-0 rounded-[2rem] overflow-hidden shadow-2xl bg-gray-200">
                     {{-- Replace with real image --}}
                     <div class="absolute inset-0 flex flex-col items-center justify-center text-gray-400 p-10 bg-gray-100">
                         <i class="fa-solid fa-camera-retro text-5xl mb-4 opacity-20"></i>
@@ -124,14 +126,13 @@
         <span class="text-sm font-bold tracking-[0.2em] uppercase text-[#0D9488] mb-4 block">The Experts</span>
         <h2 class="text-4xl font-bold text-slate-800 mb-16">Meet Your Local Guides</h2>
         
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
             @foreach([
                 ['Sonila Kosta', 'Founder & Lead Guide', 'Albanian Riviera'],
                 ['Artan Berisha', 'Senior Mountain Expert', 'Valbona Valley'],
-                ['Elira Duka', 'Tour Coordinator', 'The Old Bazaar'],
             ] as $m)
             <div class="text-left group">
-                <div class="relative overflow-hidden rounded-2xl mb-6 aspect-[3/4] bg-slate-200">
+                <div class="relative overflow-hidden rounded-2xl mb-6 aspect-[4/3] bg-slate-200">
                      <div class="absolute inset-0 bg-slate-300 flex items-center justify-center">
                          <i class="fa-solid fa-user text-white text-5xl opacity-30"></i>
                      </div>
