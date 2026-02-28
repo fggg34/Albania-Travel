@@ -230,8 +230,7 @@
         {{-- Header --}}
         <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12">
             <div>
-                <p class="text-xs font-bold tracking-[0.2em] uppercase text-teal-400 mb-3">Real Travellers</p>
-                <h2 class="text-3xl sm:text-4xl font-bold text-white leading-tight">What our guests say</h2>
+               <h2 class="text-3xl sm:text-4xl font-bold text-white leading-tight">What our guests say</h2>
             </div>
             <div class="flex items-center gap-4">
                 <div class="flex items-center gap-3 flex-shrink-0">
@@ -269,11 +268,6 @@
                     ['David R.',   'Australia',      'fa-solid fa-compass',        'Multi-Day Albania Tour',  'Six days touring Albania end-to-end. Every day was different, every destination a surprise. The team thought of everything. Already planning to come back.'],
                 ] as $t)
                 <div class="flex-shrink-0 w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] relative group rounded-3xl p-8 border border-white/5 bg-white/5 hover:bg-white/10 transition-all duration-300 flex flex-col min-h-[280px]">
-                    <span class="absolute top-5 right-7 text-6xl font-serif text-[#0D9488]/20 leading-none select-none">"</span>
-                    <div class="inline-flex items-center gap-2 bg-[#0D9488]/15 text-teal-300 text-xs font-semibold px-3 py-1.5 rounded-full mb-5 self-start">
-                        <i class="{{ $t[2] }} text-[10px]"></i>
-                        {{ $t[3] }}
-                    </div>
                     <div class="flex items-center gap-0.5 mb-4">
                         @for($i = 0; $i < 5; $i++)
                             <i class="fa-solid fa-star text-amber-400 text-xs"></i>
@@ -286,10 +280,6 @@
                         </div>
                         <div>
                             <p class="text-white text-sm font-semibold">{{ $t[0] }}</p>
-                            <p class="text-gray-500 text-xs flex items-center gap-1">
-                                <i class="fa-solid fa-location-dot text-[10px]"></i>
-                                {{ $t[1] }}
-                            </p>
                         </div>
                         <div class="ml-auto w-7 h-7 rounded-full bg-white/5 flex items-center justify-center">
                             <i class="fa-solid fa-check text-teal-400 text-[10px]"></i>
