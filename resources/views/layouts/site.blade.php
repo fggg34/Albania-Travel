@@ -19,7 +19,7 @@
 
     @yield('hero')
 
-    <main class="min-h-screen">
+    <main>
         @yield('content')
     </main>
 

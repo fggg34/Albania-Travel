@@ -38,7 +38,7 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-10">
             @foreach($tourInfoPoints as $point)
             <div class="flex items-start gap-4">
-                <div class="flex-shrink-0 w-16 h-16 rounded-full bg-white flex items-center justify-center overflow-hidden">
+                <div class="flex-shrink-0 w-16 h-16 bg-white flex items-center justify-center overflow-hidden">
                     @if($point->icon)
                     <img src="{{ $point->icon_url }}" alt="" class="w-full h-full object-contain" />
                     @else
@@ -220,8 +220,135 @@
     </div>
 </section>
 
+{{-- Testimonials --}}
+<section class="py-24 bg-[#0f1a1a] relative overflow-hidden" x-data="testimonialsSlider()">
+    <div class="absolute top-0 left-0 w-96 h-96 bg-[#0D9488]/5 rounded-full -translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
+    <div class="absolute bottom-0 right-0 w-96 h-96 bg-[#0D9488]/5 rounded-full translate-x-1/2 translate-y-1/2 pointer-events-none"></div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+
+        {{-- Header --}}
+        <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12">
+            <div>
+                <p class="text-xs font-bold tracking-[0.2em] uppercase text-teal-400 mb-3">Real Travellers</p>
+                <h2 class="text-3xl sm:text-4xl font-bold text-white leading-tight">What our guests say</h2>
+            </div>
+            <div class="flex items-center gap-4">
+                <div class="flex items-center gap-3 flex-shrink-0">
+                    <div class="flex items-center gap-0.5">
+                        @for($i = 0; $i < 5; $i++)
+                            <i class="fa-solid fa-star text-amber-400 text-sm"></i>
+                        @endfor
+                    </div>
+                    <span class="text-white font-bold">5.0</span>
+                    <span class="text-gray-500 text-sm">· 100+ reviews</span>
+                </div>
+                {{-- Arrow buttons --}}
+                <div class="flex items-center gap-2">
+                    <button @click="prev()" class="w-10 h-10 rounded-full border border-white/10 bg-white/5 hover:bg-[#0D9488]/30 hover:border-[#0D9488]/50 text-white transition flex items-center justify-center">
+                        <i class="fa-solid fa-chevron-left text-xs"></i>
+                    </button>
+                    <button @click="next()" class="w-10 h-10 rounded-full border border-white/10 bg-white/5 hover:bg-[#0D9488]/30 hover:border-[#0D9488]/50 text-white transition flex items-center justify-center">
+                        <i class="fa-solid fa-chevron-right text-xs"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        {{-- Slider track --}}
+        <div class="overflow-hidden">
+            <div class="flex transition-transform duration-500 ease-in-out gap-6"
+                 :style="`transform: translateX(calc(-${current} * (100% / ${perView} + ${gap}px / ${perView}) - ${current} * ${gap}px / ${perView}))`"
+                 x-ref="track">
+                @foreach([
+                    ['Maria S.',   'Germany',        'fa-solid fa-umbrella-beach', 'Albanian Riviera Tour',   'Absolutely unforgettable. Our guide knew every hidden cove along the Riviera. This was the best travel experience of my life — and I\'ve been to over 30 countries.'],
+                    ['James T.',   'United Kingdom', 'fa-solid fa-mountain',       'Valbona Valley Hike',     'The Valbona Valley hike was breathtaking. Everything was perfectly organised, from the pickup to the accommodation. I\'ll be back next summer for sure.'],
+                    ['Sophie L.',  'France',         'fa-solid fa-users',          'Private Family Tour',     'We did a private tour for our family of five. The team was incredibly flexible and patient with the kids. Albania surprised us in the best possible way.'],
+                    ['Lucas M.',   'Netherlands',    'fa-solid fa-city',           'Gjirokastër City Tour',   'Walking through the old bazaar with a guide who knows every stone and story is something you simply cannot replicate on your own. Magical experience.'],
+                    ['Anna K.',    'Austria',        'fa-solid fa-water',          'Shkodra Lake Day Trip',   'The lake at sunset was one of the most beautiful scenes I\'ve ever witnessed. The boat ride, the food, the silence — truly a world apart.'],
+                    ['David R.',   'Australia',      'fa-solid fa-compass',        'Multi-Day Albania Tour',  'Six days touring Albania end-to-end. Every day was different, every destination a surprise. The team thought of everything. Already planning to come back.'],
+                ] as $t)
+                <div class="flex-shrink-0 w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] relative group rounded-3xl p-8 border border-white/5 bg-white/5 hover:bg-white/10 transition-all duration-300 flex flex-col min-h-[280px]">
+                    <span class="absolute top-5 right-7 text-6xl font-serif text-[#0D9488]/20 leading-none select-none">"</span>
+                    <div class="inline-flex items-center gap-2 bg-[#0D9488]/15 text-teal-300 text-xs font-semibold px-3 py-1.5 rounded-full mb-5 self-start">
+                        <i class="{{ $t[2] }} text-[10px]"></i>
+                        {{ $t[3] }}
+                    </div>
+                    <div class="flex items-center gap-0.5 mb-4">
+                        @for($i = 0; $i < 5; $i++)
+                            <i class="fa-solid fa-star text-amber-400 text-xs"></i>
+                        @endfor
+                    </div>
+                    <p class="text-gray-300 text-sm leading-relaxed flex-1 mb-8">{{ $t[4] }}</p>
+                    <div class="flex items-center gap-3 mt-auto pt-5 border-t border-white/5">
+                        <div class="w-10 h-10 rounded-full bg-gradient-to-br from-[#0D9488] to-teal-700 flex items-center justify-center text-white text-sm font-bold flex-shrink-0 shadow-lg">
+                            {{ mb_substr($t[0], 0, 1) }}
+                        </div>
+                        <div>
+                            <p class="text-white text-sm font-semibold">{{ $t[0] }}</p>
+                            <p class="text-gray-500 text-xs flex items-center gap-1">
+                                <i class="fa-solid fa-location-dot text-[10px]"></i>
+                                {{ $t[1] }}
+                            </p>
+                        </div>
+                        <div class="ml-auto w-7 h-7 rounded-full bg-white/5 flex items-center justify-center">
+                            <i class="fa-solid fa-check text-teal-400 text-[10px]"></i>
+                        </div>
+                    </div>
+                </div>
+                @endforeach
+            </div>
+        </div>
+
+        {{-- Dot indicators --}}
+        <div class="flex items-center justify-center gap-2 mt-10">
+            @for($d = 0; $d < 6; $d++)
+            <button @click="goTo({{ $d }})"
+                :class="current === {{ $d }} ? 'bg-[#0D9488] w-6' : 'bg-white/20 w-2'"
+                class="h-2 rounded-full transition-all duration-300"></button>
+            @endfor
+        </div>
+
+    </div>
+</section>
+
+@push('scripts')
+<script>
+function testimonialsSlider() {
+    return {
+        current: 0,
+        total: 6,
+        perView: 3,
+        gap: 24,
+        init() {
+            this.updatePerView();
+            window.addEventListener('resize', () => this.updatePerView());
+        },
+        updatePerView() {
+            if (window.innerWidth < 640) this.perView = 1;
+            else if (window.innerWidth < 1024) this.perView = 2;
+            else this.perView = 3;
+            const max = this.total - this.perView;
+            if (this.current > max) this.current = max;
+        },
+        next() {
+            const max = this.total - this.perView;
+            this.current = this.current >= max ? 0 : this.current + 1;
+        },
+        prev() {
+            const max = this.total - this.perView;
+            this.current = this.current <= 0 ? max : this.current - 1;
+        },
+        goTo(index) {
+            this.current = index;
+        }
+    }
+}
+</script>
+@endpush
+
 @if($latestPosts->isNotEmpty())
-<section class="bg-gray-50 py-16">
+<section class="bg-white py-16">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2 class="text-3xl font-bold text-gray-900 text-center mb-10">Latest from the Blog</h2>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">

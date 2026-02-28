@@ -13,11 +13,12 @@
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     </head>
     <body class="font-sans antialiased bg-gray-50 text-gray-900">
         @include('layouts.partials.site-nav')
 
-        <main class="min-h-screen py-12 px-4 sm:px-6 lg:px-8">
+        <main class="py-12 px-4 sm:px-6 lg:px-8">
             <div class="max-w-sm mx-auto">
                 <a href="{{ route('home') }}" class="block text-center mb-8">
                     <span class="text-2xl font-bold text-amber-600">{{ \App\Models\Setting::get('site_name', config('app.name')) }}</span>

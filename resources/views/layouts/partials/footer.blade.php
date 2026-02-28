@@ -11,28 +11,6 @@
 
 <footer class="bg-[#0f1a1a] text-gray-400 mt-0">
 
-    {{-- Top band: newsletter --}}
-    <div class="border-b border-white/5">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-            <div class="flex flex-col lg:flex-row items-center justify-between gap-6">
-                <div>
-                    <p class="text-white font-semibold text-lg">Stay in the loop</p>
-                    <p class="text-sm text-gray-400 mt-1">Travel tips, hidden gems, and exclusive offers — straight to your inbox.</p>
-                </div>
-                <form action="{{ route('newsletter.subscribe') }}" method="POST"
-                      class="flex w-full lg:w-auto gap-2 max-w-md">
-                    @csrf
-                    <input type="email" name="email" placeholder="Your email address" required
-                           class="flex-1 min-w-0 rounded-full border border-white/10 bg-white/5 text-white px-5 py-3 text-sm placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-teal-500">
-                    <button type="submit"
-                            class="flex-shrink-0 px-6 py-3 bg-[#0D9488] text-white text-sm font-semibold rounded-full hover:bg-teal-400 transition">
-                        Subscribe
-                    </button>
-                </form>
-            </div>
-        </div>
-    </div>
-
     {{-- Main grid --}}
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-12">

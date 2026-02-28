@@ -19,7 +19,7 @@
 
     <?php echo $__env->yieldContent('hero'); ?>
 
-    <main class="min-h-screen">
+    <main>
         <?php echo $__env->yieldContent('content'); ?>
     </main>
 
