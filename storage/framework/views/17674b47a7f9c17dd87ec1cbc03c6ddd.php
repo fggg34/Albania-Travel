@@ -30,10 +30,10 @@
             <div>
                 <h3 class="text-white font-semibold text-lg mb-4">Newsletter</h3>
                 <p class="text-sm mb-3">Get travel tips and exclusive offers straight to your inbox.</p>
-                <form action="<?php echo e(route('newsletter.subscribe')); ?>" method="POST" class="flex gap-2">
+                <form action="<?php echo e(route('newsletter.subscribe')); ?>" method="POST" class="flex gap-3">
                     <?php echo csrf_field(); ?>
-                    <input type="email" name="email" placeholder="Your email" required class="flex-1 rounded-md border-gray-600 bg-gray-800 text-white px-3 py-2 text-sm focus:ring-teal-500 focus:border-teal-500">
-                    <button type="submit" class="px-4 py-2 bg-teal-600 text-white text-sm font-medium rounded-md hover:bg-teal-700 transition">Subscribe</button>
+                    <input type="email" name="email" placeholder="Your email" required class="flex-1 min-w-0 rounded-lg border border-gray-600 bg-gray-800 text-white px-4 py-3 text-sm placeholder-gray-500 focus:ring-2 focus:ring-teal-500 focus:border-teal-500">
+                    <button type="submit" class="flex-shrink-0 px-6 py-3 bg-teal-600 text-white text-sm font-medium rounded-lg hover:bg-teal-500 transition">Subscribe</button>
                 </form>
             </div>
         </div>
