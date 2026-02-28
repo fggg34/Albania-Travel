@@ -12,6 +12,7 @@
                     <a href="{{ route('home') }}" class="inline-flex items-center px-4 py-2 text-sm font-medium rounded-md {{ request()->routeIs('home') ? 'text-teal-600 bg-teal-50' : 'text-gray-700 hover:text-teal-600 hover:bg-gray-50' }}">Home</a>
                     <a href="{{ route('tours.index') }}" class="inline-flex items-center px-4 py-2 text-sm font-medium rounded-md {{ request()->routeIs('tours.*') ? 'text-teal-600 bg-teal-50' : 'text-gray-700 hover:text-teal-600 hover:bg-gray-50' }}">Our Tours</a>
                     <a href="{{ route('about') }}" class="inline-flex items-center px-4 py-2 text-sm font-medium rounded-md {{ request()->routeIs('about') ? 'text-teal-600 bg-teal-50' : 'text-gray-700 hover:text-teal-600 hover:bg-gray-50' }}">About Us</a>
+                    <a href="{{ route('gallery') }}" class="inline-flex items-center px-4 py-2 text-sm font-medium rounded-md {{ request()->routeIs('gallery') ? 'text-teal-600 bg-teal-50' : 'text-gray-700 hover:text-teal-600 hover:bg-gray-50' }}">Gallery</a>
                     <a href="{{ route('blog.index') }}" class="inline-flex items-center px-4 py-2 text-sm font-medium rounded-md {{ request()->routeIs('blog.*') ? 'text-teal-600 bg-teal-50' : 'text-gray-700 hover:text-teal-600 hover:bg-gray-50' }}">Blog</a>
                     <a href="{{ route('contact') }}" class="inline-flex items-center px-4 py-2 text-sm font-medium rounded-md {{ request()->routeIs('contact') ? 'text-teal-600 bg-teal-50' : 'text-gray-700 hover:text-teal-600 hover:bg-gray-50' }}">Contact Us</a>
                     @auth
@@ -42,6 +43,7 @@
                 <a href="{{ route('home') }}" class="block px-4 py-2 text-base font-medium text-gray-700 rounded-md hover:bg-gray-50">Home</a>
                 <a href="{{ route('tours.index') }}" class="block px-4 py-2 text-base font-medium text-gray-700 rounded-md hover:bg-gray-50">Our Tours</a>
                 <a href="{{ route('about') }}" class="block px-4 py-2 text-base font-medium text-gray-700 rounded-md hover:bg-gray-50">About Us</a>
+                <a href="{{ route('gallery') }}" class="block px-4 py-2 text-base font-medium text-gray-700 rounded-md hover:bg-gray-50">Gallery</a>
                 <a href="{{ route('blog.index') }}" class="block px-4 py-2 text-base font-medium text-gray-700 rounded-md hover:bg-gray-50">Blog</a>
                 <a href="{{ route('contact') }}" class="block px-4 py-2 text-base font-medium text-gray-700 rounded-md hover:bg-gray-50">Contact Us</a>
                 @auth

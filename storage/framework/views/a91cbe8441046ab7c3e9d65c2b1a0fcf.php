@@ -13,6 +13,7 @@
                     <a href="<?php echo e(route('home')); ?>" class="inline-flex items-center px-4 py-2 text-sm font-medium rounded-md <?php echo e(request()->routeIs('home') ? 'text-teal-600 bg-teal-50' : 'text-gray-700 hover:text-teal-600 hover:bg-gray-50'); ?>">Home</a>
                     <a href="<?php echo e(route('tours.index')); ?>" class="inline-flex items-center px-4 py-2 text-sm font-medium rounded-md <?php echo e(request()->routeIs('tours.*') ? 'text-teal-600 bg-teal-50' : 'text-gray-700 hover:text-teal-600 hover:bg-gray-50'); ?>">Our Tours</a>
                     <a href="<?php echo e(route('about')); ?>" class="inline-flex items-center px-4 py-2 text-sm font-medium rounded-md <?php echo e(request()->routeIs('about') ? 'text-teal-600 bg-teal-50' : 'text-gray-700 hover:text-teal-600 hover:bg-gray-50'); ?>">About Us</a>
+                    <a href="<?php echo e(route('gallery')); ?>" class="inline-flex items-center px-4 py-2 text-sm font-medium rounded-md <?php echo e(request()->routeIs('gallery') ? 'text-teal-600 bg-teal-50' : 'text-gray-700 hover:text-teal-600 hover:bg-gray-50'); ?>">Gallery</a>
                     <a href="<?php echo e(route('blog.index')); ?>" class="inline-flex items-center px-4 py-2 text-sm font-medium rounded-md <?php echo e(request()->routeIs('blog.*') ? 'text-teal-600 bg-teal-50' : 'text-gray-700 hover:text-teal-600 hover:bg-gray-50'); ?>">Blog</a>
                     <a href="<?php echo e(route('contact')); ?>" class="inline-flex items-center px-4 py-2 text-sm font-medium rounded-md <?php echo e(request()->routeIs('contact') ? 'text-teal-600 bg-teal-50' : 'text-gray-700 hover:text-teal-600 hover:bg-gray-50'); ?>">Contact Us</a>
                     <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if(auth()->guard()->check()): ?>
@@ -43,6 +44,7 @@
                 <a href="<?php echo e(route('home')); ?>" class="block px-4 py-2 text-base font-medium text-gray-700 rounded-md hover:bg-gray-50">Home</a>
                 <a href="<?php echo e(route('tours.index')); ?>" class="block px-4 py-2 text-base font-medium text-gray-700 rounded-md hover:bg-gray-50">Our Tours</a>
                 <a href="<?php echo e(route('about')); ?>" class="block px-4 py-2 text-base font-medium text-gray-700 rounded-md hover:bg-gray-50">About Us</a>
+                <a href="<?php echo e(route('gallery')); ?>" class="block px-4 py-2 text-base font-medium text-gray-700 rounded-md hover:bg-gray-50">Gallery</a>
                 <a href="<?php echo e(route('blog.index')); ?>" class="block px-4 py-2 text-base font-medium text-gray-700 rounded-md hover:bg-gray-50">Blog</a>
                 <a href="<?php echo e(route('contact')); ?>" class="block px-4 py-2 text-base font-medium text-gray-700 rounded-md hover:bg-gray-50">Contact Us</a>
                 <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if(auth()->guard()->check()): ?>

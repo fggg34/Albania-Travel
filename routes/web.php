@@ -34,6 +34,7 @@ Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
 Route::get('/blog/{slug}', [BlogController::class, 'show'])->name('blog.show');
 
 Route::get('/about', AboutController::class)->name('about');
+Route::get('/gallery', \App\Http\Controllers\GalleryController::class)->name('gallery');
 Route::get('/faq', \App\Http\Controllers\FaqController::class)->name('faq');
 
 Route::get('/contact', [ContactController::class, 'index'])->name('contact');
