@@ -38,7 +38,7 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-10">
             @foreach($tourInfoPoints as $point)
             <div class="flex items-start gap-4">
-                <div class="flex-shrink-0 w-16 h-16 bg-white flex items-center justify-center overflow-hidden">
+                <div class="flex-shrink-0 w-16 h-16 flex items-center justify-center overflow-hidden">
                     @if($point->icon)
                     <img src="{{ $point->icon_url }}" alt="" class="w-full h-full object-contain" />
                     @else
