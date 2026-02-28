@@ -39,93 +39,85 @@ unset($__defined_vars); ?>
     }
     $durationLabel = $tour->duration_days
         ? $tour->duration_days . ' day' . ($tour->duration_days > 1 ? 's' : '')
-        : ($tour->duration_hours ? $tour->duration_hours . ' hrs' : null);
+        : ($tour->duration_hours ? $tour->duration_hours . ' hours' : null);
     $startTimeFormatted = $tour->start_time
         ? \Carbon\Carbon::parse($tour->start_time)->format('g:i A')
         : null;
 ?>
+<article
+    <?php echo e($attributes->merge(['class' => 'bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300' . ($slider ? ' flex-shrink-0 w-[300px]' : '')])); ?>
 
-<article <?php echo e($attributes->merge(['class' => 'group bg-white rounded-2xl overflow-hidden border border-gray-100 hover:shadow-xl hover:border-gray-200 transition-all duration-300' . ($slider ? ' flex-shrink-0 w-[300px]' : '')])); ?>
-
-         <?php if($slider): ?> data-slider-card <?php endif; ?>>
+    <?php if($slider): ?> data-slider-card <?php endif; ?>
+>
     <a href="<?php echo e($tourUrl); ?>" class="block">
-
-        
-        <div class="relative aspect-[4/3] overflow-hidden bg-gray-100">
-            <img src="<?php echo e($imageUrl); ?>" alt="<?php echo e($tour->title); ?>"
-                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-
-            
-            <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($durationLabel): ?>
-            <span class="absolute bottom-3 left-3 px-2.5 py-1 bg-black/60 backdrop-blur-sm text-white text-xs font-semibold rounded-full">
-                <i class="fa-regular fa-clock mr-1"></i><?php echo e($durationLabel); ?>
-
-            </span>
-            <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
-
-            
+        <div class="relative aspect-[4/3] overflow-hidden bg-gray-200">
+            <img src="<?php echo e($imageUrl); ?>" alt="<?php echo e($tour->title); ?>" class="w-full h-full object-cover">
             <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if(auth()->guard()->check()): ?>
                 <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($wishlisted): ?>
-                    <form method="POST" action="<?php echo e(route('wishlist.destroy', $tour)); ?>"
-                          class="absolute top-3 right-3 z-10" onclick="event.stopPropagation()">
-                        <?php echo csrf_field(); ?> <?php echo method_field('DELETE'); ?>
-                        <button type="submit"
-                                class="w-8 h-8 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center text-rose-500 hover:bg-white transition shadow-sm"
-                                aria-label="Remove from wishlist">
-                            <i class="fa-solid fa-heart text-xs"></i>
+                    <form method="POST" action="<?php echo e(route('wishlist.destroy', $tour)); ?>" class="absolute top-3 right-3 z-10" onclick="event.stopPropagation()">
+                        <?php echo csrf_field(); ?>
+                        <?php echo method_field('DELETE'); ?>
+                        <button type="submit" class="w-9 h-9 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center text-rose-500 hover:bg-white transition-colors" aria-label="Remove from wishlist">
+                            <i class="fa-solid fa-heart"></i>
                         </button>
                     </form>
                 <?php else: ?>
-                    <form method="POST" action="<?php echo e(route('wishlist.store', $tour)); ?>"
-                          class="absolute top-3 right-3 z-10" onclick="event.stopPropagation()">
+                    <form method="POST" action="<?php echo e(route('wishlist.store', $tour)); ?>" class="absolute top-3 right-3 z-10" onclick="event.stopPropagation()">
                         <?php echo csrf_field(); ?>
-                        <button type="submit"
-                                class="w-8 h-8 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center text-gray-400 hover:text-rose-500 hover:bg-white transition shadow-sm"
-                                aria-label="Add to wishlist">
-                            <i class="fa-regular fa-heart text-xs"></i>
+                        <button type="submit" class="w-9 h-9 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center text-gray-600 hover:text-rose-500 hover:bg-white transition-colors" aria-label="Add to wishlist">
+                            <i class="fa-regular fa-heart"></i>
                         </button>
                     </form>
                 <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
             <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
         </div>
-
-        
-        <div class="p-5">
-
-            
-            <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($tour->start_location): ?>
-            <p class="text-xs text-gray-400 mb-2 flex items-center gap-1.5 truncate">
-                <i class="fa-solid fa-location-dot text-[#0D9488] text-[10px]"></i>
-                <?php echo e($tour->start_location); ?>
-
-            </p>
-            <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+        <div class="p-4">
+            <h3 class="text-base font-bold text-gray-900 line-clamp-2 leading-snug"><?php echo e($tour->title); ?></h3>
 
             
-            <h3 class="text-base font-bold text-gray-900 leading-snug line-clamp-2 mb-4"><?php echo e($tour->title); ?></h3>
-
-            
-            <div class="flex items-center gap-3 text-xs text-gray-500 mb-4">
-                <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($startTimeFormatted): ?>
-                <span class="flex items-center gap-1">
-                    <i class="fa-regular fa-clock"></i> <?php echo e($startTimeFormatted); ?>
-
-                </span>
-                <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
-                <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($tour->end_location && $tour->end_location !== $tour->start_location): ?>
-                <span class="flex items-center gap-1 truncate">
-                    <i class="fa-solid fa-flag-checkered"></i>
-                    <span class="truncate"><?php echo e($tour->end_location); ?></span>
-                </span>
-                <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+            <div class="mt-3 grid grid-cols-2 gap-3">
+                <div class="flex gap-2">
+                    <div class="flex-shrink-0 w-9 h-9 rounded-lg bg-slate-100 flex items-center justify-center">
+                        <i class="fa-solid fa-flag text-slate-600 text-sm"></i>
+                    </div>
+                    <div class="min-w-0">
+                        <p class="text-xs font-bold text-gray-600">Tour starts</p>
+                        <p class="text-xs text-sky-600 truncate" title="<?php echo e($tour->start_location); ?>"><?php echo e($tour->start_location ?: '—'); ?></p>
+                    </div>
+                </div>
+                <div class="flex gap-2">
+                    <div class="flex-shrink-0 w-9 h-9 rounded-lg bg-slate-100 flex items-center justify-center">
+                        <i class="fa-regular fa-clock text-slate-600 text-sm"></i>
+                    </div>
+                    <div class="min-w-0">
+                        <p class="text-xs font-bold text-gray-600">Starting time</p>
+                        <p class="text-xs text-sky-600"><?php echo e($startTimeFormatted ?: 'Flexible'); ?></p>
+                    </div>
+                </div>
+                <div class="flex gap-2">
+                    <div class="flex-shrink-0 w-9 h-9 rounded-lg bg-slate-100 flex items-center justify-center">
+                        <i class="fa-solid fa-sun text-slate-600 text-sm"></i>
+                    </div>
+                    <div class="min-w-0">
+                        <p class="text-xs font-bold text-gray-600">Duration</p>
+                        <p class="text-xs text-sky-600"><?php echo e($durationLabel ?: '—'); ?></p>
+                    </div>
+                </div>
+                <div class="flex gap-2">
+                    <div class="flex-shrink-0 w-9 h-9 rounded-lg bg-slate-100 flex items-center justify-center">
+                        <i class="fa-solid fa-suitcase text-slate-600 text-sm"></i>
+                    </div>
+                    <div class="min-w-0">
+                        <p class="text-xs font-bold text-gray-600">Ending place</p>
+                        <p class="text-xs text-sky-600 truncate" title="<?php echo e($tour->end_location); ?>"><?php echo e($tour->end_location ?: ($tour->start_location ?: '—')); ?></p>
+                    </div>
+                </div>
             </div>
 
-            
-            <div class="flex items-center justify-between pt-4 border-t border-gray-100">
-                <div>
-                    <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($rating): ?>
-                    <div class="flex items-center gap-1">
-                        <?php if (isset($component)) { $__componentOriginaldd1cac021a1037a3ad586e7a83aa8b85 = $component; } ?>
+            <div class="mt-3 flex items-center justify-between gap-2">
+                <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($rating || $reviewCount): ?>
+                    <p class="flex items-center gap-1 text-sm text-gray-600">
+                        <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($rating): ?><?php if (isset($component)) { $__componentOriginaldd1cac021a1037a3ad586e7a83aa8b85 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginaldd1cac021a1037a3ad586e7a83aa8b85 = $attributes; } ?>
 <?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.review-stars','data' => ['rating' => (float) $rating]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
 <?php $component->withName('review-stars'); ?>
@@ -146,21 +138,15 @@ unset($__defined_vars); ?>
 <?php if (isset($__componentOriginaldd1cac021a1037a3ad586e7a83aa8b85)): ?>
 <?php $component = $__componentOriginaldd1cac021a1037a3ad586e7a83aa8b85; ?>
 <?php unset($__componentOriginaldd1cac021a1037a3ad586e7a83aa8b85); ?>
-<?php endif; ?>
-                        <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($reviewCount): ?>
-                        <span class="text-xs text-gray-400 ml-0.5">(<?php echo e($reviewCount); ?>)</span>
-                        <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
-                    </div>
-                    <?php else: ?>
-                    <span class="text-xs text-gray-400">No reviews yet</span>
-                    <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
-                </div>
-                <div class="text-right">
-                    <span class="text-xs text-gray-400">From</span>
-                    <span class="block text-lg font-bold text-[#0D9488] leading-tight">€<?php echo e(number_format($tour->price ?? 0, 0)); ?></span>
+<?php endif; ?><?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+                        <span class="text-gray-500">(<?php echo e(number_format($reviewCount)); ?>)</span>
+                    </p>
+                <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+                <div class="flex items-baseline gap-1 ml-auto">
+                    <span class="text-sm text-gray-500">From</span>
+                    <span class="text-lg font-bold text-rose-600">€<?php echo e(number_format($tour->price ?? 0, 0)); ?></span>
                 </div>
             </div>
-
         </div>
     </a>
 </article>

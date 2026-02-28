@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\BlogPost;
 use App\Models\City;
 use App\Models\HomepageHero;
+use App\Models\Review;
 use App\Models\Tour;
 use App\Models\TourCategory;
 use App\Models\TourInfoPoint;
@@ -47,6 +48,12 @@ class HomeController extends Controller
         $tourInfoPoints = TourInfoPoint::ordered()->get();
         $homepageAbout = HomepageAbout::getActive();
 
-        return view('pages.home', compact('hero', 'cities', 'featuredTours', 'wishlistedIds', 'destinationCities', 'categories', 'latestPosts', 'tourInfoPoints', 'homepageAbout'));
+        $featuredReviews = Review::where('is_approved', true)
+            ->with(['user', 'tour'])
+            ->latest()
+            ->limit(6)
+            ->get();
+
+        return view('pages.home', compact('hero', 'cities', 'featuredTours', 'wishlistedIds', 'destinationCities', 'categories', 'latestPosts', 'tourInfoPoints', 'homepageAbout', 'featuredReviews'));
     }
 }

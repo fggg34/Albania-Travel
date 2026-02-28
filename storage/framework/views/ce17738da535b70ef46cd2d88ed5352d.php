@@ -57,7 +57,7 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-10">
             <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::openLoop(); ?><?php endif; ?><?php $__currentLoopData = $tourInfoPoints; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $point): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::startLoop($loop->index); ?><?php endif; ?>
             <div class="flex items-start gap-4">
-                <div class="flex-shrink-0 w-16 h-16 bg-white flex items-center justify-center overflow-hidden">
+                <div class="flex-shrink-0 w-16 h-16 flex items-center justify-center overflow-hidden">
                     <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($point->icon): ?>
                     <img src="<?php echo e($point->icon_url); ?>" alt="" class="w-full h-full object-contain" />
                     <?php else: ?>
@@ -182,7 +182,7 @@
     </div>
 </section>
 
-<!-- <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if(isset($homepageAbout) && $homepageAbout && $homepageAbout->is_active): ?>
+<?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if(isset($homepageAbout) && $homepageAbout && $homepageAbout->is_active): ?>
 <section class="bg-white py-16">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
@@ -225,9 +225,9 @@
         </div>
     </div>
 </section>
-<?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?> -->
+<?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
 
-
+<!-- 
 <section class="py-20 bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
@@ -287,10 +287,13 @@
         </div>
 
     </div>
-</section>
+</section> -->
 
+<?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($featuredReviews->isNotEmpty()): ?>
 
-<section class="py-24 bg-[#0f1a1a] relative overflow-hidden" x-data="testimonialsSlider()">
+<?php $reviewCount = $featuredReviews->count(); ?>
+<section class="py-24 bg-[#0f1a1a] relative overflow-hidden"
+         x-data="testimonialsSlider(<?php echo e($reviewCount); ?>)">
     <div class="absolute top-0 left-0 w-96 h-96 bg-[#0D9488]/5 rounded-full -translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
     <div class="absolute bottom-0 right-0 w-96 h-96 bg-[#0D9488]/5 rounded-full translate-x-1/2 translate-y-1/2 pointer-events-none"></div>
 
@@ -305,14 +308,12 @@
             <div class="flex items-center gap-4">
                 <div class="flex items-center gap-3 flex-shrink-0">
                     <div class="flex items-center gap-0.5">
-                        <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php for($i = 0; $i < 5; $i++): ?>
-                            <i class="fa-solid fa-star text-amber-400 text-sm"></i>
-                        <?php endfor; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+                        <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php for($i = 0; $i < 5; $i++): ?><i class="fa-solid fa-star text-amber-400 text-sm"></i><?php endfor; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
                     </div>
-                    <span class="text-white font-bold">5.0</span>
-                    <span class="text-gray-500 text-sm">· 100+ reviews</span>
+                    <span class="text-white font-bold"><?php echo e(number_format($featuredReviews->avg('rating'), 1)); ?></span>
+                    <span class="text-gray-500 text-sm">· <?php echo e($featuredReviews->count()); ?> reviews</span>
                 </div>
-                
+                <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($reviewCount > 3): ?>
                 <div class="flex items-center gap-2">
                     <button @click="prev()" class="w-10 h-10 rounded-full border border-white/10 bg-white/5 hover:bg-[#0D9488]/30 hover:border-[#0D9488]/50 text-white transition flex items-center justify-center">
                         <i class="fa-solid fa-chevron-left text-xs"></i>
@@ -321,49 +322,60 @@
                         <i class="fa-solid fa-chevron-right text-xs"></i>
                     </button>
                 </div>
+                <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
             </div>
         </div>
 
         
         <div class="overflow-hidden">
             <div class="flex transition-transform duration-500 ease-in-out gap-6"
-                 :style="`transform: translateX(calc(-${current} * (100% / ${perView} + ${gap}px / ${perView}) - ${current} * ${gap}px / ${perView}))`"
-                 x-ref="track">
-                <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::openLoop(); ?><?php endif; ?><?php $__currentLoopData = [
-                    ['Maria S.',   'Germany',        'fa-solid fa-umbrella-beach', 'Albanian Riviera Tour',   'Absolutely unforgettable. Our guide knew every hidden cove along the Riviera. This was the best travel experience of my life — and I\'ve been to over 30 countries.'],
-                    ['James T.',   'United Kingdom', 'fa-solid fa-mountain',       'Valbona Valley Hike',     'The Valbona Valley hike was breathtaking. Everything was perfectly organised, from the pickup to the accommodation. I\'ll be back next summer for sure.'],
-                    ['Sophie L.',  'France',         'fa-solid fa-users',          'Private Family Tour',     'We did a private tour for our family of five. The team was incredibly flexible and patient with the kids. Albania surprised us in the best possible way.'],
-                    ['Lucas M.',   'Netherlands',    'fa-solid fa-city',           'Gjirokastër City Tour',   'Walking through the old bazaar with a guide who knows every stone and story is something you simply cannot replicate on your own. Magical experience.'],
-                    ['Anna K.',    'Austria',        'fa-solid fa-water',          'Shkodra Lake Day Trip',   'The lake at sunset was one of the most beautiful scenes I\'ve ever witnessed. The boat ride, the food, the silence — truly a world apart.'],
-                    ['David R.',   'Australia',      'fa-solid fa-compass',        'Multi-Day Albania Tour',  'Six days touring Albania end-to-end. Every day was different, every destination a surprise. The team thought of everything. Already planning to come back.'],
-                ]; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $t): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::startLoop($loop->index); ?><?php endif; ?>
-                <div class="flex-shrink-0 w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] relative group rounded-3xl p-8 border border-white/5 bg-white/5 hover:bg-white/10 transition-all duration-300 flex flex-col min-h-[280px]">
+                 :style="`transform: translateX(calc(-${current} * (100% / ${perView} + ${gap}px / ${perView}) - ${current} * ${gap}px / ${perView}))`">
+                <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::openLoop(); ?><?php endif; ?><?php $__currentLoopData = $featuredReviews; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $review): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::startLoop($loop->index); ?><?php endif; ?>
+                <?php
+                    $reviewerName = $review->user?->name ?? 'Guest';
+                    $initial = mb_strtoupper(mb_substr($reviewerName, 0, 1));
+                    $tourTitle = $review->tour?->title ?? '';
+                ?>
+                <div class="flex-shrink-0 w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] relative group rounded-3xl p-8 border border-white/5 bg-white/5 hover:bg-white/10 transition-all duration-300 flex flex-col min-h-[260px]">
                     <span class="absolute top-5 right-7 text-6xl font-serif text-[#0D9488]/20 leading-none select-none">"</span>
-                    <div class="inline-flex items-center gap-2 bg-[#0D9488]/15 text-teal-300 text-xs font-semibold px-3 py-1.5 rounded-full mb-5 self-start">
-                        <i class="<?php echo e($t[2]); ?> text-[10px]"></i>
-                        <?php echo e($t[3]); ?>
 
+                    
+                    <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($tourTitle): ?>
+                    <div class="inline-flex items-center gap-2 bg-[#0D9488]/15 text-teal-300 text-xs font-semibold px-3 py-1.5 rounded-full mb-5 self-start max-w-full truncate">
+                        <i class="fa-solid fa-compass text-[10px] flex-shrink-0"></i>
+                        <span class="truncate"><?php echo e(Str::limit($tourTitle, 30)); ?></span>
                     </div>
+                    <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+
+                    
                     <div class="flex items-center gap-0.5 mb-4">
-                        <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php for($i = 0; $i < 5; $i++): ?>
+                        <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php for($i = 0; $i < $review->rating; $i++): ?>
                             <i class="fa-solid fa-star text-amber-400 text-xs"></i>
                         <?php endfor; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+                        <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php for($i = $review->rating; $i < 5; $i++): ?>
+                            <i class="fa-regular fa-star text-amber-400/30 text-xs"></i>
+                        <?php endfor; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
                     </div>
-                    <p class="text-gray-300 text-sm leading-relaxed flex-1 mb-8"><?php echo e($t[4]); ?></p>
+
+                    
+                    <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($review->title): ?>
+                    <p class="text-white text-sm font-semibold mb-2"><?php echo e($review->title); ?></p>
+                    <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+
+                    
+                    <p class="text-gray-300 text-sm leading-relaxed flex-1 mb-6"><?php echo e(Str::limit($review->comment, 180)); ?></p>
+
+                    
                     <div class="flex items-center gap-3 mt-auto pt-5 border-t border-white/5">
                         <div class="w-10 h-10 rounded-full bg-gradient-to-br from-[#0D9488] to-teal-700 flex items-center justify-center text-white text-sm font-bold flex-shrink-0 shadow-lg">
-                            <?php echo e(mb_substr($t[0], 0, 1)); ?>
+                            <?php echo e($initial); ?>
 
                         </div>
-                        <div>
-                            <p class="text-white text-sm font-semibold"><?php echo e($t[0]); ?></p>
-                            <p class="text-gray-500 text-xs flex items-center gap-1">
-                                <i class="fa-solid fa-location-dot text-[10px]"></i>
-                                <?php echo e($t[1]); ?>
-
-                            </p>
+                        <div class="min-w-0">
+                            <p class="text-white text-sm font-semibold truncate"><?php echo e($reviewerName); ?></p>
+                            <p class="text-gray-500 text-xs"><?php echo e($review->created_at->format('M Y')); ?></p>
                         </div>
-                        <div class="ml-auto w-7 h-7 rounded-full bg-white/5 flex items-center justify-center">
+                        <div class="ml-auto w-7 h-7 rounded-full bg-white/5 flex items-center justify-center flex-shrink-0">
                             <i class="fa-solid fa-check text-teal-400 text-[10px]"></i>
                         </div>
                     </div>
@@ -373,23 +385,25 @@
         </div>
 
         
+        <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($reviewCount > 3): ?>
         <div class="flex items-center justify-center gap-2 mt-10">
-            <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php for($d = 0; $d < 6; $d++): ?>
+            <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php for($d = 0; $d < $reviewCount; $d++): ?>
             <button @click="goTo(<?php echo e($d); ?>)"
                 :class="current === <?php echo e($d); ?> ? 'bg-[#0D9488] w-6' : 'bg-white/20 w-2'"
                 class="h-2 rounded-full transition-all duration-300"></button>
             <?php endfor; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
         </div>
+        <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
 
     </div>
 </section>
 
 <?php $__env->startPush('scripts'); ?>
 <script>
-function testimonialsSlider() {
+function testimonialsSlider(total) {
     return {
         current: 0,
-        total: 6,
+        total: total,
         perView: 3,
         gap: 24,
         init() {
@@ -400,15 +414,15 @@ function testimonialsSlider() {
             if (window.innerWidth < 640) this.perView = 1;
             else if (window.innerWidth < 1024) this.perView = 2;
             else this.perView = 3;
-            const max = this.total - this.perView;
+            const max = Math.max(0, this.total - this.perView);
             if (this.current > max) this.current = max;
         },
         next() {
-            const max = this.total - this.perView;
+            const max = Math.max(0, this.total - this.perView);
             this.current = this.current >= max ? 0 : this.current + 1;
         },
         prev() {
-            const max = this.total - this.perView;
+            const max = Math.max(0, this.total - this.perView);
             this.current = this.current <= 0 ? max : this.current - 1;
         },
         goTo(index) {
@@ -418,6 +432,7 @@ function testimonialsSlider() {
 }
 </script>
 <?php $__env->stopPush(); ?>
+<?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
 
 <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($latestPosts->isNotEmpty()): ?>
 <section class="bg-white py-16">
