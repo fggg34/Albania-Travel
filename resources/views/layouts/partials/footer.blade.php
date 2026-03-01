@@ -60,7 +60,6 @@
                 <ul class="space-y-3 text-sm">
                     <li><a href="{{ route('home') }}"         class="hover:text-white transition">Home</a></li>
                     <li><a href="{{ route('tours.index') }}"  class="hover:text-white transition">Our Tours</a></li>
-                    <li><a href="{{ route('cities.index') }}" class="hover:text-white transition">Destinations</a></li>
                     <li><a href="{{ route('blog.index') }}"   class="hover:text-white transition">Blog</a></li>
                 </ul>
             </div>

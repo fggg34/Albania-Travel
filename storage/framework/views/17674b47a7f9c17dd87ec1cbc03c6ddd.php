@@ -61,7 +61,6 @@
                 <ul class="space-y-3 text-sm">
                     <li><a href="<?php echo e(route('home')); ?>"         class="hover:text-white transition">Home</a></li>
                     <li><a href="<?php echo e(route('tours.index')); ?>"  class="hover:text-white transition">Our Tours</a></li>
-                    <li><a href="<?php echo e(route('cities.index')); ?>" class="hover:text-white transition">Destinations</a></li>
                     <li><a href="<?php echo e(route('blog.index')); ?>"   class="hover:text-white transition">Blog</a></li>
                 </ul>
             </div>

@@ -4,11 +4,15 @@
 @section('description', 'Get in touch with ' . \App\Models\Setting::get('site_name', config('app.name')) . '. We\'d love to hear from you.')
 
 @section('hero')
-<section class="bg-[#0f1a1a] py-14">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <p class="text-xs font-bold tracking-[0.2em] uppercase text-teal-400 mb-3">We're here to help</p>
-        <h1 class="text-3xl sm:text-4xl font-bold text-white mb-2">Contact Us</h1>
-        <p class="text-gray-400 text-sm max-w-xl">Have a question about a tour, need help planning your trip, or just want to say hello?</p>
+<section class="relative overflow-hidden bg-[#1e1e1e] py-12">
+    @include('layouts.partials.hero-decorations')
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center gap-3 mb-5">
+            <div class="w-10 h-px bg-amber-400/70"></div>
+            <p class="text-xs font-bold tracking-[0.25em] uppercase text-amber-400">We're here to help</p>
+        </div>
+        <h1 class="text-4xl sm:text-5xl font-bold text-white mb-4 leading-tight">Contact Us</h1>
+        <p class="text-gray-400 text-base max-w-xl leading-relaxed">Have a question about a tour, need help planning your trip, or just want to say hello?</p>
     </div>
 </section>
 @endsection

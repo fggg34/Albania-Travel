@@ -31,49 +31,71 @@ unset($__defined_vars); ?>
 <?php
     $imageUrl = $post->featured_image
         ? \Illuminate\Support\Facades\Storage::disk('public')->url($post->featured_image)
-        : 'https://placehold.co/600x400/e5e7eb/6b7280?text=Blog';
+        : null;
+
+    $wordCount = str_word_count(strip_tags($post->content ?? $post->excerpt ?? ''));
+    $readTime  = max(1, (int) ceil($wordCount / 200));
 ?>
 
-<article class="group bg-white rounded-2xl overflow-hidden border border-gray-100 hover:shadow-xl hover:border-gray-200 transition-all duration-300 flex flex-col">
-    <a href="<?php echo e(route('blog.show', $post->slug)); ?>" class="block">
-        <div class="aspect-[16/10] overflow-hidden bg-gray-100">
-            <img src="<?php echo e($imageUrl); ?>" alt="<?php echo e($post->title); ?>"
-                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+<article class="group bg-white rounded-2xl overflow-hidden relative flex flex-col border border-gray-100 hover:border-gray-200 hover:shadow-xl transition-all duration-300">
+
+    
+    <a href="<?php echo e(route('blog.show', $post->slug)); ?>" class="block relative overflow-hidden bg-gray-100" style="aspect-ratio: 16/9;">
+        <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($imageUrl): ?>
+        <img src="<?php echo e($imageUrl); ?>" alt="<?php echo e($post->title); ?>"
+             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+        <?php else: ?>
+        <div class="w-full h-full bg-gradient-to-br from-[#0f1a1a] to-[#0D9488]/30 flex items-center justify-center">
+            <i class="fa-solid fa-newspaper text-white/20 text-4xl"></i>
         </div>
-    </a>
-    <div class="p-6 flex flex-col flex-1">
+        <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+
         
-        <div class="flex items-center gap-3 mb-3">
-            <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($post->category): ?>
+        <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($post->category): ?>
+        <!-- <div class="absolute top-4 left-4">
             <a href="<?php echo e(route('blog.index', ['category' => $post->category->slug])); ?>"
-               class="text-xs font-semibold text-[#0D9488] uppercase tracking-wide hover:underline">
+               class="inline-flex items-center gap-1.5 bg-[#0f1a1a]/75 backdrop-blur-sm text-teal-400 text-[10px] font-bold px-3 py-1.5 rounded-full uppercase tracking-wider hover:bg-[#0D9488] hover:text-white transition-colors">
                 <?php echo e($post->category->name); ?>
 
             </a>
-            <span class="text-gray-200">·</span>
-            <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
-            <span class="text-xs text-gray-400"><?php echo e($post->published_at?->format('d M Y')); ?></span>
+        </div> -->
+        <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+    </a>
+
+    
+    <div class="flex flex-col flex-1 p-6">
+
+        
+        <div class="flex items-center gap-2 text-xs text-gray-400 mb-4">
+            <i class="fa-regular fa-calendar text-gray-300"></i>
+            <span><?php echo e($post->published_at?->format('d M Y')); ?></span>
+            <span class="w-1 h-1 rounded-full bg-gray-200 flex-shrink-0"></span>
+            <i class="fa-regular fa-clock text-gray-300"></i>
+            <span><?php echo e($readTime); ?> min read</span>
         </div>
 
         
-        <a href="<?php echo e(route('blog.show', $post->slug)); ?>" class="block">
-            <h3 class="text-base font-bold text-gray-900 leading-snug line-clamp-2 mb-3 group-hover:text-[#0D9488] transition-colors">
+        <a href="<?php echo e(route('blog.show', $post->slug)); ?>" class="block flex-1 mb-4">
+            <h3 class="text-base font-bold text-gray-900 leading-snug line-clamp-2 mb-2 group-hover:text-[#0D9488] transition-colors duration-200">
                 <?php echo e($post->title); ?>
 
             </h3>
+            <p class="text-sm text-gray-400 leading-relaxed line-clamp-2">
+                <?php echo e(Str::limit(strip_tags($post->excerpt ?? ''), 110)); ?>
+
+            </p>
         </a>
 
         
-        <p class="text-sm text-gray-500 leading-relaxed line-clamp-2 flex-1">
-            <?php echo e(Str::limit(strip_tags($post->excerpt ?? ''), 120)); ?>
-
-        </p>
-
-        
-        <a href="<?php echo e(route('blog.show', $post->slug)); ?>"
-           class="inline-flex items-center gap-1.5 mt-5 text-sm font-semibold text-[#0D9488] hover:gap-2.5 transition-all">
-            Read article <i class="fa-solid fa-arrow-right text-xs"></i>
-        </a>
+        <div class="flex items-center justify-between pt-5 border-t border-gray-100 mt-auto">
+            <a href="<?php echo e(route('blog.show', $post->slug)); ?>"
+               class="inline-flex items-center gap-2 text-sm font-semibold text-[#0D9488]">
+                Read article
+                <span class="w-6 h-6 rounded-full bg-[#0D9488]/10 group-hover:bg-[#0D9488] group-hover:text-white flex items-center justify-center transition-all duration-300">
+                    <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                </span>
+            </a>
+        </div>
     </div>
 </article>
 <?php /**PATH /Users/kevinhitaj/Desktop/Projects/TOURS Second/resources/views/components/blog-card.blade.php ENDPATH**/ ?>

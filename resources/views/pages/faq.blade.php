@@ -4,11 +4,15 @@
 @section('description', 'Frequently asked questions about tours, bookings, payments, and travel in Albania.')
 
 @section('hero')
-<section class="bg-[#0f1a1a] py-14">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <p class="text-xs font-bold tracking-[0.2em] uppercase text-teal-400 mb-3">Everything You Need to Know</p>
-        <h1 class="text-3xl sm:text-4xl font-bold text-white mb-2">Frequently Asked Questions</h1>
-        <p class="text-gray-400 text-sm max-w-xl">Everything you need to know about travelling with us in Albania.</p>
+<section class="relative overflow-hidden bg-[#1e1e1e] py-12">
+    @include('layouts.partials.hero-decorations')
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center gap-3 mb-5">
+            <div class="w-10 h-px bg-amber-400/70"></div>
+            <p class="text-xs font-bold tracking-[0.25em] uppercase text-amber-400">Everything You Need to Know</p>
+        </div>
+        <h1 class="text-4xl sm:text-5xl font-bold text-white mb-4 leading-tight">Frequently Asked<br class="hidden sm:block"> Questions</h1>
+        <p class="text-gray-400 text-base max-w-xl leading-relaxed">Everything you need to know about travelling with us in Albania.</p>
     </div>
 </section>
 @endsection

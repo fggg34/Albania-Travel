@@ -4,11 +4,15 @@
 @section('description', 'Browse our photo gallery of Albania tours, landscapes, culture, and travel experiences.')
 
 @section('hero')
-<section class="bg-[#0f1a1a] py-14">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <p class="text-xs font-bold tracking-[0.2em] uppercase text-teal-400 mb-3">Through Our Lens</p>
-        <h1 class="text-3xl sm:text-4xl font-bold text-white mb-2">Gallery</h1>
-        <p class="text-gray-400 text-sm max-w-xl">A glimpse into the landscapes, culture, and unforgettable moments waiting for you in Albania.</p>
+<section class="relative overflow-hidden bg-[#1e1e1e] py-12">
+    @include('layouts.partials.hero-decorations')
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center gap-3 mb-5">
+            <div class="w-10 h-px bg-amber-400/70"></div>
+            <p class="text-xs font-bold tracking-[0.25em] uppercase text-amber-400">Through Our Lens</p>
+        </div>
+        <h1 class="text-4xl sm:text-5xl font-bold text-white mb-4 leading-tight">Gallery</h1>
+        <p class="text-gray-400 text-base max-w-xl leading-relaxed">A glimpse into the landscapes, culture, and unforgettable moments waiting for you in Albania.</p>
     </div>
 </section>
 @endsection

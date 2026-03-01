@@ -4,30 +4,31 @@
 @section('description', $post->meta_description ?: Str::limit(strip_tags($post->excerpt ?? ''), 160))
 
 @section('hero')
-<section class="bg-[#0f1a1a] py-12">
-    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+<section class="relative overflow-hidden bg-[#1e1e1e] py-12">
+    @include('layouts.partials.hero-decorations')
+    <div class="relative max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
         {{-- Breadcrumb --}}
         <nav class="flex items-center gap-2 text-xs text-gray-500 mb-6">
-            <a href="{{ route('home') }}" class="hover:text-teal-400 transition">Home</a>
+            <a href="{{ route('home') }}" class="hover:text-amber-400 transition">Home</a>
             <i class="fa-solid fa-chevron-right text-[10px]"></i>
-            <a href="{{ route('blog.index') }}" class="hover:text-teal-400 transition">Blog</a>
+            <a href="{{ route('blog.index') }}" class="hover:text-amber-400 transition">Blog</a>
             @if($post->category)
             <i class="fa-solid fa-chevron-right text-[10px]"></i>
             <a href="{{ route('blog.index', ['category' => $post->category->slug]) }}"
-               class="hover:text-teal-400 transition">{{ $post->category->name }}</a>
+               class="hover:text-amber-400 transition">{{ $post->category->name }}</a>
             @endif
         </nav>
 
         {{-- Category + date --}}
         <div class="flex items-center gap-3 mb-4">
             @if($post->category)
-            <span class="text-xs font-bold uppercase tracking-widest text-teal-400">{{ $post->category->name }}</span>
+            <span class="text-xs font-bold uppercase tracking-widest text-amber-400">{{ $post->category->name }}</span>
             <span class="text-gray-700">·</span>
             @endif
             <span class="text-xs text-gray-400">{{ $post->published_at?->format('F j, Y') }}</span>
         </div>
 
-        <h1 class="text-3xl sm:text-4xl font-bold text-white leading-tight">{{ $post->title }}</h1>
+        <h1 class="text-3xl sm:text-5xl font-bold text-white leading-tight">{{ $post->title }}</h1>
 
         @if($post->excerpt)
         <p class="mt-4 text-gray-400 text-base leading-relaxed">{{ Str::limit(strip_tags($post->excerpt), 200) }}</p>

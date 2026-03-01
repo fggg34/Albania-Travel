@@ -11,7 +11,7 @@
     $bgImage = $hero && $hero->banner_type === 'image' && $hero->banner_image ? $hero->banner_image_url : 'https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=1920';
     $bgVideo = $hero && $hero->banner_type === 'video' && $hero->banner_video ? $hero->banner_video_url : null;
 @endphp
-<section class="relative w-full rounded-b-3xl md:rounded-b-[2rem] min-h-[420px] md:min-h-[520px] flex flex-col justify-center items-center text-white" style="min-height: calc(100vh - 120px);">
+<section class="relative w-full rounded-b-3xl md:rounded-b-[2rem] flex flex-col justify-center items-center text-white" style="min-height: 70vh;" x-data x-init="if (window.innerWidth >= 768) $el.style.minHeight = 'calc(100vh - 120px)'">
     @if($bgVideo)
         <video autoplay muted loop playsinline class="absolute inset-0 w-full h-full object-cover">
             <source src="{{ $bgVideo }}" type="video/mp4">
@@ -31,45 +31,108 @@
 @endsection
 
 @section('content')
-{{-- Tour Info Points (under hero) --}}
+{{-- Tour Info Points --}}
 @if(isset($tourInfoPoints) && $tourInfoPoints->isNotEmpty())
-<section class="bg-slate-50/80 py-12 md:py-[20px] border-b border-slate-200/60" style="background-color: #F0F6F3;">
-    <div class="mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-10">
-            @foreach($tourInfoPoints as $point)
-            <div class="flex items-start gap-4">
-                <div class="flex-shrink-0 w-16 h-16 flex items-center justify-center overflow-hidden">
-                    @if($point->icon)
-                    <img src="{{ $point->icon_url }}" alt="" class="w-full h-full object-contain" />
-                    @else
-                    <svg class="w-8 h-8 text-violet-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-                    @endif
-                </div>
-                <div class="flex-1 min-w-0">
-                    <h3 class="font-bold text-lg" style="color: #41235A;">{{ $point->title }}</h3>
-                    <p class="text-slate-500 text-sm mt-1 leading-relaxed">{{ $point->description }}</p>
+<section class="border-b border-slate-200/60 py-5" style="background-color: #F0F6F3;">
+
+    {{-- Desktop: auto grid --}}
+    <div class="hidden lg:grid grid-cols-2 xl:grid-cols-4 gap-6 px-4 sm:px-6 lg:px-8">
+        @foreach($tourInfoPoints as $point)
+        <div class="flex items-start gap-4">
+            <div class="flex-shrink-0 w-14 h-14 flex items-center justify-center overflow-hidden">
+                @if($point->icon)
+                <img src="{{ $point->icon_url }}" alt="" class="w-full h-full object-contain" />
+                @else
+                <svg class="w-8 h-8 text-violet-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                @endif
+            </div>
+            <div class="flex-1 min-w-0">
+                <h3 class="font-bold text-base" style="color:#41235A;">{{ $point->title }}</h3>
+                <p class="text-slate-500 text-sm mt-1 leading-relaxed">{{ $point->description }}</p>
+            </div>
+        </div>
+        @endforeach
+    </div>
+
+    {{-- Mobile/tablet: drag slider --}}
+    <div class="lg:hidden relative" x-data="dragSlider()">
+        {{-- Arrows: absolute top-right --}}
+        <div class="pl-4 sm:pl-6 pt-2">
+            <div class="overflow-x-auto scrollbar-hide cursor-grab select-none"
+                 x-ref="track"
+                 @mousedown="startDrag($event)" @mousemove="onDrag($event)" @mouseup="stopDrag()" @mouseleave="stopDrag()"
+                 @touchstart.passive="startDrag($event)" @touchmove.passive="onDrag($event)" @touchend="stopDrag()"
+                 style="scrollbar-width:none;-ms-overflow-style:none;scroll-snap-type:x mandatory;">
+                <div class="flex gap-4 pb-1 pr-4 sm:pr-6">
+                    @foreach($tourInfoPoints as $point)
+                    <div class="flex-shrink-0 flex items-start gap-4 w-[82vw] sm:w-80" style="scroll-snap-align:start;">
+                        <div class="flex-shrink-0 w-14 h-14 flex items-center justify-center overflow-hidden">
+                            @if($point->icon)
+                            <img src="{{ $point->icon_url }}" alt="" class="w-full h-full object-contain pointer-events-none" />
+                            @else
+                            <svg class="w-8 h-8 text-violet-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                            @endif
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <h3 class="font-bold text-base" style="color:#41235A;">{{ $point->title }}</h3>
+                            <p class="text-slate-500 text-sm mt-1 leading-relaxed">{{ $point->description }}</p>
+                        </div>
+                    </div>
+                    @endforeach
                 </div>
             </div>
-            @endforeach
         </div>
     </div>
+
 </section>
 @endif
 
-{{-- Featured Tours (3-column grid on desktop) --}}
+{{-- Featured Tours --}}
 @if($featuredTours->isNotEmpty())
-<section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-    <h2 class="text-2xl md:text-3xl font-bold text-slate-800 mb-8">
-        @if(request()->get('city') && $cityName = $cities->firstWhere('slug', request()->get('city'))?->name)
-            Based on your search in {{ $cityName }}
-        @else
-            Featured Tours
-        @endif
-    </h2>
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        @foreach($featuredTours->take(3) as $tour)
-            <x-tour-card :tour="$tour" :queryParams="[]" :wishlisted="in_array($tour->id, $wishlistedIds ?? [])" :slider="false" />
-        @endforeach
+<section class="py-16" x-data="dragSlider()">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {{-- Title row — arrows sit absolute-right on mobile --}}
+        <div class="relative mb-8">
+            <h2 class="text-2xl md:text-3xl font-bold text-slate-800">
+                @if(request()->get('city') && $cityName = $cities->firstWhere('slug', request()->get('city'))?->name)
+                    Based on your search in {{ $cityName }}
+                @else
+                    Featured Tours
+                @endif
+            </h2>
+            <div class="lg:hidden absolute right-0 top-1/2 -translate-y-1/2 flex items-center gap-1.5">
+                <button @click="scrollPrev()" class="w-8 h-8 rounded-full border border-gray-200 bg-white text-gray-500 flex items-center justify-center shadow-sm">
+                    <i class="fa-solid fa-chevron-left text-[10px]"></i>
+                </button>
+                <button @click="scrollNext()" class="w-8 h-8 rounded-full border border-gray-200 bg-white text-gray-500 flex items-center justify-center shadow-sm">
+                    <i class="fa-solid fa-chevron-right text-[10px]"></i>
+                </button>
+            </div>
+        </div>
+
+        {{-- Desktop: 3-column grid --}}
+        <div class="hidden lg:grid grid-cols-3 gap-6">
+            @foreach($featuredTours->take(3) as $tour)
+                <x-tour-card :tour="$tour" :queryParams="[]" :wishlisted="in_array($tour->id, $wishlistedIds ?? [])" :slider="false" />
+            @endforeach
+        </div>
+    </div>
+
+    {{-- Mobile/tablet: drag slider --}}
+    <div class="lg:hidden pl-4 sm:pl-6 mt-2">
+        <div class="overflow-x-auto scrollbar-hide cursor-grab select-none"
+             x-ref="track"
+             @mousedown="startDrag($event)" @mousemove="onDrag($event)" @mouseup="stopDrag()" @mouseleave="stopDrag()"
+             @touchstart.passive="startDrag($event)" @touchmove.passive="onDrag($event)" @touchend="stopDrag()"
+             style="scrollbar-width:none;-ms-overflow-style:none;scroll-snap-type:x mandatory;">
+            <div class="flex gap-4 pb-2 pr-4 sm:pr-6">
+                @foreach($featuredTours->take(6) as $tour)
+                <div class="flex-shrink-0 w-[82vw] sm:w-80" style="scroll-snap-align:start;">
+                    <x-tour-card :tour="$tour" :queryParams="[]" :wishlisted="in_array($tour->id, $wishlistedIds ?? [])" :slider="false" />
+                </div>
+                @endforeach
+            </div>
+        </div>
     </div>
 </section>
 @endif
@@ -98,21 +161,35 @@
 <section class="bg-gray-100 py-16">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2 class="text-3xl font-bold text-gray-900 text-center mb-10">Categories</h2>
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             @foreach($categories as $cat)
-                <a href="{{ route('tours.index', ['category' => $cat->slug]) }}" class="block bg-white rounded-xl shadow hover:shadow-md text-center transition overflow-hidden">
-                    <div class="aspect-[4/3] w-full overflow-hidden bg-gray-100">
-                        @if($cat->image_url)
-                        <img src="{{ $cat->image_url }}" alt="{{ $cat->name }}" class="w-full h-full object-cover" loading="lazy" />
-                        @else
-                        <div class="w-full h-full flex items-center justify-center text-gray-400">
-                            <i class="fa-solid fa-compass text-4xl"></i>
-                        </div>
-                        @endif
+                <a href="{{ route('tours.index', ['category' => $cat->slug]) }}"
+                   class="group relative block rounded-2xl overflow-hidden aspect-[4/3] bg-gray-900 shadow-md hover:shadow-xl transition-all duration-300">
+
+                    {{-- Image --}}
+                    @if($cat->image_url)
+                    <img src="{{ $cat->image_url }}" alt="{{ $cat->name }}"
+                         class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+                    @else
+                    <div class="absolute inset-0 flex items-center justify-center bg-gray-800">
+                        <i class="fa-solid fa-compass text-5xl text-white/20"></i>
                     </div>
-                    <div class="p-6">
-                        <h3 class="font-semibold text-gray-900">{{ $cat->name }}</h3>
-                        <p class="text-sm text-gray-500 mt-1">{{ Str::limit(strip_tags($cat->description ?? ''), 40) }}</p>
+                    @endif
+
+                    {{-- Gradient overlay --}}
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent group-hover:from-black/90 transition-all duration-300"></div>
+
+                    {{-- Text --}}
+                    <div class="absolute bottom-0 left-0 right-0 p-5">
+                        <h3 class="font-bold text-white text-xl leading-snug">{{ $cat->name }}</h3>
+                        @if($cat->description)
+                        <p class="text-gray-300 text-sm mt-1.5 leading-relaxed line-clamp-2">
+                            {{ Str::limit(strip_tags($cat->description), 70) }}
+                        </p>
+                        @endif
+                        <span class="inline-flex items-center gap-1 mt-3 text-xs font-semibold text-amber-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            Explore <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                        </span>
                     </div>
                 </a>
             @endforeach
@@ -133,8 +210,8 @@
             </div>
             {{-- Right column (50%): 2 sub-columns - left: main image, right: highlight box + image --}}
             <div class="grid grid-cols-2 gap-4" style="grid-template-rows: auto 1fr;">
-                {{-- Main image: spans both rows --}}
-                <div class="row-span-2 min-h-[300px]">
+                {{-- Main image: full-width on mobile, spans both rows on desktop --}}
+                <div class="col-span-2 lg:col-span-1 lg:row-span-2 min-h-[300px]">
                     @if($homepageAbout->image_1)
                     <img src="{{ $homepageAbout->image_1_url }}" alt="" class="w-full h-full min-h-[300px] object-cover rounded-xl" />
                     @else
@@ -142,7 +219,7 @@
                     @endif
                 </div>
                 {{-- Highlight box --}}
-                <div>
+                <div class="col-span-2 lg:col-span-1">
                     @if($homepageAbout->highlight_text || $homepageAbout->highlight_subtext)
                     <div class="bg-gray-900 text-white rounded-xl px-6 py-8 text-center">
                         <span class="text-4xl font-bold block">{{ $homepageAbout->highlight_text }}</span>
@@ -151,7 +228,7 @@
                     @endif
                 </div>
                 {{-- Secondary image --}}
-                <div class="self-end">
+                <div class="col-span-2 lg:col-span-1 self-end">
                     @if($homepageAbout->image_2)
                     <img src="{{ $homepageAbout->image_2_url }}" alt="" class="w-full h-40 sm:h-48 object-cover rounded-xl" />
                     @else
@@ -365,13 +442,49 @@ function testimonialsSlider(total) {
 @endif
 
 @if($latestPosts->isNotEmpty())
-<section class="bg-white py-16">
+<section class="bg-[#FDFDF5] py-20" x-data="dragSlider()">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 class="text-3xl font-bold text-gray-900 text-center mb-10">Latest from the Blog</h2>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {{-- Header row — arrows sit absolute-right on mobile --}}
+        <div class="relative mb-10">
+            <div class="flex items-center gap-3 mb-4">
+                <div class="w-10 h-px bg-[#0D9488]/70"></div>
+                <p class="text-xs font-bold tracking-[0.25em] uppercase text-[#0D9488]">From Our Journal</p>
+            </div>
+            <div class="flex items-end justify-between gap-4">
+                <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 leading-tight">Latest from the Blog</h2>
+                <a href="{{ route('blog.index') }}"
+                   class="flex-shrink-0 inline-flex items-center gap-2 text-sm font-semibold text-[#0D9488] group">
+                    View all
+                    <span class="w-6 h-6 rounded-full bg-[#0D9488]/10 group-hover:bg-[#0D9488] group-hover:text-white flex items-center justify-center transition-all duration-300">
+                        <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                    </span>
+                </a>
+            </div>
+            {{-- Arrows: absolute top-right, mobile only --}}
+        </div>
+
+        {{-- Desktop: 3-column grid --}}
+        <div class="hidden lg:grid grid-cols-3 gap-6">
             @foreach($latestPosts as $post)
                 <x-blog-card :post="$post" />
             @endforeach
+        </div>
+    </div>
+
+    {{-- Mobile/tablet: drag slider --}}
+    <div class="lg:hidden pl-4 sm:pl-6 mt-2">
+        <div class="overflow-x-auto scrollbar-hide cursor-grab select-none"
+             x-ref="track"
+             @mousedown="startDrag($event)" @mousemove="onDrag($event)" @mouseup="stopDrag()" @mouseleave="stopDrag()"
+             @touchstart.passive="startDrag($event)" @touchmove.passive="onDrag($event)" @touchend="stopDrag()"
+             style="scrollbar-width:none;-ms-overflow-style:none;scroll-snap-type:x mandatory;">
+            <div class="flex gap-4 pb-2 pr-4 sm:pr-6">
+                @foreach($latestPosts as $post)
+                <div class="flex-shrink-0 w-[82vw] sm:w-80" style="scroll-snap-align:start;">
+                    <x-blog-card :post="$post" />
+                </div>
+                @endforeach
+            </div>
         </div>
     </div>
 </section>
@@ -382,4 +495,45 @@ function testimonialsSlider(total) {
     <p class="text-gray-600 mb-6">Browse our tours and find your next adventure.</p>
     <a href="{{ route('tours.index') }}" class="inline-flex items-center px-6 py-3 bg-amber-600 text-white font-medium rounded-lg hover:bg-amber-700">View all tours</a>
 </section> -->
+
+@push('scripts')
+<script>
+function dragSlider() {
+    return {
+        isDragging: false,
+        startX: 0,
+        scrollLeft: 0,
+
+        startDrag(e) {
+            this.isDragging = true;
+            const pageX = e.touches ? e.touches[0].pageX : e.pageX;
+            this.startX = pageX - this.$refs.track.offsetLeft;
+            this.scrollLeft = this.$refs.track.scrollLeft;
+            this.$refs.track.style.cursor = 'grabbing';
+        },
+
+        onDrag(e) {
+            if (!this.isDragging) return;
+            const pageX = e.touches ? e.touches[0].pageX : e.pageX;
+            const walk = (pageX - this.$refs.track.offsetLeft - this.startX) * 1.4;
+            this.$refs.track.scrollLeft = this.scrollLeft - walk;
+        },
+
+        stopDrag() {
+            this.isDragging = false;
+            if (this.$refs.track) this.$refs.track.style.cursor = 'grab';
+        },
+
+        scrollPrev() {
+            this.$refs.track.scrollBy({ left: -this.$refs.track.clientWidth * 0.8, behavior: 'smooth' });
+        },
+
+        scrollNext() {
+            this.$refs.track.scrollBy({ left: this.$refs.track.clientWidth * 0.8, behavior: 'smooth' });
+        }
+    }
+}
+</script>
+@endpush
+
 @endsection
