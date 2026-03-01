@@ -80,8 +80,7 @@
             <div class="overflow-x-auto scrollbar-hide cursor-grab select-none"
                  x-ref="track"
                  @mousedown="startDrag($event)" @mousemove="onDrag($event)" @mouseup="stopDrag()" @mouseleave="stopDrag()"
-                 @touchstart.passive="startDrag($event)" @touchmove.passive="onDrag($event)" @touchend="stopDrag()"
-                 style="scrollbar-width:none;-ms-overflow-style:none;scroll-snap-type:x mandatory;">
+                 style="scrollbar-width:none;-ms-overflow-style:none;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;touch-action:pan-x;">
                 <div class="flex gap-4 pb-1 pr-4 sm:pr-6">
                     <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::openLoop(); ?><?php endif; ?><?php $__currentLoopData = $tourInfoPoints; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $point): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::startLoop($loop->index); ?><?php endif; ?>
                     <div class="flex-shrink-0 flex items-start gap-4 w-[82vw] sm:w-80" style="scroll-snap-align:start;">
@@ -164,8 +163,7 @@
         <div class="overflow-x-auto scrollbar-hide cursor-grab select-none"
              x-ref="track"
              @mousedown="startDrag($event)" @mousemove="onDrag($event)" @mouseup="stopDrag()" @mouseleave="stopDrag()"
-             @touchstart.passive="startDrag($event)" @touchmove.passive="onDrag($event)" @touchend="stopDrag()"
-             style="scrollbar-width:none;-ms-overflow-style:none;scroll-snap-type:x mandatory;">
+             style="scrollbar-width:none;-ms-overflow-style:none;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;touch-action:pan-x;">
             <div class="flex gap-4 pb-2 pr-4 sm:pr-6">
                 <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::openLoop(); ?><?php endif; ?><?php $__currentLoopData = $featuredTours->take(6); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $tour): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::startLoop($loop->index); ?><?php endif; ?>
                 <div class="flex-shrink-0 w-[82vw] sm:w-80" style="scroll-snap-align:start;">
@@ -589,8 +587,7 @@ function testimonialsSlider(total) {
         <div class="overflow-x-auto scrollbar-hide cursor-grab select-none"
              x-ref="track"
              @mousedown="startDrag($event)" @mousemove="onDrag($event)" @mouseup="stopDrag()" @mouseleave="stopDrag()"
-             @touchstart.passive="startDrag($event)" @touchmove.passive="onDrag($event)" @touchend="stopDrag()"
-             style="scrollbar-width:none;-ms-overflow-style:none;scroll-snap-type:x mandatory;">
+             style="scrollbar-width:none;-ms-overflow-style:none;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;touch-action:pan-x;">
             <div class="flex gap-4 pb-2 pr-4 sm:pr-6">
                 <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::openLoop(); ?><?php endif; ?><?php $__currentLoopData = $latestPosts; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $post): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::startLoop($loop->index); ?><?php endif; ?>
                 <div class="flex-shrink-0 w-[82vw] sm:w-80" style="scroll-snap-align:start;">
@@ -636,34 +633,61 @@ function dragSlider() {
     return {
         isDragging: false,
         startX: 0,
-        scrollLeft: 0,
+        startScrollLeft: 0,
+        velX: 0,
+        lastX: 0,
+        rafId: null,
 
+        // Mouse-only drag — touch is handled by native iOS scroll
         startDrag(e) {
+            if (e.touches) return;
             this.isDragging = true;
-            const pageX = e.touches ? e.touches[0].pageX : e.pageX;
-            this.startX = pageX - this.$refs.track.offsetLeft;
-            this.scrollLeft = this.$refs.track.scrollLeft;
+            this.startX = e.clientX;
+            this.startScrollLeft = this.$refs.track.scrollLeft;
+            this.velX = 0;
+            this.lastX = e.clientX;
+            cancelAnimationFrame(this.rafId);
             this.$refs.track.style.cursor = 'grabbing';
+            this.$refs.track.style.userSelect = 'none';
         },
 
         onDrag(e) {
-            if (!this.isDragging) return;
-            const pageX = e.touches ? e.touches[0].pageX : e.pageX;
-            const walk = (pageX - this.$refs.track.offsetLeft - this.startX) * 1.4;
-            this.$refs.track.scrollLeft = this.scrollLeft - walk;
+            if (!this.isDragging || e.touches) return;
+            e.preventDefault();
+            this.velX = e.clientX - this.lastX;
+            this.lastX = e.clientX;
+            const walk = this.startX - e.clientX;
+            this.$refs.track.scrollLeft = this.startScrollLeft + walk;
         },
 
         stopDrag() {
+            if (!this.isDragging) return;
             this.isDragging = false;
-            if (this.$refs.track) this.$refs.track.style.cursor = 'grab';
+            this.$refs.track.style.cursor = 'grab';
+            this.$refs.track.style.userSelect = '';
+            // Momentum glide after mouse release
+            let vel = this.velX * -1;
+            const glide = () => {
+                if (Math.abs(vel) < 0.5) return;
+                this.$refs.track.scrollLeft += vel;
+                vel *= 0.92;
+                this.rafId = requestAnimationFrame(glide);
+            };
+            this.rafId = requestAnimationFrame(glide);
         },
 
         scrollPrev() {
-            this.$refs.track.scrollBy({ left: -this.$refs.track.clientWidth * 0.8, behavior: 'smooth' });
+            const track = this.$refs.track;
+            const item = track.querySelector('[style*="scroll-snap-align"]');
+            const step = item ? item.offsetWidth + 16 : track.clientWidth * 0.85;
+            track.scrollBy({ left: -step, behavior: 'smooth' });
         },
 
         scrollNext() {
-            this.$refs.track.scrollBy({ left: this.$refs.track.clientWidth * 0.8, behavior: 'smooth' });
+            const track = this.$refs.track;
+            const item = track.querySelector('[style*="scroll-snap-align"]');
+            const step = item ? item.offsetWidth + 16 : track.clientWidth * 0.85;
+            track.scrollBy({ left: step, behavior: 'smooth' });
         }
     }
 }
