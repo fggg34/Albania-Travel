@@ -298,7 +298,7 @@
 @if($featuredReviews->isNotEmpty())
 {{-- Testimonials --}}
 @php $reviewCount = $featuredReviews->count(); @endphp
-<section class="py-24 bg-[#111111] relative overflow-hidden"
+<section class="py-24 bg-[#f3f4f6] relative overflow-hidden"
          x-data="testimonialsSlider({{ $reviewCount }})">
     <div class="absolute top-0 left-0 w-96 h-96 bg-[#CC1021]/5 rounded-full -translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
     <div class="absolute bottom-0 right-0 w-96 h-96 bg-[#CC1021]/5 rounded-full translate-x-1/2 translate-y-1/2 pointer-events-none"></div>
