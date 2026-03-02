@@ -234,7 +234,7 @@
                             <ul class="space-y-2">
                                 @foreach((array) $tour->included as $item)
                                     <li class="flex items-start gap-3">
-                                        <span class="flex-shrink-0 w-7 h-7 rounded flex items-center justify-center bg-emerald-100 text-brand-600">
+                                        <span class="flex-shrink-0 w-7 h-7 rounded flex items-center justify-center bg-emerald-100 text-emerald-600">
                                             <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg>
                                         </span>
                                         <span class="text-gray-700">{{ $item }}</span>
