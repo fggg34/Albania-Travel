@@ -1,6 +1,6 @@
 @extends('layouts.site')
 
-@section('title', $city->name . ' - ' . config('app.name'))
+@section('title', $city->name . ' - ' . )
 @section('description', Str::limit(strip_tags($city->description ?? ''), 160))
 
 @push('meta')

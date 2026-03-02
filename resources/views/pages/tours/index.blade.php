@@ -1,6 +1,6 @@
 @extends('layouts.site')
 
-@section('title', 'Our Tours - ' . config('app.name'))
+@section('title', 'Our Tours - ' . )
 @section('description', 'Browse our handcrafted selection of Albanian tours — day trips, multi-day adventures, private & group experiences.')
 
 @section('hero')

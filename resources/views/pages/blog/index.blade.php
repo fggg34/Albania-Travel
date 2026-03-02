@@ -1,6 +1,6 @@
 @extends('layouts.site')
 
-@section('title', 'Blog — ' . config('app.name'))
+@section('title', 'Blog — ' . )
 @section('description', 'Travel tips, destination guides and stories from Albania.')
 
 @section('hero')

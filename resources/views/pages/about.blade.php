@@ -1,9 +1,5 @@
 @extends('layouts.site')
 
-@php
-    $siteName = \App\Models\Setting::get('site_name', config('app.name'));
-@endphp
-
 @section('title', 'About Us — ' . $siteName)
 @section('description', 'Learn about ' . $siteName . ' – your trusted Albania travel partner.')
 

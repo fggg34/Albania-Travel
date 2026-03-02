@@ -1,6 +1,6 @@
 @extends('layouts.site')
 
-@section('title', \App\Models\Setting::get('site_name', config('app.name')) . ' - ' . \App\Models\Setting::get('site_tagline', 'Discover your next adventure'))
+@section('title', $siteName . ' - ' . \App\Models\Setting::get('site_tagline', 'Discover your next adventure'))
 @section('description', \App\Models\Setting::get('hero_subtitle', 'Explore stunning destinations with expert guides.'))
 
 @section('hero')

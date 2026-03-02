@@ -1,6 +1,6 @@
 @extends('layouts.site')
 
-@section('title', 'FAQ - ' . config('app.name'))
+@section('title', 'FAQ - ' . )
 @section('description', 'Frequently asked questions about tours, bookings, payments, and travel in Albania.')
 
 @section('hero')

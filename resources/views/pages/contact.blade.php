@@ -1,7 +1,7 @@
 @extends('layouts.site')
 
-@section('title', 'Contact Us - ' . config('app.name'))
-@section('description', 'Get in touch with ' . \App\Models\Setting::get('site_name', config('app.name')) . '. We\'d love to hear from you.')
+@section('title', 'Contact Us - ' . $siteName)
+@section('description', 'Get in touch with ' . $siteName . '. We\'d love to hear from you.')
 
 @section('hero')
 <section class="relative overflow-hidden">
