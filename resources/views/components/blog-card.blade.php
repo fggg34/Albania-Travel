@@ -9,61 +9,39 @@
     $readTime  = max(1, (int) ceil($wordCount / 200));
 @endphp
 
-<article class="group bg-white rounded-2xl overflow-hidden relative flex flex-col border border-gray-100 hover:border-gray-200 hover:shadow-xl transition-all duration-300">
-
-    {{-- Image --}}
-    <a href="{{ route('blog.show', $post->slug) }}" class="block relative overflow-hidden bg-gray-100" style="aspect-ratio: 16/9;">
+<article class="group flex flex-col bg-white rounded-2xl shadow-sm hover:shadow-lg transition-shadow duration-300 overflow-hidden">
+    <a href="{{ route('blog.show', $post->slug) }}" class="block relative overflow-hidden bg-gray-100" style="aspect-ratio: 16/10;">
         @if($imageUrl)
         <img src="{{ $imageUrl }}" alt="{{ $post->title }}"
-             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
         @else
-        <div class="w-full h-full bg-gradient-to-br from-[#111111] to-[#CC1021]/30 flex items-center justify-center">
-            <i class="fa-solid fa-newspaper text-white/20 text-4xl"></i>
+        <div class="w-full h-full bg-gray-200 flex items-center justify-center">
+            <i class="fa-solid fa-newspaper text-gray-300 text-3xl"></i>
         </div>
-        @endif
-
-        {{-- Category badge over image --}}
-        @if($post->category)
-        <!-- <div class="absolute top-4 left-4">
-            <a href="{{ route('blog.index', ['category' => $post->category->slug]) }}"
-               class="inline-flex items-center gap-1.5 bg-[#111111]/75 backdrop-blur-sm text-brand-400 text-[10px] font-bold px-3 py-1.5 rounded-full uppercase tracking-wider hover:bg-[#CC1021] hover:text-white transition-colors">
-                {{ $post->category->name }}
-            </a>
-        </div> -->
         @endif
     </a>
 
-    {{-- Body --}}
-    <div class="flex flex-col flex-1 p-6">
-
-        {{-- Date + read time --}}
-        <div class="flex items-center gap-2 text-xs text-gray-400 mb-4">
-            <i class="fa-regular fa-calendar text-gray-300"></i>
+    <div class="p-5 flex flex-col flex-1">
+        <div class="flex items-center gap-2 text-xs text-gray-400 mb-3">
             <span>{{ $post->published_at?->format('d M Y') }}</span>
-            <span class="w-1 h-1 rounded-full bg-gray-200 flex-shrink-0"></span>
-            <i class="fa-regular fa-clock text-gray-300"></i>
+            <span class="w-1 h-1 rounded-full bg-gray-300"></span>
             <span>{{ $readTime }} min read</span>
         </div>
 
-        {{-- Title --}}
-        <a href="{{ route('blog.show', $post->slug) }}" class="block flex-1 mb-4">
-            <h3 class="text-base font-bold text-gray-900 leading-snug line-clamp-2 mb-2 group-hover:text-[#CC1021] transition-colors duration-200">
+        <a href="{{ route('blog.show', $post->slug) }}" class="block flex-1">
+            <h3 class="text-lg font-bold text-gray-900 leading-snug line-clamp-2 group-hover:text-brand-600 transition-colors duration-200">
                 {{ $post->title }}
             </h3>
-            <p class="text-sm text-gray-400 leading-relaxed line-clamp-2">
-                {{ Str::limit(strip_tags($post->excerpt ?? ''), 110) }}
+            @if($post->excerpt)
+            <p class="text-sm text-gray-500 leading-relaxed line-clamp-2 mt-2">
+                {{ Str::limit(strip_tags($post->excerpt), 100) }}
             </p>
+            @endif
         </a>
 
-        {{-- Footer --}}
-        <div class="flex items-center justify-between pt-5 border-t border-gray-100 mt-auto">
-            <a href="{{ route('blog.show', $post->slug) }}"
-               class="inline-flex items-center gap-2 text-sm font-semibold text-[#CC1021]">
-                Read article
-                <span class="w-6 h-6 rounded-full bg-[#CC1021]/10 group-hover:bg-[#CC1021] group-hover:text-white flex items-center justify-center transition-all duration-300">
-                    <i class="fa-solid fa-arrow-right text-[10px]"></i>
-                </span>
-            </a>
-        </div>
+        <a href="{{ route('blog.show', $post->slug) }}"
+           class="inline-flex items-center gap-1.5 text-sm font-semibold text-brand-600 mt-4 group-hover:gap-2.5 transition-all duration-200">
+            Read more <i class="fa-solid fa-arrow-right text-[10px]"></i>
+        </a>
     </div>
 </article>

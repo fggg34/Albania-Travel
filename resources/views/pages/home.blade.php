@@ -437,30 +437,119 @@ function testimonialsSlider(total) {
 @endpush
 @endif
 
-@if($latestPosts->isNotEmpty())
-<section class="bg-[#FDFDF5] py-20" x-data="dragSlider()">
+@if($galleryImages->isNotEmpty())
+<section class="bg-white py-20" x-data="gallerySlider({{ $galleryImages->count() }}, {{ $galleryImages->map(fn($img) => ['url' => $img->image_url, 'title' => $img->title ?? '', 'caption' => $img->caption ?? ''])->toJson() }})">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {{-- Header row — arrows sit absolute-right on mobile --}}
-        <div class="relative mb-10">
-            <div class="flex items-center gap-3 mb-4">
-                <div class="w-10 h-px bg-[#CC1021]/70"></div>
-                <p class="text-xs font-bold tracking-[0.25em] uppercase text-[#CC1021]">From Our Journal</p>
+        <div class="flex items-end justify-between gap-4 mb-10">
+            <div>
+                <p class="text-xs font-bold tracking-[0.2em] uppercase text-brand-600 mb-3">Photo Gallery</p>
+                <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 leading-tight">Explore Albania</h2>
             </div>
-            <div class="flex items-end justify-between gap-4">
-                <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 leading-tight">Latest from the Blog</h2>
-                <a href="{{ route('blog.index') }}"
-                   class="flex-shrink-0 inline-flex items-center gap-2 text-sm font-semibold text-[#CC1021] group">
-                    View all
-                    <span class="w-6 h-6 rounded-full bg-[#CC1021]/10 group-hover:bg-[#CC1021] group-hover:text-white flex items-center justify-center transition-all duration-300">
-                        <i class="fa-solid fa-arrow-right text-[10px]"></i>
-                    </span>
+            <div class="flex items-center gap-3">
+                <button @click="prev()" class="w-10 h-10 rounded-full border border-gray-200 bg-white hover:bg-brand-50 hover:border-brand-300 text-gray-500 hover:text-brand-600 transition flex items-center justify-center shadow-sm">
+                    <i class="fa-solid fa-arrow-left text-sm"></i>
+                </button>
+                <button @click="next()" class="w-10 h-10 rounded-full border border-gray-200 bg-white hover:bg-brand-50 hover:border-brand-300 text-gray-500 hover:text-brand-600 transition flex items-center justify-center shadow-sm">
+                    <i class="fa-solid fa-arrow-right text-sm"></i>
+                </button>
+                <a href="{{ route('gallery') }}"
+                   class="hidden sm:inline-flex items-center gap-2 text-sm font-semibold text-gray-500 hover:text-brand-600 transition ml-2">
+                    View all <i class="fa-solid fa-arrow-right text-xs"></i>
                 </a>
             </div>
-            {{-- Arrows: absolute top-right, mobile only --}}
+        </div>
+
+        <div class="overflow-hidden" x-ref="galleryViewport">
+            <div class="flex transition-transform duration-500 ease-out cursor-grab select-none"
+                 :style="`transform: translateX(-${offset}px)`"
+                 x-ref="galleryTrack"
+                 @mousedown="startDrag($event)"
+                 @mousemove.window="onDrag($event)"
+                 @mouseup.window="stopDrag()"
+                 @touchstart.passive="startDrag($event)"
+                 @touchmove.passive="onDrag($event)"
+                 @touchend="stopDrag()">
+                @foreach($galleryImages as $image)
+                <div class="flex-shrink-0 px-2" :style="`width: ${itemWidth}px`">
+                    <div class="group relative overflow-hidden rounded-xl cursor-pointer" style="aspect-ratio: 4/3;"
+                         @click="openLightbox({{ $loop->index }})">
+                        <img src="{{ $image->image_url }}" alt="{{ $image->title ?? 'Gallery photo' }}"
+                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+                            @if($image->title)
+                            <p class="text-white font-semibold text-sm">{{ $image->title }}</p>
+                            @endif
+                            <div class="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
+                                <i class="fa-solid fa-expand text-white text-xs"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @endforeach
+            </div>
+        </div>
+
+        <div class="sm:hidden text-center mt-8">
+            <a href="{{ route('gallery') }}" class="inline-flex items-center gap-2 text-sm font-semibold text-brand-600">
+                View full gallery <i class="fa-solid fa-arrow-right text-xs"></i>
+            </a>
+        </div>
+    </div>
+
+    {{-- Lightbox --}}
+    <div x-show="lightboxOpen" x-cloak
+         x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
+         x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
+         class="fixed inset-0 z-50 flex items-center justify-center bg-black/90 px-4"
+         @click.self="closeLightbox()"
+         @keydown.escape.window="closeLightbox()"
+         @keydown.arrow-left.window="lightboxOpen && lightboxPrev()"
+         @keydown.arrow-right.window="lightboxOpen && lightboxNext()">
+
+        <button @click="closeLightbox()" class="absolute top-5 right-5 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition z-10">
+            <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+
+        <button @click="lightboxPrev()" x-show="images.length > 1" class="absolute left-4 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition z-10">
+            <i class="fa-solid fa-chevron-left"></i>
+        </button>
+
+        <div class="relative max-w-5xl w-full flex flex-col items-center">
+            <template x-for="(img, idx) in images" :key="idx">
+                <div x-show="lightboxIndex === idx" class="w-full flex flex-col items-center">
+                    <img :src="img.url" :alt="img.title || 'Gallery photo'" class="max-h-[80vh] max-w-full object-contain rounded-xl shadow-2xl">
+                    <div class="mt-4 text-center" x-show="img.title || img.caption">
+                        <p class="text-white font-semibold text-base" x-text="img.title" x-show="img.title"></p>
+                        <p class="text-gray-400 text-sm mt-1" x-text="img.caption" x-show="img.caption"></p>
+                    </div>
+                    <p class="mt-3 text-gray-500 text-xs" x-text="`${idx + 1} / ${images.length}`"></p>
+                </div>
+            </template>
+        </div>
+
+        <button @click="lightboxNext()" x-show="images.length > 1" class="absolute right-4 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition z-10">
+            <i class="fa-solid fa-chevron-right"></i>
+        </button>
+    </div>
+</section>
+@endif
+
+@if($latestPosts->isNotEmpty())
+<section class="bg-gray-50 py-20" x-data="dragSlider()">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-end justify-between gap-4 mb-10">
+            <div>
+                <p class="text-xs font-bold tracking-[0.2em] uppercase text-brand-600 mb-3">From Our Journal</p>
+                <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 leading-tight">Latest from the Blog</h2>
+            </div>
+            <a href="{{ route('blog.index') }}"
+               class="hidden sm:inline-flex items-center gap-2 text-sm font-semibold text-gray-500 hover:text-brand-600 transition">
+                View all <i class="fa-solid fa-arrow-right text-xs"></i>
+            </a>
         </div>
 
         {{-- Desktop: 3-column grid --}}
-        <div class="hidden lg:grid grid-cols-3 gap-6">
+        <div class="hidden lg:grid grid-cols-3 gap-8">
             @foreach($latestPosts as $post)
                 <x-blog-card :post="$post" />
             @endforeach
@@ -473,7 +562,7 @@ function testimonialsSlider(total) {
              x-ref="track"
              @mousedown="startDrag($event)" @mousemove="onDrag($event)" @mouseup="stopDrag()" @mouseleave="stopDrag()"
              style="scrollbar-width:none;-ms-overflow-style:none;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;touch-action:pan-x;">
-            <div class="flex gap-4 pb-2 pr-4 sm:pr-6">
+            <div class="flex gap-5 pb-2 pr-4 sm:pr-6">
                 @foreach($latestPosts as $post)
                 <div class="flex-shrink-0 w-[82vw] sm:w-80" style="scroll-snap-align:start;">
                     <x-blog-card :post="$post" />
@@ -481,6 +570,12 @@ function testimonialsSlider(total) {
                 @endforeach
             </div>
         </div>
+    </div>
+
+    <div class="sm:hidden max-w-7xl mx-auto px-4 mt-8 text-center">
+        <a href="{{ route('blog.index') }}" class="inline-flex items-center gap-2 text-sm font-semibold text-brand-600">
+            View all articles <i class="fa-solid fa-arrow-right text-xs"></i>
+        </a>
     </div>
 </section>
 @endif
@@ -490,6 +585,102 @@ function testimonialsSlider(total) {
     <p class="text-gray-600 mb-6">Browse our tours and find your next adventure.</p>
     <a href="{{ route('tours.index') }}" class="inline-flex items-center px-6 py-3 bg-amber-600 text-white font-medium rounded-lg hover:bg-amber-700">View all tours</a>
 </section> -->
+
+@push('scripts')
+<script>
+function gallerySlider(total, images) {
+    return {
+        total,
+        images,
+        current: 0,
+        perView: 4,
+        itemWidth: 0,
+        offset: 0,
+        isDragging: false,
+        dragStartX: 0,
+        dragStartOffset: 0,
+        dragMoved: false,
+        lightboxOpen: false,
+        lightboxIndex: 0,
+
+        init() {
+            this.calcSizes();
+            window.addEventListener('resize', () => this.calcSizes());
+        },
+
+        calcSizes() {
+            const vw = this.$refs.galleryViewport.offsetWidth;
+            if (vw < 640) this.perView = 1;
+            else if (vw < 1024) this.perView = 2;
+            else this.perView = 3;
+            this.itemWidth = vw / this.perView;
+            const max = Math.max(0, this.total - this.perView);
+            if (this.current > max) this.current = max;
+            this.offset = this.current * this.itemWidth;
+        },
+
+        next() {
+            const max = Math.max(0, this.total - this.perView);
+            this.current = this.current >= max ? 0 : this.current + 1;
+            this.offset = this.current * this.itemWidth;
+        },
+
+        prev() {
+            const max = Math.max(0, this.total - this.perView);
+            this.current = this.current <= 0 ? max : this.current - 1;
+            this.offset = this.current * this.itemWidth;
+        },
+
+        startDrag(e) {
+            this.isDragging = true;
+            this.dragMoved = false;
+            this.dragStartX = e.touches ? e.touches[0].clientX : e.clientX;
+            this.dragStartOffset = this.offset;
+            this.$refs.galleryTrack.style.transition = 'none';
+        },
+
+        onDrag(e) {
+            if (!this.isDragging) return;
+            const x = e.touches ? e.touches[0].clientX : e.clientX;
+            const diff = this.dragStartX - x;
+            if (Math.abs(diff) > 5) this.dragMoved = true;
+            const maxOffset = Math.max(0, this.total - this.perView) * this.itemWidth;
+            this.offset = Math.max(0, Math.min(maxOffset, this.dragStartOffset + diff));
+        },
+
+        stopDrag() {
+            if (!this.isDragging) return;
+            this.isDragging = false;
+            this.$refs.galleryTrack.style.transition = '';
+            this.current = Math.round(this.offset / this.itemWidth);
+            const max = Math.max(0, this.total - this.perView);
+            this.current = Math.max(0, Math.min(max, this.current));
+            this.offset = this.current * this.itemWidth;
+        },
+
+        openLightbox(index) {
+            if (this.dragMoved) return;
+            this.lightboxIndex = index;
+            this.lightboxOpen = true;
+            document.body.style.overflow = 'hidden';
+        },
+
+        closeLightbox() {
+            this.lightboxOpen = false;
+            document.body.style.overflow = '';
+        },
+
+        lightboxPrev() {
+            this.lightboxIndex = this.lightboxIndex === 0 ? this.images.length - 1 : this.lightboxIndex - 1;
+        },
+
+        lightboxNext() {
+            this.lightboxIndex = this.lightboxIndex === this.images.length - 1 ? 0 : this.lightboxIndex + 1;
+        }
+    };
+}
+</script>
+@endpush
 
 @push('scripts')
 <script>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\BlogPost;
 use App\Models\City;
+use App\Models\GalleryImage;
 use App\Models\HomepageHero;
 use App\Models\Review;
 use App\Models\Tour;
@@ -54,6 +55,11 @@ class HomeController extends Controller
             ->limit(6)
             ->get();
 
-        return view('pages.home', compact('hero', 'cities', 'featuredTours', 'wishlistedIds', 'destinationCities', 'categories', 'latestPosts', 'tourInfoPoints', 'homepageAbout', 'featuredReviews'));
+        $galleryImages = GalleryImage::where('is_active', true)
+            ->orderBy('sort_order')
+            ->limit(8)
+            ->get();
+
+        return view('pages.home', compact('hero', 'cities', 'featuredTours', 'wishlistedIds', 'destinationCities', 'categories', 'latestPosts', 'tourInfoPoints', 'homepageAbout', 'featuredReviews', 'galleryImages'));
     }
 }
