@@ -185,7 +185,7 @@
                             {{ Str::limit(strip_tags($cat->description), 70) }}
                         </p>
                         @endif
-                        <span class="inline-flex items-center gap-1.5 mt-3 text-sm font-semibold text-[#CC1021] opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <span class="inline-flex items-center gap-1.5 mt-3 text-sm font-bold text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                             Explore <i class="fa-solid fa-arrow-right text-xs"></i>
                         </span>
                     </div>
