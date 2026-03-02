@@ -158,7 +158,7 @@
 
 <section class="bg-gray-100 py-16">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 class="text-3xl font-bold text-gray-900 text-center mb-10">Categories</h2>
+        <h2 class="text-3xl font-bold text-gray-900 mb-10">Categories</h2>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             @foreach($categories as $cat)
                 <a href="{{ route('tours.index', ['category' => $cat->slug]) }}"
