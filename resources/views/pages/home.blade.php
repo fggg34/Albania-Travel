@@ -300,31 +300,29 @@
 @php $reviewCount = $featuredReviews->count(); @endphp
 <section class="py-24 bg-[#f3f4f6] relative overflow-hidden"
          x-data="testimonialsSlider({{ $reviewCount }})">
-    <div class="absolute top-0 left-0 w-96 h-96 bg-[#CC1021]/5 rounded-full -translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
-    <div class="absolute bottom-0 right-0 w-96 h-96 bg-[#CC1021]/5 rounded-full translate-x-1/2 translate-y-1/2 pointer-events-none"></div>
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
 
         {{-- Header --}}
         <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12">
             <div>
-                <p class="text-xs font-bold tracking-[0.2em] uppercase text-brand-400 mb-3">Real Travellers</p>
-                <h2 class="text-3xl sm:text-4xl font-bold text-white leading-tight">What our guests say</h2>
+                <p class="text-xs font-bold tracking-[0.2em] uppercase text-brand-600 mb-3">Real Travellers</p>
+                <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 leading-tight">What our guests say</h2>
             </div>
             <div class="flex items-center gap-4">
                 <div class="flex items-center gap-3 flex-shrink-0">
                     <div class="flex items-center gap-0.5">
                         @for($i = 0; $i < 5; $i++)<i class="fa-solid fa-star text-amber-400 text-sm"></i>@endfor
                     </div>
-                    <span class="text-white font-bold">{{ number_format($featuredReviews->avg('rating'), 1) }}</span>
-                    <span class="text-gray-500 text-sm">· {{ $featuredReviews->count() }} reviews</span>
+                    <span class="text-gray-900 font-bold">{{ number_format($featuredReviews->avg('rating'), 1) }}</span>
+                    <span class="text-gray-400 text-sm">· {{ $featuredReviews->count() }} reviews</span>
                 </div>
                 @if($reviewCount > 3)
                 <div class="flex items-center gap-2">
-                    <button @click="prev()" class="w-10 h-10 rounded-full border border-white/10 bg-white/5 hover:bg-[#CC1021]/30 hover:border-[#CC1021]/50 text-white transition flex items-center justify-center">
+                    <button @click="prev()" class="w-10 h-10 rounded-full border border-gray-200 bg-white hover:bg-brand-50 hover:border-brand-300 text-gray-500 hover:text-brand-600 transition flex items-center justify-center shadow-sm">
                         <i class="fa-solid fa-chevron-left text-xs"></i>
                     </button>
-                    <button @click="next()" class="w-10 h-10 rounded-full border border-white/10 bg-white/5 hover:bg-[#CC1021]/30 hover:border-[#CC1021]/50 text-white transition flex items-center justify-center">
+                    <button @click="next()" class="w-10 h-10 rounded-full border border-gray-200 bg-white hover:bg-brand-50 hover:border-brand-300 text-gray-500 hover:text-brand-600 transition flex items-center justify-center shadow-sm">
                         <i class="fa-solid fa-chevron-right text-xs"></i>
                     </button>
                 </div>
@@ -342,12 +340,12 @@
                     $initial = mb_strtoupper(mb_substr($reviewerName, 0, 1));
                     $tourTitle = $review->tour?->title ?? '';
                 @endphp
-                <div class="flex-shrink-0 w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] relative group rounded-3xl p-8 border border-white/5 bg-white/5 hover:bg-white/10 transition-all duration-300 flex flex-col min-h-[260px]">
-                    <span class="absolute top-5 right-7 text-6xl font-serif text-[#CC1021]/20 leading-none select-none">"</span>
+                <div class="flex-shrink-0 w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] relative group rounded-3xl p-8 border border-gray-100 bg-white hover:shadow-lg transition-all duration-300 flex flex-col min-h-[260px]">
+                    <span class="absolute top-5 right-7 text-6xl font-serif text-brand-600/10 leading-none select-none">"</span>
 
                     {{-- Tour tag --}}
                     @if($tourTitle)
-                    <div class="inline-flex items-center gap-2 bg-[#CC1021]/15 text-brand-300 text-xs font-semibold px-3 py-1.5 rounded-full mb-5 self-start max-w-full truncate">
+                    <div class="inline-flex items-center gap-2 bg-brand-50 text-brand-700 text-xs font-semibold px-3 py-1.5 rounded-full mb-5 self-start max-w-full truncate">
                         <i class="fa-solid fa-compass text-[10px] flex-shrink-0"></i>
                         <span class="truncate">{{ Str::limit($tourTitle, 30) }}</span>
                     </div>
@@ -359,29 +357,29 @@
                             <i class="fa-solid fa-star text-amber-400 text-xs"></i>
                         @endfor
                         @for($i = $review->rating; $i < 5; $i++)
-                            <i class="fa-regular fa-star text-amber-400/30 text-xs"></i>
+                            <i class="fa-regular fa-star text-gray-200 text-xs"></i>
                         @endfor
                     </div>
 
                     {{-- Title --}}
                     @if($review->title)
-                    <p class="text-white text-sm font-semibold mb-2">{{ $review->title }}</p>
+                    <p class="text-gray-900 text-sm font-semibold mb-2">{{ $review->title }}</p>
                     @endif
 
                     {{-- Comment --}}
-                    <p class="text-gray-300 text-sm leading-relaxed flex-1 mb-6">{{ Str::limit($review->comment, 180) }}</p>
+                    <p class="text-gray-500 text-sm leading-relaxed flex-1 mb-6">{{ Str::limit($review->comment, 180) }}</p>
 
                     {{-- Reviewer --}}
-                    <div class="flex items-center gap-3 mt-auto pt-5 border-t border-white/5">
-                        <div class="w-10 h-10 rounded-full bg-gradient-to-br from-[#CC1021] to-brand-700 flex items-center justify-center text-white text-sm font-bold flex-shrink-0 shadow-lg">
+                    <div class="flex items-center gap-3 mt-auto pt-5 border-t border-gray-100">
+                        <div class="w-10 h-10 rounded-full bg-gradient-to-br from-brand-600 to-brand-700 flex items-center justify-center text-white text-sm font-bold flex-shrink-0 shadow-md">
                             {{ $initial }}
                         </div>
                         <div class="min-w-0">
-                            <p class="text-white text-sm font-semibold truncate">{{ $reviewerName }}</p>
-                            <p class="text-gray-500 text-xs">{{ $review->created_at->format('M Y') }}</p>
+                            <p class="text-gray-900 text-sm font-semibold truncate">{{ $reviewerName }}</p>
+                            <p class="text-gray-400 text-xs">{{ $review->created_at->format('M Y') }}</p>
                         </div>
-                        <div class="ml-auto w-7 h-7 rounded-full bg-white/5 flex items-center justify-center flex-shrink-0">
-                            <i class="fa-solid fa-check text-brand-400 text-[10px]"></i>
+                        <div class="ml-auto w-7 h-7 rounded-full bg-green-50 flex items-center justify-center flex-shrink-0">
+                            <i class="fa-solid fa-check text-green-500 text-[10px]"></i>
                         </div>
                     </div>
                 </div>
@@ -394,7 +392,7 @@
         <div class="flex items-center justify-center gap-2 mt-10">
             @for($d = 0; $d < $reviewCount; $d++)
             <button @click="goTo({{ $d }})"
-                :class="current === {{ $d }} ? 'bg-[#CC1021] w-6' : 'bg-white/20 w-2'"
+                :class="current === {{ $d }} ? 'bg-brand-600 w-6' : 'bg-gray-300 w-2'"
                 class="h-2 rounded-full transition-all duration-300"></button>
             @endfor
         </div>
