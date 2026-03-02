@@ -1,11 +1,11 @@
 <x-filament-panels::page>
     <div class="space-y-6">
 
-        {{-- Page header actions --}}
-        <div class="flex items-center justify-between">
+        {{-- Page header --}}
+        <div class="flex flex-wrap items-center justify-between gap-3">
             <p class="text-sm text-gray-500 dark:text-gray-400">
                 QR codes are auto-generated for every public page on your website.
-                Click any code to preview it or use the download button to save it as a PNG.
+                Download individual PNGs or grab everything in one ZIP.
             </p>
             <a href="{{ $downloadAll }}"
                class="inline-flex items-center gap-2 rounded-lg bg-primary-600 px-4 py-2 text-sm font-semibold text-white shadow hover:bg-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500">
@@ -17,25 +17,24 @@
         </div>
 
         {{-- Groups --}}
-        @foreach ($pages as $group => $items)
+        @foreach ($groups as $group => $items)
             <div class="rounded-xl border border-gray-200 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800">
+
+                {{-- Group header --}}
                 <div class="flex items-center justify-between border-b border-gray-200 px-5 py-3 dark:border-gray-700">
                     <h2 class="text-base font-semibold text-gray-900 dark:text-white">{{ $group }}</h2>
                     <span class="rounded-full bg-gray-100 px-2 py-0.5 text-xs text-gray-600 dark:bg-gray-700 dark:text-gray-300">
-                        {{ count($items) }} {{ Str::plural('page', count($items)) }}
+                        {{ count($items) }} {{ count($items) === 1 ? 'page' : 'pages' }}
                     </span>
                 </div>
 
                 <div class="grid grid-cols-2 gap-5 p-5 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
                     @foreach ($items as $item)
-                        @php
-                            $qrSvg = \SimpleSoftwareIO\QrCode\Facades\QrCode::size(160)->margin(1)->generate($item['url']);
-                            $downloadUrl = route('admin.qr.download', ['url' => $item['url'], 'label' => $item['label']]);
-                        @endphp
-                        <div class="group flex flex-col items-center gap-2 rounded-lg border border-gray-100 p-3 text-center transition hover:border-primary-300 hover:shadow-md dark:border-gray-700 dark:hover:border-primary-500">
-                            {{-- QR preview --}}
+                        <div class="flex flex-col items-center gap-2 rounded-lg border border-gray-100 p-3 text-center transition hover:border-primary-300 hover:shadow-md dark:border-gray-700 dark:hover:border-primary-500">
+
+                            {{-- QR preview (SVG pre-generated in PHP) --}}
                             <div class="overflow-hidden rounded-md bg-white p-1 shadow-sm">
-                                {!! $qrSvg !!}
+                                {!! $item['svg'] !!}
                             </div>
 
                             {{-- Label --}}
@@ -59,7 +58,7 @@
                                     </svg>
                                     Visit
                                 </a>
-                                <a href="{{ $downloadUrl }}"
+                                <a href="{{ $item['downloadUrl'] }}"
                                    class="rounded bg-primary-50 px-2 py-1 text-[11px] font-semibold text-primary-700 hover:bg-primary-100 dark:bg-primary-900/30 dark:text-primary-400 dark:hover:bg-primary-900/50"
                                    title="Download PNG">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="inline h-3.5 w-3.5" viewBox="0 0 20 20" fill="currentColor">
