@@ -1,6 +1,6 @@
 @extends('layouts.site')
 
-@section('title', 'Gallery - ' . )
+@section('title', 'Gallery - ' . $siteName)
 @section('description', 'Browse our photo gallery of Albania tours, landscapes, culture, and travel experiences.')
 
 @section('hero')

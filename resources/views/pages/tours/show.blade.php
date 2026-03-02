@@ -1,6 +1,6 @@
 @extends('layouts.site')
 
-@section('title', $tour->meta_title ?: $tour->title . ' - ' . )
+@section('title', $tour->meta_title ?: $tour->title . ' - ' . $siteName)
 @section('description', $tour->meta_description ?: Str::limit($tour->short_description, 160))
 
 @push('meta')

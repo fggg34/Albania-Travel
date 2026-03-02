@@ -1,6 +1,6 @@
 @extends('layouts.site')
 
-@section('title', 'All Cities - ' . )
+@section('title', 'All Cities - ' . $siteName)
 @section('description', 'Explore cities and find hotels and tours.')
 
 @section('content')

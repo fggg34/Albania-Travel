@@ -1,6 +1,6 @@
 @extends('layouts.site')
 
-@section('title', 'Booking confirmed - ' . )
+@section('title', 'Booking confirmed - ' . $siteName)
 
 @section('content')
 @php

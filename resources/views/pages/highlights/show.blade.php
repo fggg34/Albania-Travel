@@ -1,6 +1,6 @@
 @extends('layouts.site')
 
-@section('title', $highlight->title . ' - ' . $city->name . ' - ' . )
+@section('title', $highlight->title . ' - ' . $city->name . ' - ' . $siteName)
 @section('description', Str::limit(strip_tags($highlight->description), 160))
 
 @push('meta')

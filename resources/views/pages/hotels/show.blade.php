@@ -1,6 +1,6 @@
 @extends('layouts.site')
 
-@section('title', $hotel->name . ' - ' . )
+@section('title', $hotel->name . ' - ' . $siteName)
 @section('description', Str::limit(strip_tags($hotel->description), 160))
 
 @push('meta')
