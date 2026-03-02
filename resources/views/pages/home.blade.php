@@ -117,7 +117,7 @@
                  style="scrollbar-width:none;-ms-overflow-style:none;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;touch-action:pan-x;">
                 <div class="flex gap-4 pb-2 pr-4 sm:pr-6">
                     @foreach($featuredTours as $tour)
-                    <div class="flex-shrink-0 w-[82vw] sm:w-72 lg:w-80" style="scroll-snap-align:start;">
+                    <div class="flex-shrink-0 w-[82vw] sm:w-64 lg:w-[292px]" style="scroll-snap-align:start;">
                         <x-tour-card :tour="$tour" :queryParams="[]" :wishlisted="in_array($tour->id, $wishlistedIds ?? [])" :slider="false" />
                     </div>
                     @endforeach
