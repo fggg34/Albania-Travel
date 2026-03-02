@@ -128,13 +128,22 @@
 </section>
 @endif
 
-{{-- Things to do wherever you're going (5 per view) --}}
+{{-- Things to do wherever you're going --}}
 @if(isset($destinationCities) && $destinationCities->isNotEmpty())
-<section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16" x-data="homeSlider({ fixedSlideBy: 5 })">
+<section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
     <h2 class="text-2xl md:text-3xl font-bold text-slate-800 mb-8">Things to do wherever you're going</h2>
-    <div class="relative flex items-stretch">
+
+    {{-- Desktop: 5-column grid, no overflow --}}
+    <div class="hidden lg:grid grid-cols-5 gap-5">
+        @foreach($destinationCities as $city)
+            <x-destination-card :city="$city" />
+        @endforeach
+    </div>
+
+    {{-- Mobile/tablet: horizontal slider with arrow --}}
+    <div class="lg:hidden relative flex items-stretch" x-data="homeSlider({ fixedSlideBy: 5 })">
         <div class="flex-1 overflow-x-auto scroll-smooth scrollbar-hide" x-ref="track" style="scrollbar-width: none; -ms-overflow-style: none;">
-            <div class="flex gap-5 pb-4" style="scroll-snap-type: x mandatory;" data-slider-gap="20">
+            <div class="flex gap-5 pb-4 pr-4" style="scroll-snap-type: x mandatory;" data-slider-gap="20">
                 @foreach($destinationCities as $city)
                     <div class="flex-shrink-0" style="scroll-snap-align: start;">
                         <x-destination-card :city="$city" />
@@ -142,7 +151,7 @@
                 @endforeach
             </div>
         </div>
-        <button type="button" @click="scrollNext()" class="lg:hidden flex-shrink-0 w-12 h-12 rounded-full bg-brand-50 text-brand-600 flex items-center justify-center ml-4 hover:bg-brand-100 transition-colors self-center shadow-sm" aria-label="Scroll right">
+        <button type="button" @click="scrollNext()" class="flex-shrink-0 w-12 h-12 rounded-full bg-brand-50 text-brand-600 flex items-center justify-center ml-4 hover:bg-brand-100 transition-colors self-center shadow-sm" aria-label="Scroll right">
             <i class="fa-solid fa-chevron-right"></i>
         </button>
     </div>
