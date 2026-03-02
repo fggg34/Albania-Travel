@@ -30,7 +30,7 @@
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start">
 
             {{-- ── Left: main image + thumbnail strip ─────────────────── --}}
-            <div class="space-y-2.5">
+            <div class="space-y-2.5 city-gallery">
                 {{-- Main image with glightbox --}}
                 <div class="relative rounded-2xl overflow-hidden bg-gray-100 aspect-[4/3] group">
                     @if($city->city_image_url)
@@ -298,12 +298,3 @@
 
 @endsection
 
-@push('scripts')
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        if (typeof GLightbox !== 'undefined') {
-            GLightbox({ selector: '.glightbox[data-gallery^="city-gallery"]', touchNavigation: true, loop: true });
-        }
-    });
-</script>
-@endpush
