@@ -50,9 +50,9 @@ class City extends Model
         return $this->hasMany(Hotel::class);
     }
 
-    public function tours(): HasMany
+    public function tours(): BelongsToMany
     {
-        return $this->hasMany(Tour::class);
+        return $this->belongsToMany(Tour::class, 'city_tour');
     }
 
     public function highlights(): BelongsToMany

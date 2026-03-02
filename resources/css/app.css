@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+
 /* Tom Select custom styling for booking sidebar */
 .booking-guests-select .ts-wrapper {
   display: block;
@@ -66,6 +67,14 @@
   .tour-gallery-right > *:last-child {
     grid-column: 1 / -1;
   }
+}
+
+/* Paragraph spacing inside rich-editor (backend) content */
+.prose p {
+  margin-bottom: 15px;
+}
+.prose p:last-child {
+  margin-bottom: 0;
 }
 
 /* Blog post content spacing */
