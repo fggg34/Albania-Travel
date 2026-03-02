@@ -153,7 +153,7 @@ class TourForm
                                         Repeater::make('itineraries')
                                             ->relationship()
                                             ->schema([
-                                                TextInput::make('day')->numeric()->required()->suffix('Day'),
+                                                TextInput::make('day')->numeric()->nullable()->suffix('Day'),
                                                 TextInput::make('title')->required(),
                                                 RichEditor::make('description')->label('Description'),
                                                 Select::make('hotel_id')

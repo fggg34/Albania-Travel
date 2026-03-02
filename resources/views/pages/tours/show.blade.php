@@ -152,23 +152,23 @@
             </div>
 
             @if($tour->itineraries->isNotEmpty())
-                <div class="" x-data="{ openDay: {{ $tour->itineraries->first()->day }} }">
+                <div class="" x-data="{ openDay: 0 }">
                     <h2 class="text-2xl font-bold text-gray-900 mb-4">Itinerary &amp; Details</h2>
                     <div class="border border-gray-200 rounded-lg overflow-hidden divide-y divide-gray-200">
                         @foreach($tour->itineraries as $day)
                             <div class="bg-white">
                                 <button type="button"
-                                    @click="openDay = openDay === {{ $day->day }} ? null : {{ $day->day }}"
-                                    :class="openDay === {{ $day->day }} ? 'bg-gray-100' : 'bg-white hover:bg-gray-50'"
+                                    @click="openDay = openDay === {{ $loop->index }} ? null : {{ $loop->index }}"
+                                    :class="openDay === {{ $loop->index }} ? 'bg-gray-100' : 'bg-white hover:bg-gray-50'"
                                     class="w-full flex items-center justify-between px-4 py-4 text-left font-semibold text-gray-900 transition-colors">
-                                    <span>Day {{ $day->day }}: {{ $day->title }}</span>
+                                    <span>{{ $day->day ? 'Day ' . $day->day . ': ' : '' }}{{ $day->title }}</span>
                                     <svg class="w-5 h-5 text-gray-500 flex-shrink-0 ml-2 transition-transform"
-                                        :class="openDay === {{ $day->day }} ? 'rotate-180' : ''"
+                                        :class="openDay === {{ $loop->index }} ? 'rotate-180' : ''"
                                         xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
                                     </svg>
                                 </button>
-                                <div x-show="openDay === {{ $day->day }}"
+                                <div x-show="openDay === {{ $loop->index }}"
                                     x-collapse
                                     class="border-t border-gray-200">
                                     <div class="px-4 py-4 text-gray-600 text-sm space-y-4">
