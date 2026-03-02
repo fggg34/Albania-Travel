@@ -40,8 +40,7 @@
                     @if($city->city_image_url)
                         <a href="{{ $city->city_image_url }}"
                            class="glightbox block w-full h-full"
-                           data-gallery="city-gallery-{{ $city->id }}"
-                           data-title="{{ $city->name }}">
+                           data-gallery="city-gallery-{{ $city->id }}">
                             <img src="{{ $city->city_image_url }}" alt="{{ $city->name }}"
                                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                             <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300"></div>
@@ -68,8 +67,7 @@
                     @foreach(array_slice($city->gallery_urls, 0, 4) as $i => $url)
                     <a href="{{ $url }}"
                        class="glightbox relative block rounded-xl overflow-hidden aspect-square bg-gray-100 group"
-                       data-gallery="city-gallery-{{ $city->id }}"
-                       data-title="{{ $city->name }}">
+                       data-gallery="city-gallery-{{ $city->id }}">
                         <img src="{{ $url }}" alt="{{ $city->name }}"
                              class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-400" />
                         {{-- "+N" overlay on the last visible thumb --}}
@@ -87,8 +85,7 @@
                 @foreach(array_slice($city->gallery_urls, 4) as $url)
                 <a href="{{ $url }}"
                    class="glightbox hidden"
-                   data-gallery="city-gallery-{{ $city->id }}"
-                   data-title="{{ $city->name }}"></a>
+                   data-gallery="city-gallery-{{ $city->id }}"></a>
                 @endforeach
                 @endif
             </div>
