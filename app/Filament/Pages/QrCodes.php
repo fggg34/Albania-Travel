@@ -5,7 +5,7 @@ namespace App\Filament\Pages;
 use App\Http\Controllers\Admin\QrCodeController;
 use Filament\Pages\Page;
 use Filament\Support\Icons\Heroicon;
-use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use SimpleSoftwareIO\QrCode\Generator as QrCodeGenerator;
 
 class QrCodes extends Page
 {
@@ -25,6 +25,7 @@ class QrCodes extends Page
 
         // Pre-generate SVG previews and attach download URLs so the Blade
         // view never needs to call any PHP class directly.
+        $qr     = app(QrCodeGenerator::class);
         $groups = [];
         foreach ($rawPages as $group => $items) {
             $built = [];
@@ -32,7 +33,7 @@ class QrCodes extends Page
                 $built[] = [
                     'label'       => $item['label'],
                     'url'         => $item['url'],
-                    'svg'         => (string) QrCode::size(160)->margin(1)->generate($item['url']),
+                    'svg'         => (string) $qr->size(160)->margin(1)->generate($item['url']),
                     'downloadUrl' => route('admin.qr.download', [
                         'url'   => $item['url'],
                         'label' => $item['label'],

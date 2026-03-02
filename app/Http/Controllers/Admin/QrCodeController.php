@@ -7,7 +7,7 @@ use App\Models\BlogPost;
 use App\Models\City;
 use App\Models\Tour;
 use Illuminate\Http\Request;
-use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use SimpleSoftwareIO\QrCode\Generator as QrCodeGenerator;
 use ZipArchive;
 
 class QrCodeController extends Controller
@@ -24,7 +24,7 @@ class QrCodeController extends Controller
             abort(400, 'Invalid URL');
         }
 
-        $png = QrCode::format('png')->size(400)->margin(2)->generate($url);
+        $png = app(QrCodeGenerator::class)->format('png')->size(400)->margin(2)->generate($url);
 
         $filename = str($label)->slug()->append('.png')->toString();
 
@@ -47,7 +47,7 @@ class QrCodeController extends Controller
 
         foreach ($pages as $group => $items) {
             foreach ($items as $item) {
-                $png      = QrCode::format('png')->size(400)->margin(2)->generate($item['url']);
+                $png      = app(QrCodeGenerator::class)->format('png')->size(400)->margin(2)->generate($item['url']);
                 $filename = str($group)->slug()->toString()
                     . '/' . str($item['label'])->slug()->toString() . '.png';
                 $zip->addFromString($filename, $png);
