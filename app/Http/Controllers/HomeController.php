@@ -27,14 +27,10 @@ class HomeController extends Controller
         $wishlistedIds = auth()->user()?->wishlistTours()->pluck('tours.id')->toArray() ?? [];
 
         $destinationCities = City::active()
-            ->whereHas('tours', fn ($q) => $q->where('is_active', true))
             ->withCount(['tours' => fn ($q) => $q->where('is_active', true)])
             ->orderByDesc('tours_count')
+            ->orderBy('name')
             ->get();
-
-        if ($destinationCities->isEmpty()) {
-            $destinationCities = City::active()->orderBy('name')->get();
-        }
 
         $categories = TourCategory::orderBy('sort_order')->get();
 
