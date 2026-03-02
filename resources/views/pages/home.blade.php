@@ -202,9 +202,15 @@
             {{-- Left column (50%): title + description --}}
             <div>
                 <h2 class="text-3xl font-bold text-gray-900 mb-6">{{ $homepageAbout->title }}</h2>
-                <div class="text-gray-600 leading-relaxed prose prose-lg max-w-none">
+                <div class="text-gray-600 leading-relaxed prose prose-lg max-w-none mb-6">
                     {!! nl2br(e($homepageAbout->description ?? '')) !!}
                 </div>
+                <a href="{{ route('about') }}" class="inline-flex items-center gap-2 rounded-lg bg-[#CC1021] px-5 py-2.5 text-sm font-semibold text-white shadow hover:bg-[#a00d1a] focus:outline-none focus:ring-2 focus:ring-[#CC1021] focus:ring-offset-2">
+                    Learn more
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                    </svg>
+                </a>
             </div>
             {{-- Right column (50%): 2 sub-columns - left: main image, right: highlight box + image --}}
             <div class="grid grid-cols-2 gap-4" style="grid-template-rows: auto 1fr;">
