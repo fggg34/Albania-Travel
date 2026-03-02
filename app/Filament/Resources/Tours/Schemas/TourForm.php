@@ -29,12 +29,12 @@ class TourForm
                                         Select::make('category_id')
                                             ->relationship('category', 'name')
                                             ->required(),
-                                        Select::make('city_id')
-                                            ->relationship('city', 'name')
+                                        Select::make('cities')
+                                            ->relationship('cities', 'name')
+                                            ->multiple()
                                             ->searchable()
                                             ->preload()
-                                            ->nullable()
-                                            ->label('City'),
+                                            ->label('Cities'),
                                         TextInput::make('title')->required()->live(onBlur: true),
                                         TextInput::make('slug')->required()->maxLength(255),
                                         Textarea::make('short_description')->rows(2)->columnSpanFull()->helperText('Brief plain-text summary.'),

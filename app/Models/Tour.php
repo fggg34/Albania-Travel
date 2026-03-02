@@ -92,9 +92,15 @@ class Tour extends Model
         return $this->belongsTo(TourCategory::class, 'category_id');
     }
 
+    /** @deprecated  Use cities() for multi-city support */
     public function city(): BelongsTo
     {
         return $this->belongsTo(City::class);
+    }
+
+    public function cities(): BelongsToMany
+    {
+        return $this->belongsToMany(City::class, 'city_tour');
     }
 
     public function images(): HasMany

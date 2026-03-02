@@ -11,10 +11,10 @@ class TourController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Tour::where('is_active', true)->with(['category', 'city', 'images', 'approvedReviews']);
+        $query = Tour::where('is_active', true)->with(['category', 'cities', 'city', 'images', 'approvedReviews']);
 
         if ($request->filled('city')) {
-            $query->whereHas('city', fn ($q) => $q->where('slug', $request->city));
+            $query->whereHas('cities', fn ($q) => $q->where('slug', $request->city));
         }
         if ($request->filled('adults')) {
             $adults = (int) $request->adults;
