@@ -11,6 +11,7 @@
         "laravel/framework": "^11.31",
         "laravel/tinker": "^2.9",
         "league/iso3166": "^4.4",
+        "simplesoftwareio/simple-qrcode": "^4.2",
         "spatie/laravel-sluggable": "^3.8"
     },
     "require-dev": {

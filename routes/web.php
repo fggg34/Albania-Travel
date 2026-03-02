@@ -47,6 +47,12 @@ Route::post('/newsletter', function () {
 
 Route::get('/dashboard', \App\Http\Controllers\User\DashboardController::class)->middleware(['auth', 'verified'])->name('dashboard');
 
+// Admin QR code downloads (protected by Filament auth)
+Route::middleware(['auth'])->prefix('admin-qr')->group(function () {
+    Route::get('/download',     [\App\Http\Controllers\Admin\QrCodeController::class, 'download'])->name('admin.qr.download');
+    Route::get('/download-all', [\App\Http\Controllers\Admin\QrCodeController::class, 'downloadAll'])->name('admin.qr.download-all');
+});
+
 Route::middleware('auth')->group(function () {
     Route::resource('amenities', AmenityController::class)->except(['show']);
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
