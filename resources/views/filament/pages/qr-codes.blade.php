@@ -33,9 +33,9 @@
                         <div class="flex flex-col items-center gap-2 rounded-lg border border-gray-100 p-3 text-center transition hover:border-primary-300 hover:shadow-md dark:border-gray-700 dark:hover:border-primary-500">
 
                             {{-- QR preview (SVG pre-generated in PHP) --}}
-                            <div class="overflow-hidden rounded-md bg-white p-1 shadow-sm w-24 h-24 flex items-center justify-center">
-                                <div class="w-full h-full [&>svg]:w-full [&>svg]:h-full">
-                                    {!! $item['svg'] !!}
+                            <div class="overflow-hidden rounded-md bg-white p-1 shadow-sm" style="width:96px;height:96px;flex-shrink:0;">
+                                <div style="width:80px;height:80px;display:flex;align-items:center;justify-content:center;">
+                                    {!! preg_replace('/width="\d+" height="\d+"/', 'width="80" height="80"', $item['svg']) !!}
                                 </div>
                             </div>
 
