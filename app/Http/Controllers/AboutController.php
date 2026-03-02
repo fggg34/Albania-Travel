@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Setting;
+use App\Models\AboutPage;
 
 class AboutController extends Controller
 {
     public function __invoke()
     {
-        return view('pages.about');
+        $aboutPage = AboutPage::getInstance();
+        return view('pages.about', compact('aboutPage'));
     }
 }
