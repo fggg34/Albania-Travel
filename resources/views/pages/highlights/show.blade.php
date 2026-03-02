@@ -13,63 +13,113 @@
 @endpush
 
 @section('content')
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-    {{-- Breadcrumb --}}
-    <nav class="text-sm text-gray-500 mb-6" aria-label="Breadcrumb">
-        <ol class="flex items-center gap-1.5 flex-wrap">
-            <li><a href="{{ route('home') }}" class="text-amber-600 hover:text-amber-700 transition">Home</a></li>
-            <li aria-hidden="true"><span>&gt;</span></li>
-            <li><a href="{{ route('cities.index') }}" class="text-amber-600 hover:text-amber-700 transition">Cities</a></li>
-            <li aria-hidden="true"><span>&gt;</span></li>
-            <li><a href="{{ route('cities.show', $city->slug) }}" class="text-amber-600 hover:text-amber-700 transition">{{ $city->name }}</a></li>
-            <li aria-hidden="true"><span>&gt;</span></li>
-            <li class="text-gray-700" aria-current="page">{{ $highlight->title }}</li>
-        </ol>
-    </nav>
 
-    {{-- Title + description (65%) | Image (35%) --}}
-    <div class="grid grid-cols-1 lg:grid-cols-[65fr_35fr] gap-8 lg:gap-10 mb-12">
-        <div class="order-2 lg:order-1">
-            <h1 class="text-2xl sm:text-3xl font-bold text-gray-900 mb-4">{{ $highlight->title }}</h1>
-            <p class="text-sm text-gray-500 mb-4">{{ $city->name }}, {{ $city->country }}</p>
-            @if($highlight->description)
-                <div class="prose prose-gray max-w-none text-gray-600">
+{{-- ── INTRO ──────────────────────────────────────────────────────────── --}}
+<section class="bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
+
+        {{-- Breadcrumb --}}
+        <div class="flex items-center gap-2 text-sm text-gray-400 mb-8 flex-wrap">
+            <a href="{{ route('home') }}" class="hover:text-[#CC1021] transition">Home</a>
+            <i class="fa-solid fa-chevron-right text-[9px]"></i>
+            <a href="{{ route('cities.show', $city->slug) }}" class="hover:text-[#CC1021] transition">{{ $city->name }}</a>
+            <i class="fa-solid fa-chevron-right text-[9px]"></i>
+            <span class="text-gray-700 font-medium">{{ $highlight->title }}</span>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start">
+
+            {{-- ── Left: image ─────────────────────────────────────────── --}}
+            <div>
+                <div class="rounded-2xl overflow-hidden bg-gray-100 aspect-[4/3]">
+                    @if($highlight->image_url)
+                        <img src="{{ $highlight->image_url }}" alt="{{ $highlight->title }}"
+                             class="w-full h-full object-cover" />
+                    @else
+                        <div class="w-full h-full flex items-center justify-center">
+                            <i class="fa-solid fa-mountain-sun text-6xl text-gray-300"></i>
+                        </div>
+                    @endif
+                </div>
+            </div>
+
+            {{-- ── Right: info + description ────────────────────────────── --}}
+            <div class="flex flex-col gap-5">
+
+                {{-- Location badge --}}
+                <div class="inline-flex items-center gap-2 self-start bg-[#CC1021]/8 text-[#CC1021] text-xs font-bold tracking-[0.15em] uppercase px-3 py-1.5 rounded-full border border-[#CC1021]/20">
+                    <i class="fa-solid fa-location-dot text-[10px]"></i>
+                    {{ $city->name }}@if($city->country), {{ $city->country }}@endif
+                </div>
+
+                {{-- Title --}}
+                <h1 class="text-4xl sm:text-5xl font-bold text-gray-900 leading-tight">
+                    {{ $highlight->title }}
+                </h1>
+
+                {{-- Divider --}}
+                <div class="w-12 h-1 rounded-full bg-[#CC1021]/40"></div>
+
+                {{-- Description --}}
+                @if($highlight->description)
+                <div class="prose prose-gray max-w-none text-gray-600 leading-relaxed text-[15px]">
                     {!! $highlight->description !!}
                 </div>
-            @else
-                <p class="text-gray-600">No description available.</p>
-            @endif
-        </div>
-        <div class="order-1 lg:order-2">
-            @if($highlight->image_url)
-                <div class="rounded-xl overflow-hidden bg-gray-200 aspect-[4/3] lg:aspect-auto lg:min-h-[280px]">
-                    <img src="{{ $highlight->image_url }}" alt="{{ $highlight->title }}" class="w-full h-full object-cover">
+                @endif
+
+                {{-- Back to city CTA --}}
+                <div class="mt-2">
+                    <a href="{{ route('cities.show', $city->slug) }}"
+                       class="inline-flex items-center gap-2 text-sm font-semibold text-[#CC1021] group">
+                        <span class="w-7 h-7 rounded-full bg-[#CC1021]/10 group-hover:bg-[#CC1021] group-hover:text-white flex items-center justify-center transition-all duration-300">
+                            <i class="fa-solid fa-arrow-left text-[10px]"></i>
+                        </span>
+                        Back to {{ $city->name }}
+                    </a>
                 </div>
-            @else
-                <div class="rounded-xl bg-gray-200 aspect-[4/3] lg:min-h-[280px] flex items-center justify-center text-gray-400">No image</div>
-            @endif
+
+            </div>
         </div>
     </div>
+</section>
 
-    {{-- Other places to visit in this city --}}
-    @if($otherHighlights->isNotEmpty())
-        <section>
-            <h2 class="text-xl font-bold text-gray-900 mb-4">Other places to visit in {{ $city->name }}</h2>
-            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
-                @foreach($otherHighlights as $other)
-                    <a href="{{ route('cities.highlights.show', [$city->slug, $other->slug]) }}" class="group block text-center">
-                        <div class="w-24 h-24 sm:w-28 sm:h-28 mx-auto rounded-full overflow-hidden bg-gray-200 border-2 border-white shadow-md group-hover:border-amber-400 transition">
-                            @if($other->image_url)
-                                <img src="{{ $other->image_url }}" alt="{{ $other->title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
-                            @else
-                                <div class="w-full h-full flex items-center justify-center text-gray-400 text-xs">No image</div>
-                            @endif
-                        </div>
-                        <p class="mt-2 text-sm font-medium text-gray-900 group-hover:text-amber-600 transition line-clamp-2">{{ $other->title }}</p>
-                    </a>
-                @endforeach
-            </div>
-        </section>
-    @endif
-</div>
+{{-- ── OTHER HIGHLIGHTS ────────────────────────────────────────────────── --}}
+@if($otherHighlights->isNotEmpty())
+<section class="py-16 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <div class="flex items-center gap-3 mb-3">
+            <div class="w-8 h-px bg-[#CC1021]/70"></div>
+            <p class="text-xs font-bold tracking-[0.25em] uppercase text-[#CC1021]">Explore more</p>
+        </div>
+        <h2 class="text-2xl sm:text-3xl font-bold text-gray-900 mb-10">
+            Other places to visit in {{ $city->name }}
+        </h2>
+
+        <div class="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-4 sm:gap-5">
+            @foreach($otherHighlights as $other)
+            <a href="{{ route('cities.highlights.show', [$city->slug, $other->slug]) }}"
+               class="group text-center">
+                <div class="relative mx-auto w-full aspect-square rounded-2xl overflow-hidden bg-gray-200 mb-3 shadow-sm group-hover:shadow-md transition-all duration-300 group-hover:-translate-y-1">
+                    @if($other->image_url)
+                    <img src="{{ $other->image_url }}" alt="{{ $other->title }}"
+                         class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                    <div class="absolute inset-0 bg-black/0 group-hover:bg-black/15 transition-colors duration-300"></div>
+                    @else
+                    <div class="w-full h-full flex items-center justify-center">
+                        <i class="fa-solid fa-mountain-sun text-2xl text-gray-300"></i>
+                    </div>
+                    @endif
+                </div>
+                <p class="text-xs sm:text-sm font-semibold text-gray-800 group-hover:text-[#CC1021] transition-colors leading-snug line-clamp-2">
+                    {{ $other->title }}
+                </p>
+            </a>
+            @endforeach
+        </div>
+
+    </div>
+</section>
+@endif
+
 @endsection

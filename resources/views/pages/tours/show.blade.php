@@ -144,6 +144,17 @@
                         <p class="text-sm text-gray-900 truncate" title="{{ $tour->end_location ?? '' }}">{{ $tour->end_location ?? ($tour->start_location ?: '—') }}</p>
                     </div>
                 </div>
+                @if(!empty($tour->languages))
+                <div class="flex gap-2">
+                    <div class="flex-shrink-0 w-9 h-9 rounded-lg bg-brand-50 flex items-center justify-center">
+                        <i class="fa-solid fa-language text-brand-600 text-sm"></i>
+                    </div>
+                    <div class="min-w-0">
+                        <p class="text-xs font-bold text-gray-500">Languages</p>
+                        <p class="text-sm text-gray-900">{{ implode(', ', (array) $tour->languages) }}</p>
+                    </div>
+                </div>
+                @endif
             </div>
 
             <div class="prose max-w-none">
