@@ -31,7 +31,7 @@
                     x-transition:enter-start="opacity-0"
                     x-transition:enter-end="opacity-100"
                     x-transition:leave="transition ease-in duration-100"
-                    class="absolute left-0 right-0 top-full mt-1 z-50 bg-white rounded-xl shadow-xl border border-gray-200"
+                    class="absolute left-0 right-0 top-full mt-4 z-50 bg-white rounded-xl shadow-xl border border-gray-200"
                     style="display: none;">
                     <div class="max-h-64 overflow-y-auto py-2">
                         <button type="button" @click="selectCity(null); cityOpen = false"
@@ -74,7 +74,7 @@
                     @click.self="adultsOpen = false"
                     style="display: none;">
                     <div class="absolute inset-0 bg-black/50 md:hidden" @click="adultsOpen = false"></div>
-                    <div style="border: 1px solid rgb(229, 231, 235);" class="relative bg-white rounded-xl shadow-xl max-w-sm w-full p-6 md:absolute md:left-0 md:right-auto md:top-full md:mt-1 md:min-w-[220px]"
+                    <div style="border: 1px solid rgb(229, 231, 235);" class="relative bg-white rounded-xl shadow-xl max-w-sm w-full p-6 md:absolute md:left-0 md:right-auto md:top-full md:mt-4 md:min-w-[220px]"
                         x-transition:enter="transition ease-out duration-200"
                         x-transition:enter-start="opacity-0 scale-95"
                         x-transition:enter-end="opacity-100 scale-100">
