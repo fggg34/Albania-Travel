@@ -179,14 +179,14 @@
 
                     {{-- Text --}}
                     <div class="absolute bottom-0 left-0 right-0 p-5">
-                        <h3 class="font-bold text-white text-xl leading-snug">{{ $cat->name }}</h3>
+                        <h3 class="font-bold text-white text-2xl leading-snug">{{ $cat->name }}</h3>
                         @if($cat->description)
-                        <p class="text-gray-300 text-sm mt-1.5 leading-relaxed line-clamp-2">
+                        <p class="text-gray-300 text-base mt-2 leading-relaxed line-clamp-2">
                             {{ Str::limit(strip_tags($cat->description), 70) }}
                         </p>
                         @endif
-                        <span class="inline-flex items-center gap-1 mt-3 text-xs font-semibold text-amber-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                            Explore <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                        <span class="inline-flex items-center gap-1.5 mt-3 text-sm font-semibold text-[#CC1021] opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            Explore <i class="fa-solid fa-arrow-right text-xs"></i>
                         </span>
                     </div>
                 </a>
