@@ -4,15 +4,12 @@
 @section('description', 'Travel tips, destination guides and stories from Albania.')
 
 @section('hero')
-<section class="relative overflow-hidden bg-[#1e1e1e] py-12">
-    @include('layouts.partials.hero-decorations')
-    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex items-center gap-3 mb-5">
-            <div class="w-10 h-px bg-amber-400/70"></div>
-            <p class="text-xs font-bold tracking-[0.25em] uppercase text-amber-400">Stories & Guides</p>
-        </div>
-        <h1 class="text-4xl sm:text-5xl font-bold text-white mb-4 leading-tight">Our Blog</h1>
-        <p class="text-gray-400 text-base max-w-xl leading-relaxed">Travel tips, destination guides and tales from the road.</p>
+<section class="relative overflow-hidden">
+    <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('https://albaniatravelbysonilakosta.com/storage/heroes/breadcrumb.jpg');"></div>
+    <div class="absolute inset-0 bg-black/60"></div>
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
+        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight">Our Blog</h1>
+        <p class="mt-3 text-white/75 text-base max-w-xl leading-relaxed">Travel tips, destination guides and tales from the road.</p>
     </div>
 </section>
 @endsection
@@ -25,13 +22,13 @@
     <div class="flex flex-wrap items-center gap-2 mb-10">
         <a href="{{ route('blog.index') }}"
            class="px-5 py-2 rounded-full text-sm font-semibold border transition-all duration-200
-                  {{ !request('category') ? 'bg-[#0D9488] text-white border-[#0D9488]' : 'bg-white text-gray-600 border-gray-200 hover:border-[#0D9488] hover:text-[#0D9488]' }}">
+                  {{ !request('category') ? 'bg-[#CC1021] text-white border-[#CC1021]' : 'bg-white text-gray-600 border-gray-200 hover:border-[#CC1021] hover:text-[#CC1021]' }}">
             All
         </a>
         @foreach($categories as $c)
         <a href="{{ route('blog.index', ['category' => $c->slug]) }}"
            class="px-5 py-2 rounded-full text-sm font-semibold border transition-all duration-200
-                  {{ request('category') === $c->slug ? 'bg-[#0D9488] text-white border-[#0D9488]' : 'bg-white text-gray-600 border-gray-200 hover:border-[#0D9488] hover:text-[#0D9488]' }}">
+                  {{ request('category') === $c->slug ? 'bg-[#CC1021] text-white border-[#CC1021]' : 'bg-white text-gray-600 border-gray-200 hover:border-[#CC1021] hover:text-[#CC1021]' }}">
             {{ $c->name }}
         </a>
         @endforeach

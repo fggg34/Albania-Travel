@@ -8,31 +8,31 @@
 
                 {{-- Logo --}}
                 <div class="flex items-center">
-                    <a href="{{ route('home') }}" class="text-xl font-bold text-teal-600 hover:text-teal-700 transition">
+                    <a href="{{ route('home') }}" class="text-xl font-bold text-brand-600 hover:text-brand-700 transition">
                         {{ \App\Models\Setting::get('site_name', config('app.name')) }}
                     </a>
                 </div>
 
                 {{-- Desktop links --}}
                 <div class="hidden lg:flex lg:items-center lg:gap-2 lg:space-x-1">
-                    <a href="{{ route('home') }}" class="inline-flex items-center px-4 py-2 text-sm font-medium rounded-md {{ request()->routeIs('home') ? 'text-teal-600 bg-teal-50' : 'text-gray-700 hover:text-teal-600 hover:bg-gray-50' }}">Home</a>
-                    <a href="{{ route('tours.index') }}" class="inline-flex items-center px-4 py-2 text-sm font-medium rounded-md {{ request()->routeIs('tours.*') ? 'text-teal-600 bg-teal-50' : 'text-gray-700 hover:text-teal-600 hover:bg-gray-50' }}">Our Tours</a>
-                    <a href="{{ route('about') }}" class="inline-flex items-center px-4 py-2 text-sm font-medium rounded-md {{ request()->routeIs('about') ? 'text-teal-600 bg-teal-50' : 'text-gray-700 hover:text-teal-600 hover:bg-gray-50' }}">About Us</a>
-                    <a href="{{ route('gallery') }}" class="inline-flex items-center px-4 py-2 text-sm font-medium rounded-md {{ request()->routeIs('gallery') ? 'text-teal-600 bg-teal-50' : 'text-gray-700 hover:text-teal-600 hover:bg-gray-50' }}">Gallery</a>
-                    <a href="{{ route('blog.index') }}" class="inline-flex items-center px-4 py-2 text-sm font-medium rounded-md {{ request()->routeIs('blog.*') ? 'text-teal-600 bg-teal-50' : 'text-gray-700 hover:text-teal-600 hover:bg-gray-50' }}">Blog</a>
-                    <a href="{{ route('contact') }}" class="inline-flex items-center px-4 py-2 text-sm font-medium rounded-md {{ request()->routeIs('contact') ? 'text-teal-600 bg-teal-50' : 'text-gray-700 hover:text-teal-600 hover:bg-gray-50' }}">Contact Us</a>
+                    <a href="{{ route('home') }}" class="inline-flex items-center px-4 py-2 text-sm font-medium rounded-md {{ request()->routeIs('home') ? 'text-brand-600 bg-brand-50' : 'text-gray-700 hover:text-brand-600 hover:bg-gray-50' }}">Home</a>
+                    <a href="{{ route('tours.index') }}" class="inline-flex items-center px-4 py-2 text-sm font-medium rounded-md {{ request()->routeIs('tours.*') ? 'text-brand-600 bg-brand-50' : 'text-gray-700 hover:text-brand-600 hover:bg-gray-50' }}">Our Tours</a>
+                    <a href="{{ route('about') }}" class="inline-flex items-center px-4 py-2 text-sm font-medium rounded-md {{ request()->routeIs('about') ? 'text-brand-600 bg-brand-50' : 'text-gray-700 hover:text-brand-600 hover:bg-gray-50' }}">About Us</a>
+                    <a href="{{ route('gallery') }}" class="inline-flex items-center px-4 py-2 text-sm font-medium rounded-md {{ request()->routeIs('gallery') ? 'text-brand-600 bg-brand-50' : 'text-gray-700 hover:text-brand-600 hover:bg-gray-50' }}">Gallery</a>
+                    <a href="{{ route('blog.index') }}" class="inline-flex items-center px-4 py-2 text-sm font-medium rounded-md {{ request()->routeIs('blog.*') ? 'text-brand-600 bg-brand-50' : 'text-gray-700 hover:text-brand-600 hover:bg-gray-50' }}">Blog</a>
+                    <a href="{{ route('contact') }}" class="inline-flex items-center px-4 py-2 text-sm font-medium rounded-md {{ request()->routeIs('contact') ? 'text-brand-600 bg-brand-50' : 'text-gray-700 hover:text-brand-600 hover:bg-gray-50' }}">Contact Us</a>
                     @auth
-                        <a href="{{ route('dashboard') }}" class="p-2 rounded-full text-gray-500 hover:bg-gray-100 hover:text-teal-600 transition" title="Wishlist & bookings">
+                        <a href="{{ route('dashboard') }}" class="p-2 rounded-full text-gray-500 hover:bg-gray-100 hover:text-brand-600 transition" title="Wishlist & bookings">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
                         </a>
-                        <a href="{{ route('profile.edit') }}" class="p-2 rounded-full text-gray-500 hover:bg-gray-100 hover:text-teal-600 transition" title="Account">
+                        <a href="{{ route('profile.edit') }}" class="p-2 rounded-full text-gray-500 hover:bg-gray-100 hover:text-brand-600 transition" title="Account">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
                         </a>
                     @else
-                        <a href="{{ route('dashboard') }}" class="p-2 rounded-full text-gray-500 hover:bg-gray-100 hover:text-teal-600 transition" title="Wishlist">
+                        <a href="{{ route('dashboard') }}" class="p-2 rounded-full text-gray-500 hover:bg-gray-100 hover:text-brand-600 transition" title="Wishlist">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
                         </a>
-                        <a href="{{ route('login') }}" class="p-2 rounded-full text-gray-500 hover:bg-gray-100 hover:text-teal-600 transition" title="Account / Login">
+                        <a href="{{ route('login') }}" class="p-2 rounded-full text-gray-500 hover:bg-gray-100 hover:text-brand-600 transition" title="Account / Login">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
                         </a>
                     @endauth
@@ -75,7 +75,7 @@
 
             {{-- Drawer header --}}
             <div class="flex items-center justify-between px-5 h-16 border-b border-gray-100 flex-shrink-0">
-                <a href="{{ route('home') }}" class="text-lg font-bold text-teal-600" @click="open = false">
+                <a href="{{ route('home') }}" class="text-lg font-bold text-brand-600" @click="open = false">
                     {{ \App\Models\Setting::get('site_name', config('app.name')) }}
                 </a>
                 <button @click="open = false" class="p-2 rounded-md text-gray-400 hover:bg-gray-100 transition">
@@ -88,33 +88,33 @@
             {{-- Nav links --}}
             <nav class="flex-1 overflow-y-auto px-3 py-4 space-y-0.5">
                 <a href="{{ route('home') }}" @click="open = false"
-                   class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition {{ request()->routeIs('home') ? 'bg-teal-50 text-teal-600' : 'text-gray-700 hover:bg-gray-50 hover:text-teal-600' }}">
-                    <i class="fa-solid fa-house w-4 text-center text-gray-400 {{ request()->routeIs('home') ? 'text-teal-500' : '' }}"></i>
+                   class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition {{ request()->routeIs('home') ? 'bg-brand-50 text-brand-600' : 'text-gray-700 hover:bg-gray-50 hover:text-brand-600' }}">
+                    <i class="fa-solid fa-house w-4 text-center text-gray-400 {{ request()->routeIs('home') ? 'text-brand-500' : '' }}"></i>
                     Home
                 </a>
                 <a href="{{ route('tours.index') }}" @click="open = false"
-                   class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition {{ request()->routeIs('tours.*') ? 'bg-teal-50 text-teal-600' : 'text-gray-700 hover:bg-gray-50 hover:text-teal-600' }}">
-                    <i class="fa-solid fa-map-location-dot w-4 text-center text-gray-400 {{ request()->routeIs('tours.*') ? 'text-teal-500' : '' }}"></i>
+                   class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition {{ request()->routeIs('tours.*') ? 'bg-brand-50 text-brand-600' : 'text-gray-700 hover:bg-gray-50 hover:text-brand-600' }}">
+                    <i class="fa-solid fa-map-location-dot w-4 text-center text-gray-400 {{ request()->routeIs('tours.*') ? 'text-brand-500' : '' }}"></i>
                     Our Tours
                 </a>
                 <a href="{{ route('about') }}" @click="open = false"
-                   class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition {{ request()->routeIs('about') ? 'bg-teal-50 text-teal-600' : 'text-gray-700 hover:bg-gray-50 hover:text-teal-600' }}">
-                    <i class="fa-solid fa-circle-info w-4 text-center text-gray-400 {{ request()->routeIs('about') ? 'text-teal-500' : '' }}"></i>
+                   class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition {{ request()->routeIs('about') ? 'bg-brand-50 text-brand-600' : 'text-gray-700 hover:bg-gray-50 hover:text-brand-600' }}">
+                    <i class="fa-solid fa-circle-info w-4 text-center text-gray-400 {{ request()->routeIs('about') ? 'text-brand-500' : '' }}"></i>
                     About Us
                 </a>
                 <a href="{{ route('gallery') }}" @click="open = false"
-                   class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition {{ request()->routeIs('gallery') ? 'bg-teal-50 text-teal-600' : 'text-gray-700 hover:bg-gray-50 hover:text-teal-600' }}">
-                    <i class="fa-solid fa-images w-4 text-center text-gray-400 {{ request()->routeIs('gallery') ? 'text-teal-500' : '' }}"></i>
+                   class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition {{ request()->routeIs('gallery') ? 'bg-brand-50 text-brand-600' : 'text-gray-700 hover:bg-gray-50 hover:text-brand-600' }}">
+                    <i class="fa-solid fa-images w-4 text-center text-gray-400 {{ request()->routeIs('gallery') ? 'text-brand-500' : '' }}"></i>
                     Gallery
                 </a>
                 <a href="{{ route('blog.index') }}" @click="open = false"
-                   class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition {{ request()->routeIs('blog.*') ? 'bg-teal-50 text-teal-600' : 'text-gray-700 hover:bg-gray-50 hover:text-teal-600' }}">
-                    <i class="fa-solid fa-newspaper w-4 text-center text-gray-400 {{ request()->routeIs('blog.*') ? 'text-teal-500' : '' }}"></i>
+                   class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition {{ request()->routeIs('blog.*') ? 'bg-brand-50 text-brand-600' : 'text-gray-700 hover:bg-gray-50 hover:text-brand-600' }}">
+                    <i class="fa-solid fa-newspaper w-4 text-center text-gray-400 {{ request()->routeIs('blog.*') ? 'text-brand-500' : '' }}"></i>
                     Blog
                 </a>
                 <a href="{{ route('contact') }}" @click="open = false"
-                   class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition {{ request()->routeIs('contact') ? 'bg-teal-50 text-teal-600' : 'text-gray-700 hover:bg-gray-50 hover:text-teal-600' }}">
-                    <i class="fa-solid fa-envelope w-4 text-center text-gray-400 {{ request()->routeIs('contact') ? 'text-teal-500' : '' }}"></i>
+                   class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition {{ request()->routeIs('contact') ? 'bg-brand-50 text-brand-600' : 'text-gray-700 hover:bg-gray-50 hover:text-brand-600' }}">
+                    <i class="fa-solid fa-envelope w-4 text-center text-gray-400 {{ request()->routeIs('contact') ? 'text-brand-500' : '' }}"></i>
                     Contact Us
                 </a>
             </nav>
@@ -123,12 +123,12 @@
             <div class="flex-shrink-0 border-t border-gray-100 px-3 py-4 space-y-0.5">
                 @auth
                     <a href="{{ route('dashboard') }}" @click="open = false"
-                       class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-teal-600 transition">
+                       class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-brand-600 transition">
                         <i class="fa-solid fa-heart w-4 text-center text-gray-400"></i>
                         My Bookings
                     </a>
                     <a href="{{ route('profile.edit') }}" @click="open = false"
-                       class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-teal-600 transition">
+                       class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-brand-600 transition">
                         <i class="fa-solid fa-user w-4 text-center text-gray-400"></i>
                         Profile
                     </a>
@@ -142,12 +142,12 @@
                     </form>
                 @else
                     <a href="{{ route('login') }}" @click="open = false"
-                       class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-teal-600 hover:bg-teal-50 transition">
+                       class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-brand-600 hover:bg-brand-50 transition">
                         <i class="fa-solid fa-right-to-bracket w-4 text-center"></i>
                         Login
                     </a>
                     <a href="{{ route('register') }}" @click="open = false"
-                       class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-teal-600 transition">
+                       class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-brand-600 transition">
                         <i class="fa-solid fa-user-plus w-4 text-center text-gray-400"></i>
                         Register
                     </a>

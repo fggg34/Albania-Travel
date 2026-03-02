@@ -114,7 +114,7 @@
                     </div>
                     <div class="min-w-0">
                         <p class="text-xs font-bold text-gray-600">Tour starts</p>
-                        <p class="text-sm text-sky-600 truncate" title="{{ $tour->start_location }}">{{ $tour->start_location ?: '—' }}</p>
+                        <p class="text-sm text-brand-600 truncate" title="{{ $tour->start_location }}">{{ $tour->start_location ?: '—' }}</p>
                     </div>
                 </div>
                 <div class="flex gap-2">
@@ -123,7 +123,7 @@
                     </div>
                     <div class="min-w-0">
                         <p class="text-xs font-bold text-gray-600">Starting time</p>
-                        <p class="text-sm text-sky-600">{{ $startTimeFormatted ?: 'Flexible' }}</p>
+                        <p class="text-sm text-brand-600">{{ $startTimeFormatted ?: 'Flexible' }}</p>
                     </div>
                 </div>
                 <div class="flex gap-2">
@@ -132,7 +132,7 @@
                     </div>
                     <div class="min-w-0">
                         <p class="text-xs font-bold text-gray-600">Duration</p>
-                        <p class="text-sm text-sky-600">{{ $durationLabel ?: '—' }}</p>
+                        <p class="text-sm text-brand-600">{{ $durationLabel ?: '—' }}</p>
                     </div>
                 </div>
                 <div class="flex gap-2">
@@ -141,19 +141,19 @@
                     </div>
                     <div class="min-w-0">
                         <p class="text-xs font-bold text-gray-600">Ending place</p>
-                        <p class="text-sm text-sky-600 truncate" title="{{ $tour->end_location ?? '' }}">{{ $tour->end_location ?? ($tour->start_location ?: '—') }}</p>
+                        <p class="text-sm text-brand-600 truncate" title="{{ $tour->end_location ?? '' }}">{{ $tour->end_location ?? ($tour->start_location ?: '—') }}</p>
                     </div>
                 </div>
             </div>
 
             <div class="prose max-w-none">
-                <h2 class="text-3xl font-bold text-emerald-600 mb-4">Summary</h2>
+                <h2 class="text-3xl font-bold text-brand-600 mb-4">Summary</h2>
                 {!! $tour->description !!}
             </div>
 
             @if($tour->itineraries->isNotEmpty())
                 <div class="" x-data="{ openDay: {{ $tour->itineraries->first()->day }} }">
-                    <h2 class="text-3xl font-bold text-emerald-600 mb-4">Itinerary &amp; Details</h2>
+                    <h2 class="text-3xl font-bold text-brand-600 mb-4">Itinerary &amp; Details</h2>
                     <div class="border border-gray-200 rounded-lg overflow-hidden divide-y divide-gray-200">
                         @foreach($tour->itineraries as $day)
                             <div class="bg-white">
@@ -219,11 +219,11 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-12">
                     @if($tour->included)
                         <div>
-                            <h2 class="text-3xl font-bold text-emerald-600 mb-3">Included</h2>
+                            <h2 class="text-3xl font-bold text-brand-600 mb-3">Included</h2>
                             <ul class="space-y-2">
                                 @foreach((array) $tour->included as $item)
                                     <li class="flex items-start gap-3">
-                                        <span class="flex-shrink-0 w-7 h-7 rounded flex items-center justify-center bg-emerald-100 text-emerald-600">
+                                        <span class="flex-shrink-0 w-7 h-7 rounded flex items-center justify-center bg-emerald-100 text-brand-600">
                                             <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg>
                                         </span>
                                         <span class="text-gray-700">{{ $item }}</span>
@@ -234,7 +234,7 @@
                     @endif
                     @if($tour->not_included)
                         <div>
-                            <h2 class="text-3xl font-bold text-emerald-600 mb-3">Not included</h2>
+                            <h2 class="text-3xl font-bold text-brand-600 mb-3">Not included</h2>
                             <ul class="space-y-2">
                                 @foreach((array) $tour->not_included as $item)
                                     <li class="flex items-start gap-3">
@@ -259,7 +259,7 @@
                 <div class="">
                     <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-6 mb-6">
                         <div>
-                            <h2 class="text-3xl font-bold text-emerald-600">Customer reviews</h2>
+                            <h2 class="text-3xl font-bold text-brand-600">Customer reviews</h2>
                             <p class="mt-1 text-base text-gray-600">
                                 Read what real customers had to say about <strong class="font-bold text-gray-900">{{ $tour->title }}.</strong>
                             </p>

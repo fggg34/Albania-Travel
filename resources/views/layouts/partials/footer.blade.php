@@ -9,7 +9,7 @@
     $tripadvisor = \App\Models\Setting::get('tripadvisor_url', '');
 @endphp
 
-<footer class="bg-[#0f1a1a] text-gray-400 mt-0">
+<footer class="bg-[#111111] text-gray-400 mt-0">
 
     {{-- Main grid --}}
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
@@ -26,28 +26,28 @@
                 <div class="flex gap-3 mt-6">
                     @if($facebook)
                     <a href="{{ $facebook }}" target="_blank" rel="noopener"
-                       class="w-9 h-9 rounded-full border border-white/10 flex items-center justify-center text-gray-400 hover:border-teal-500 hover:text-teal-400 transition">
+                       class="w-9 h-9 rounded-full border border-white/10 flex items-center justify-center text-gray-400 hover:border-brand-500 hover:text-brand-400 transition">
                         <i class="fa-brands fa-facebook-f text-xs"></i>
                     </a>
                     @endif
                     @if($instagram)
                     <a href="{{ $instagram }}" target="_blank" rel="noopener"
-                       class="w-9 h-9 rounded-full border border-white/10 flex items-center justify-center text-gray-400 hover:border-teal-500 hover:text-teal-400 transition">
+                       class="w-9 h-9 rounded-full border border-white/10 flex items-center justify-center text-gray-400 hover:border-brand-500 hover:text-brand-400 transition">
                         <i class="fa-brands fa-instagram text-xs"></i>
                     </a>
                     @endif
                     @if($tripadvisor)
                     <a href="{{ $tripadvisor }}" target="_blank" rel="noopener"
-                       class="w-9 h-9 rounded-full border border-white/10 flex items-center justify-center text-gray-400 hover:border-teal-500 hover:text-teal-400 transition">
+                       class="w-9 h-9 rounded-full border border-white/10 flex items-center justify-center text-gray-400 hover:border-brand-500 hover:text-brand-400 transition">
                         <i class="fa-brands fa-tripadvisor text-xs"></i>
                     </a>
                     @endif
                     {{-- Fallback: always show placeholder icons if no settings --}}
                     @if(!$facebook && !$instagram && !$tripadvisor)
-                    <a href="#" class="w-9 h-9 rounded-full border border-white/10 flex items-center justify-center text-gray-500 hover:border-teal-500 hover:text-teal-400 transition">
+                    <a href="#" class="w-9 h-9 rounded-full border border-white/10 flex items-center justify-center text-gray-500 hover:border-brand-500 hover:text-brand-400 transition">
                         <i class="fa-brands fa-facebook-f text-xs"></i>
                     </a>
-                    <a href="#" class="w-9 h-9 rounded-full border border-white/10 flex items-center justify-center text-gray-500 hover:border-teal-500 hover:text-teal-400 transition">
+                    <a href="#" class="w-9 h-9 rounded-full border border-white/10 flex items-center justify-center text-gray-500 hover:border-brand-500 hover:text-brand-400 transition">
                         <i class="fa-brands fa-instagram text-xs"></i>
                     </a>
                     @endif
@@ -81,7 +81,7 @@
                     @if($email)
                     <li class="flex items-start gap-3">
                         <span class="flex-shrink-0 w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center">
-                            <i class="fa-solid fa-envelope text-[#0D9488] text-xs"></i>
+                            <i class="fa-solid fa-envelope text-[#CC1021] text-xs"></i>
                         </span>
                         <a href="mailto:{{ $email }}" class="hover:text-white transition pt-1.5">{{ $email }}</a>
                     </li>
@@ -89,7 +89,7 @@
                     @if($phone)
                     <li class="flex items-start gap-3">
                         <span class="flex-shrink-0 w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center">
-                            <i class="fa-solid fa-phone text-[#0D9488] text-xs"></i>
+                            <i class="fa-solid fa-phone text-[#CC1021] text-xs"></i>
                         </span>
                         <a href="tel:{{ $phone }}" class="hover:text-white transition pt-1.5">{{ $phone }}</a>
                     </li>
@@ -97,7 +97,7 @@
                     @if($address)
                     <li class="flex items-start gap-3">
                         <span class="flex-shrink-0 w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center">
-                            <i class="fa-solid fa-location-dot text-[#0D9488] text-xs"></i>
+                            <i class="fa-solid fa-location-dot text-[#CC1021] text-xs"></i>
                         </span>
                         <span class="pt-1.5">{{ $address }}</span>
                     </li>

@@ -53,7 +53,7 @@
                     </div>
                     <div class="min-w-0">
                         <p class="text-xs font-bold text-gray-600">Tour starts</p>
-                        <p class="text-xs text-sky-600 truncate" title="{{ $tour->start_location }}">{{ $tour->start_location ?: '—' }}</p>
+                        <p class="text-xs text-brand-600 truncate" title="{{ $tour->start_location }}">{{ $tour->start_location ?: '—' }}</p>
                     </div>
                 </div>
                 <div class="flex gap-2">
@@ -62,7 +62,7 @@
                     </div>
                     <div class="min-w-0">
                         <p class="text-xs font-bold text-gray-600">Starting time</p>
-                        <p class="text-xs text-sky-600">{{ $startTimeFormatted ?: 'Flexible' }}</p>
+                        <p class="text-xs text-brand-600">{{ $startTimeFormatted ?: 'Flexible' }}</p>
                     </div>
                 </div>
                 <div class="flex gap-2">
@@ -71,7 +71,7 @@
                     </div>
                     <div class="min-w-0">
                         <p class="text-xs font-bold text-gray-600">Duration</p>
-                        <p class="text-xs text-sky-600">{{ $durationLabel ?: '—' }}</p>
+                        <p class="text-xs text-brand-600">{{ $durationLabel ?: '—' }}</p>
                     </div>
                 </div>
                 <div class="flex gap-2">
@@ -80,7 +80,7 @@
                     </div>
                     <div class="min-w-0">
                         <p class="text-xs font-bold text-gray-600">Ending place</p>
-                        <p class="text-xs text-sky-600 truncate" title="{{ $tour->end_location }}">{{ $tour->end_location ?: ($tour->start_location ?: '—') }}</p>
+                        <p class="text-xs text-brand-600 truncate" title="{{ $tour->end_location }}">{{ $tour->end_location ?: ($tour->start_location ?: '—') }}</p>
                     </div>
                 </div>
             </div>

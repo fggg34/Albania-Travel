@@ -41,7 +41,7 @@
                         <template x-for="city in cities" :key="city.slug">
                             <button type="button" @click="selectCity(city.slug); cityOpen = false"
                                 class="w-full flex items-center justify-between px-4 py-3 text-left hover:bg-gray-50"
-                                :class="selectedCity === city.slug ? 'bg-teal-50 text-teal-700' : 'text-gray-900'">
+                                :class="selectedCity === city.slug ? 'bg-brand-50 text-brand-700' : 'text-gray-900'">
                                 <span x-text="city.name"></span>
                                 <span class="text-gray-500 text-sm ml-2" x-text="city.label || 'City'"></span>
                             </button>
@@ -92,7 +92,7 @@
                                 class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full border border-gray-300 bg-white text-gray-600 hover:bg-gray-50 font-medium text-xl transition">+</button>
                         </div>
                         <button type="button" @click="adultsOpen = false"
-                            class="mt-4 w-full py-2.5 bg-teal-600 text-white font-medium rounded-lg hover:bg-teal-700 md:hidden">
+                            class="mt-4 w-full py-2.5 bg-brand-600 text-white font-medium rounded-lg hover:bg-brand-700 md:hidden">
                             Done
                         </button>
                     </div>
@@ -100,7 +100,7 @@
             </div>
             {{-- Search button --}}
             <div class="flex items-center justify-center md:h-full p-2 md:py-0" style="border-left:0;">
-                <button type="submit" class="w-full md:w-auto md:min-w-[120px] h-12 md:h-full md:min-h-[48px] px-6 bg-teal-600 hover:bg-teal-700 text-white font-medium rounded-xl md:rounded-lg transition flex items-center justify-center gap-2 shadow-sm">
+                <button type="submit" class="w-full md:w-auto md:min-w-[120px] h-12 md:h-full md:min-h-[48px] px-6 bg-brand-600 hover:bg-brand-700 text-white font-medium rounded-xl md:rounded-lg transition flex items-center justify-center gap-2 shadow-sm">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
                     Search
                 </button>

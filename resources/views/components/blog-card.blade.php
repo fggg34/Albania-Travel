@@ -17,7 +17,7 @@
         <img src="{{ $imageUrl }}" alt="{{ $post->title }}"
              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
         @else
-        <div class="w-full h-full bg-gradient-to-br from-[#0f1a1a] to-[#0D9488]/30 flex items-center justify-center">
+        <div class="w-full h-full bg-gradient-to-br from-[#111111] to-[#CC1021]/30 flex items-center justify-center">
             <i class="fa-solid fa-newspaper text-white/20 text-4xl"></i>
         </div>
         @endif
@@ -26,7 +26,7 @@
         @if($post->category)
         <!-- <div class="absolute top-4 left-4">
             <a href="{{ route('blog.index', ['category' => $post->category->slug]) }}"
-               class="inline-flex items-center gap-1.5 bg-[#0f1a1a]/75 backdrop-blur-sm text-teal-400 text-[10px] font-bold px-3 py-1.5 rounded-full uppercase tracking-wider hover:bg-[#0D9488] hover:text-white transition-colors">
+               class="inline-flex items-center gap-1.5 bg-[#111111]/75 backdrop-blur-sm text-brand-400 text-[10px] font-bold px-3 py-1.5 rounded-full uppercase tracking-wider hover:bg-[#CC1021] hover:text-white transition-colors">
                 {{ $post->category->name }}
             </a>
         </div> -->
@@ -47,7 +47,7 @@
 
         {{-- Title --}}
         <a href="{{ route('blog.show', $post->slug) }}" class="block flex-1 mb-4">
-            <h3 class="text-base font-bold text-gray-900 leading-snug line-clamp-2 mb-2 group-hover:text-[#0D9488] transition-colors duration-200">
+            <h3 class="text-base font-bold text-gray-900 leading-snug line-clamp-2 mb-2 group-hover:text-[#CC1021] transition-colors duration-200">
                 {{ $post->title }}
             </h3>
             <p class="text-sm text-gray-400 leading-relaxed line-clamp-2">
@@ -58,9 +58,9 @@
         {{-- Footer --}}
         <div class="flex items-center justify-between pt-5 border-t border-gray-100 mt-auto">
             <a href="{{ route('blog.show', $post->slug) }}"
-               class="inline-flex items-center gap-2 text-sm font-semibold text-[#0D9488]">
+               class="inline-flex items-center gap-2 text-sm font-semibold text-[#CC1021]">
                 Read article
-                <span class="w-6 h-6 rounded-full bg-[#0D9488]/10 group-hover:bg-[#0D9488] group-hover:text-white flex items-center justify-center transition-all duration-300">
+                <span class="w-6 h-6 rounded-full bg-[#CC1021]/10 group-hover:bg-[#CC1021] group-hover:text-white flex items-center justify-center transition-all duration-300">
                     <i class="fa-solid fa-arrow-right text-[10px]"></i>
                 </span>
             </a>

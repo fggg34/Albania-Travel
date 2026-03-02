@@ -12,16 +12,16 @@
 @endphp
 
 {{-- Hero confirmation banner --}}
-<div class="bg-[#0D9488] py-14 px-4 text-center">
+<div class="bg-[#CC1021] py-14 px-4 text-center">
     <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-white/20 text-white mb-5 backdrop-blur-sm">
         <i class="fa-solid fa-circle-check text-3xl"></i>
     </div>
     <h1 class="text-2xl sm:text-3xl font-bold text-white">Booking Confirmed!</h1>
-    <p class="mt-2 text-teal-100 text-sm max-w-md mx-auto">
+    <p class="mt-2 text-brand-100 text-sm max-w-md mx-auto">
         A confirmation email has been sent to <strong class="text-white">{{ $booking->guest_email }}</strong>.
     </p>
     <div class="mt-4 inline-flex items-center gap-2 bg-white/15 text-white text-sm font-mono px-5 py-2 rounded-full">
-        <i class="fa-solid fa-hashtag text-teal-200 text-xs"></i>
+        <i class="fa-solid fa-hashtag text-brand-200 text-xs"></i>
         {{ $booking->reference }}
     </div>
 </div>
@@ -36,7 +36,7 @@
                 {{-- Left: Booking details --}}
                 <div class="lg:col-span-3 p-6 sm:p-8">
                     <h2 class="text-sm font-bold text-gray-900 uppercase tracking-widest mb-6 flex items-center gap-2">
-                        <span class="inline-block w-1 h-4 bg-[#0D9488] rounded-full"></span>
+                        <span class="inline-block w-1 h-4 bg-[#CC1021] rounded-full"></span>
                         Booking Details
                     </h2>
 
@@ -104,7 +104,7 @@
                         </a>
                         @auth
                             <a href="{{ route('dashboard') }}"
-                                class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-medium text-white bg-[#0D9488] hover:bg-[#0b8277] transition">
+                                class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-medium text-white bg-[#CC1021] hover:bg-[#a50d18] transition">
                                 <i class="fa-solid fa-calendar-check text-xs"></i>
                                 My bookings
                             </a>
@@ -120,7 +120,7 @@
                             @endif
                         @else
                             <a href="{{ route('tours.index') }}"
-                                class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-medium text-white bg-[#0D9488] hover:bg-[#0b8277] transition">
+                                class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-medium text-white bg-[#CC1021] hover:bg-[#a50d18] transition">
                                 <i class="fa-solid fa-compass text-xs"></i>
                                 Browse more tours
                             </a>
@@ -139,7 +139,7 @@
 
                     <div class="mt-5 pt-4 border-t border-gray-200 flex items-center justify-between">
                         <span class="text-sm font-semibold text-gray-600">Total paid</span>
-                        <span class="text-xl font-bold text-[#0D9488]">
+                        <span class="text-xl font-bold text-[#CC1021]">
                             {{ (strtoupper($booking->currency ?? '') === 'EUR' ? '€' : ($booking->currency ?? '')) }}{{ number_format($booking->total_amount, 2) }}
                         </span>
                     </div>
@@ -157,8 +157,8 @@
             <h3 class="text-sm font-bold text-gray-900 mb-4">What happens next?</h3>
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div class="flex gap-3">
-                    <div class="w-8 h-8 rounded-lg bg-[#0D9488]/10 flex items-center justify-center flex-shrink-0">
-                        <i class="fa-solid fa-envelope text-[#0D9488] text-sm"></i>
+                    <div class="w-8 h-8 rounded-lg bg-[#CC1021]/10 flex items-center justify-center flex-shrink-0">
+                        <i class="fa-solid fa-envelope text-[#CC1021] text-sm"></i>
                     </div>
                     <div>
                         <p class="text-sm font-semibold text-gray-800">Confirmation email</p>
@@ -166,8 +166,8 @@
                     </div>
                 </div>
                 <div class="flex gap-3">
-                    <div class="w-8 h-8 rounded-lg bg-[#0D9488]/10 flex items-center justify-center flex-shrink-0">
-                        <i class="fa-solid fa-phone text-[#0D9488] text-sm"></i>
+                    <div class="w-8 h-8 rounded-lg bg-[#CC1021]/10 flex items-center justify-center flex-shrink-0">
+                        <i class="fa-solid fa-phone text-[#CC1021] text-sm"></i>
                     </div>
                     <div>
                         <p class="text-sm font-semibold text-gray-800">We'll reach out</p>
@@ -175,8 +175,8 @@
                     </div>
                 </div>
                 <div class="flex gap-3">
-                    <div class="w-8 h-8 rounded-lg bg-[#0D9488]/10 flex items-center justify-center flex-shrink-0">
-                        <i class="fa-solid fa-map-location-dot text-[#0D9488] text-sm"></i>
+                    <div class="w-8 h-8 rounded-lg bg-[#CC1021]/10 flex items-center justify-center flex-shrink-0">
+                        <i class="fa-solid fa-map-location-dot text-[#CC1021] text-sm"></i>
                     </div>
                     <div>
                         <p class="text-sm font-semibold text-gray-800">Enjoy your tour</p>
