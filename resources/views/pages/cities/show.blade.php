@@ -12,6 +12,10 @@
 @endif
 @endpush
 
+@push('scripts')
+@vite(['resources/js/tour-gallery.js'])
+@endpush
+
 @section('content')
 
 {{-- ── INTRO: split image+gallery / info ──────────────────────────────── --}}
