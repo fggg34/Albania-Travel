@@ -142,7 +142,7 @@
                 @endforeach
             </div>
         </div>
-        <button type="button" @click="scrollNext()" class="flex-shrink-0 w-12 h-12 rounded-full bg-brand-50 text-brand-600 flex items-center justify-center ml-4 hover:bg-brand-100 transition-colors self-center shadow-sm" aria-label="Scroll right">
+        <button type="button" @click="scrollNext()" class="lg:hidden flex-shrink-0 w-12 h-12 rounded-full bg-brand-50 text-brand-600 flex items-center justify-center ml-4 hover:bg-brand-100 transition-colors self-center shadow-sm" aria-label="Scroll right">
             <i class="fa-solid fa-chevron-right"></i>
         </button>
     </div>
