@@ -20,16 +20,16 @@
         <div class="flex items-center justify-between gap-4">
             <div class="flex flex-col min-w-0">
                 <span class="text-xs text-gray-500">From</span>
-                <span class="text-lg font-bold text-emerald-600">{{ $currency }} {{ $formattedPrice }} <span class="text-xs font-normal text-gray-500">/ person</span></span>
+                <span class="text-lg font-bold text-brand-600">{{ $currency }} {{ $formattedPrice }} <span class="text-xs font-normal text-gray-500">/ person</span></span>
             </div>
             <button type="button"
                     @click="scrollToBooking()"
-                    class="flex-shrink-0 py-3 px-5 bg-emerald-600 text-white font-semibold rounded-lg hover:bg-emerald-700 transition-colors text-sm sm:text-base">
+                    class="flex-shrink-0 py-3 px-5 bg-brand-600 text-white font-semibold rounded-lg hover:bg-brand-700 transition-colors text-sm sm:text-base">
                 Proceed to Booking
             </button>
         </div>
         <div class="mt-2 flex items-center justify-center gap-2 text-xs text-gray-500">
-            <span class="flex h-4 w-4 items-center justify-center rounded-full bg-emerald-100 text-emerald-600">
+            <span class="flex h-4 w-4 items-center justify-center rounded-full bg-brand-50 text-brand-600">
                 <svg class="h-2.5 w-2.5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg>
             </span>
             <span>Best price guarantee</span>

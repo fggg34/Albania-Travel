@@ -36,7 +36,7 @@
                     </svg>
                 </span>
                 <input type="text" x-ref="dateInput" placeholder="Select Date" readonly
-                    class="block w-full rounded-lg border border-gray-300 bg-white py-2.5 pl-10 pr-10 text-sm text-gray-900 placeholder-gray-400 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500">
+                    class="block w-full rounded-lg border border-gray-300 bg-white py-2.5 pl-10 pr-10 text-sm text-gray-900 placeholder-gray-400 focus:border-brand-500 focus:ring-1 focus:ring-brand-500">
                 <span class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-gray-400">
                     <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" /></svg>
                 </span>
@@ -54,7 +54,7 @@
                     </svg>
                 </span>
                 <button type="button" @click="participantsOpen = true"
-                    class="w-full flex items-center rounded-lg border border-gray-300 bg-white py-2.5 pl-10 pr-[10px] text-left text-sm text-gray-900 hover:border-gray-400 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-colors">
+                    class="w-full flex items-center rounded-lg border border-gray-300 bg-white py-2.5 pl-10 pr-[10px] text-left text-sm text-gray-900 hover:border-gray-400 focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-colors">
                     <span class="flex-1" x-text="guests + ' Adult' + (guests !== 1 ? 's' : '')"></span>
                     <svg class="h-5 w-5 text-gray-400 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" /></svg>
                 </button>
@@ -66,7 +66,7 @@
             <input type="hidden" name="date" :value="selectedDate">
             <input type="hidden" name="guests" :value="guests">
             <button type="submit" :disabled="!selectedDate || loading"
-                class="w-full py-3.5 bg-emerald-600 text-white font-semibold rounded-lg hover:bg-emerald-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-base">
+                class="w-full py-3.5 bg-brand-600 text-white font-semibold rounded-lg hover:bg-brand-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-base">
                 Proceed to Booking
             </button>
         </form>
@@ -79,17 +79,17 @@
             </div>
             <div class="flex justify-between text-md">
                 <span class="text-gray-900 font-semibold">Total Price</span>
-                <span class="text-emerald-600 font-bold" x-text="total > 0 ? currency + ' ' + total.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : '—'"></span>
+                <span class="text-brand-600 font-bold" x-text="total > 0 ? currency + ' ' + total.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : '—'"></span>
             </div>
         </div>
 
         {{-- Best price guarantee --}}
         <div class="mt-4 flex items-center gap-2 text-sm">
-            <span class="flex h-6 w-6 items-center justify-center rounded-full bg-emerald-100 text-emerald-600">
+            <span class="flex h-6 w-6 items-center justify-center rounded-full bg-brand-50 text-brand-600">
                 <svg class="h-3.5 w-3.5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg>
             </span>
             <span class="text-gray-600">Best price guarantee</span>
-            <a href="#" class="text-emerald-600 hover:underline font-medium">Learn More</a>
+            <a href="#" class="text-brand-600 hover:underline font-medium">Learn More</a>
         </div>
     </div>
 
@@ -139,12 +139,12 @@
             </div>
             <div class="flex justify-between text-sm">
                 <span class="text-gray-900 font-semibold">Total</span>
-                <span class="text-emerald-600 font-bold" x-text="currency + ' ' + total.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')"></span>
+                <span class="text-brand-600 font-bold" x-text="currency + ' ' + total.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')"></span>
             </div>
         </div>
         {{-- Done button --}}
         <button type="button" @click="participantsOpen = false"
-            class="mt-5 w-full py-3.5 bg-emerald-600 text-white font-semibold rounded-lg hover:bg-emerald-700 transition-colors">
+            class="mt-5 w-full py-3.5 bg-brand-600 text-white font-semibold rounded-lg hover:bg-brand-700 transition-colors">
             Done
         </button>
     </div>

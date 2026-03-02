@@ -109,51 +109,51 @@
             @endphp
             <div class="flex flex-wrap gap-4 sm:gap-6" style="margin-top: 20px;">
                 <div class="flex gap-2">
-                    <div class="flex-shrink-0 w-9 h-9 rounded-lg bg-slate-100 flex items-center justify-center">
-                        <i class="fa-solid fa-flag text-slate-600 text-sm"></i>
+                    <div class="flex-shrink-0 w-9 h-9 rounded-lg bg-brand-50 flex items-center justify-center">
+                        <i class="fa-solid fa-flag text-brand-600 text-sm"></i>
                     </div>
                     <div class="min-w-0">
-                        <p class="text-xs font-bold text-gray-600">Tour starts</p>
-                        <p class="text-sm text-brand-600 truncate" title="{{ $tour->start_location }}">{{ $tour->start_location ?: '—' }}</p>
+                        <p class="text-xs font-bold text-gray-500">Tour starts</p>
+                        <p class="text-sm text-gray-900 truncate" title="{{ $tour->start_location }}">{{ $tour->start_location ?: '—' }}</p>
                     </div>
                 </div>
                 <div class="flex gap-2">
-                    <div class="flex-shrink-0 w-9 h-9 rounded-lg bg-slate-100 flex items-center justify-center">
-                        <i class="fa-regular fa-clock text-slate-600 text-sm"></i>
+                    <div class="flex-shrink-0 w-9 h-9 rounded-lg bg-brand-50 flex items-center justify-center">
+                        <i class="fa-regular fa-clock text-brand-600 text-sm"></i>
                     </div>
                     <div class="min-w-0">
-                        <p class="text-xs font-bold text-gray-600">Starting time</p>
-                        <p class="text-sm text-brand-600">{{ $startTimeFormatted ?: 'Flexible' }}</p>
+                        <p class="text-xs font-bold text-gray-500">Starting time</p>
+                        <p class="text-sm text-gray-900">{{ $startTimeFormatted ?: 'Flexible' }}</p>
                     </div>
                 </div>
                 <div class="flex gap-2">
-                    <div class="flex-shrink-0 w-9 h-9 rounded-lg bg-slate-100 flex items-center justify-center">
-                        <i class="fa-solid fa-sun text-slate-600 text-sm"></i>
+                    <div class="flex-shrink-0 w-9 h-9 rounded-lg bg-brand-50 flex items-center justify-center">
+                        <i class="fa-solid fa-sun text-brand-600 text-sm"></i>
                     </div>
                     <div class="min-w-0">
-                        <p class="text-xs font-bold text-gray-600">Duration</p>
-                        <p class="text-sm text-brand-600">{{ $durationLabel ?: '—' }}</p>
+                        <p class="text-xs font-bold text-gray-500">Duration</p>
+                        <p class="text-sm text-gray-900">{{ $durationLabel ?: '—' }}</p>
                     </div>
                 </div>
                 <div class="flex gap-2">
-                    <div class="flex-shrink-0 w-9 h-9 rounded-lg bg-slate-100 flex items-center justify-center">
-                        <i class="fa-solid fa-suitcase text-slate-600 text-sm"></i>
+                    <div class="flex-shrink-0 w-9 h-9 rounded-lg bg-brand-50 flex items-center justify-center">
+                        <i class="fa-solid fa-suitcase text-brand-600 text-sm"></i>
                     </div>
                     <div class="min-w-0">
-                        <p class="text-xs font-bold text-gray-600">Ending place</p>
-                        <p class="text-sm text-brand-600 truncate" title="{{ $tour->end_location ?? '' }}">{{ $tour->end_location ?? ($tour->start_location ?: '—') }}</p>
+                        <p class="text-xs font-bold text-gray-500">Ending place</p>
+                        <p class="text-sm text-gray-900 truncate" title="{{ $tour->end_location ?? '' }}">{{ $tour->end_location ?? ($tour->start_location ?: '—') }}</p>
                     </div>
                 </div>
             </div>
 
             <div class="prose max-w-none">
-                <h2 class="text-3xl font-bold text-brand-600 mb-4">Summary</h2>
+                <h2 class="text-2xl font-bold text-gray-900 mb-4">Summary</h2>
                 {!! $tour->description !!}
             </div>
 
             @if($tour->itineraries->isNotEmpty())
                 <div class="" x-data="{ openDay: {{ $tour->itineraries->first()->day }} }">
-                    <h2 class="text-3xl font-bold text-brand-600 mb-4">Itinerary &amp; Details</h2>
+                    <h2 class="text-2xl font-bold text-gray-900 mb-4">Itinerary &amp; Details</h2>
                     <div class="border border-gray-200 rounded-lg overflow-hidden divide-y divide-gray-200">
                         @foreach($tour->itineraries as $day)
                             <div class="bg-white">
@@ -219,7 +219,7 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-12">
                     @if($tour->included)
                         <div>
-                            <h2 class="text-3xl font-bold text-brand-600 mb-3">Included</h2>
+                            <h2 class="text-2xl font-bold text-gray-900 mb-3">Included</h2>
                             <ul class="space-y-2">
                                 @foreach((array) $tour->included as $item)
                                     <li class="flex items-start gap-3">
@@ -234,7 +234,7 @@
                     @endif
                     @if($tour->not_included)
                         <div>
-                            <h2 class="text-3xl font-bold text-brand-600 mb-3">Not included</h2>
+                            <h2 class="text-2xl font-bold text-gray-900 mb-3">Not included</h2>
                             <ul class="space-y-2">
                                 @foreach((array) $tour->not_included as $item)
                                     <li class="flex items-start gap-3">
@@ -259,13 +259,13 @@
                 <div class="">
                     <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-6 mb-6">
                         <div>
-                            <h2 class="text-3xl font-bold text-brand-600">Customer reviews</h2>
+                            <h2 class="text-2xl font-bold text-gray-900">Customer reviews</h2>
                             <p class="mt-1 text-base text-gray-600">
                                 Read what real customers had to say about <strong class="font-bold text-gray-900">{{ $tour->title }}.</strong>
                             </p>
                         </div>
                         <div class="flex-shrink-0 w-full md:w-auto md:min-w-[200px]">
-                            <div class="rounded-lg p-5 text-white bg-[#1F70C7]">
+                            <div class="rounded-lg p-5 text-white bg-gray-900">
                                 <p class="text-sm">Overall rating for this trip</p>
                                 @php
                                     $fullStars = (int) floor($avgRating);
@@ -302,9 +302,11 @@
                                 if ($initials === '') { $initials = '?'; }
                             @endphp
                             <div class="border border-gray-200 rounded-lg p-5 md:p-6 bg-white relative" x-data="{ expanded: false }">
-                                <div class="absolute top-4 right-4 w-8 h-8 rounded flex items-center justify-center bg-[#1F70C7] text-white text-xs font-bold">t</div>
+                                <div class="absolute top-4 right-4 w-7 h-7 rounded-full flex items-center justify-center bg-green-50">
+                                    <i class="fa-solid fa-check text-green-500 text-[10px]"></i>
+                                </div>
                                 <div class="flex gap-4 pr-10">
-                                    <div class="w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center text-white text-sm font-medium flex-shrink-0">
+                                    <div class="w-10 h-10 rounded-full bg-gradient-to-br from-brand-600 to-brand-700 flex items-center justify-center text-white text-sm font-medium flex-shrink-0">
                                         {{ $initials }}
                                     </div>
                                     <div>
@@ -328,7 +330,7 @@
                                 <div class="mt-2 text-base text-gray-700">
                                     <p :class="expanded ? '' : 'line-clamp-4'">{{ $review->comment }}</p>
                                     @if(strlen($review->comment) > 280)
-                                        <button type="button" @click="expanded = !expanded" class="text-blue-600 hover:underline mt-1 text-sm font-medium" x-text="expanded ? 'Show less' : 'Show more'"></button>
+                                        <button type="button" @click="expanded = !expanded" class="text-brand-600 hover:underline mt-1 text-sm font-medium" x-text="expanded ? 'Show less' : 'Show more'"></button>
                                     @endif
                                 </div>
                             </div>
