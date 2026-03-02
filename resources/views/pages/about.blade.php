@@ -17,7 +17,7 @@
 @section('content')
 
 {{-- STORY --}}
-<section class="py-24 bg-[#F0F6F3] max-h-[75vh] overflow-hidden">
+<section class="py-24 bg-[#F0F6F3] overflow-hidden">
     <div class="max-w-7xl mx-auto px-6">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
             <div class="relative w-full aspect-[4/5] max-h-[55vh]">
