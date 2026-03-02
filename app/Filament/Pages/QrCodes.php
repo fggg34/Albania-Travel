@@ -33,7 +33,7 @@ class QrCodes extends Page
                 $built[] = [
                     'label'       => $item['label'],
                     'url'         => $item['url'],
-                    'svg'         => (string) $qr->size(160)->margin(1)->generate($item['url']),
+                    'svg'         => (string) $qr->size(100)->margin(1)->generate($item['url']),
                     'downloadUrl' => route('admin.qr.download', [
                         'url'   => $item['url'],
                         'label' => $item['label'],
