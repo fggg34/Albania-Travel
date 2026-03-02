@@ -90,7 +90,7 @@
 @if($featuredTours->isNotEmpty())
 <section class="py-16" x-data="dragSlider()">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {{-- Title row — arrows sit absolute-right on mobile --}}
+        {{-- Title row — arrows on both mobile and desktop --}}
         <div class="relative mb-8">
             <h2 class="text-2xl md:text-3xl font-bold text-slate-800">
                 @if(request()->get('city') && $cityName = $cities->firstWhere('slug', request()->get('city'))?->name)
@@ -99,45 +99,38 @@
                     Featured Tours
                 @endif
             </h2>
-            <div class="lg:hidden absolute right-0 top-1/2 -translate-y-1/2 flex items-center gap-1.5">
-                <button @click="scrollPrev()" class="w-8 h-8 rounded-full border border-gray-200 bg-white text-gray-500 flex items-center justify-center shadow-sm">
+            <div class="absolute right-0 top-1/2 -translate-y-1/2 flex items-center gap-1.5">
+                <button @click="scrollPrev()" class="w-8 h-8 rounded-full border border-gray-200 bg-white text-gray-500 flex items-center justify-center shadow-sm hover:bg-gray-50">
                     <i class="fa-solid fa-chevron-left text-[10px]"></i>
                 </button>
-                <button @click="scrollNext()" class="w-8 h-8 rounded-full border border-gray-200 bg-white text-gray-500 flex items-center justify-center shadow-sm">
+                <button @click="scrollNext()" class="w-8 h-8 rounded-full border border-gray-200 bg-white text-gray-500 flex items-center justify-center shadow-sm hover:bg-gray-50">
                     <i class="fa-solid fa-chevron-right text-[10px]"></i>
                 </button>
             </div>
         </div>
 
-        {{-- Desktop: 3-column grid --}}
-        <div class="hidden lg:grid grid-cols-4 gap-6">
-            @foreach($featuredTours->take(3) as $tour)
-                <x-tour-card :tour="$tour" :queryParams="[]" :wishlisted="in_array($tour->id, $wishlistedIds ?? [])" :slider="false" />
-            @endforeach
-        </div>
-    </div>
-
-    {{-- Mobile/tablet: drag slider --}}
-    <div class="lg:hidden pl-4 sm:pl-6 mt-2">
-        <div class="overflow-x-auto scrollbar-hide cursor-grab select-none"
-             x-ref="track"
-             @mousedown="startDrag($event)" @mousemove="onDrag($event)" @mouseup="stopDrag()" @mouseleave="stopDrag()"
-             style="scrollbar-width:none;-ms-overflow-style:none;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;touch-action:pan-x;">
-            <div class="flex gap-4 pb-2 pr-4 sm:pr-6">
-                @foreach($featuredTours->take(6) as $tour)
-                <div class="flex-shrink-0 w-[82vw] sm:w-80" style="scroll-snap-align:start;">
-                    <x-tour-card :tour="$tour" :queryParams="[]" :wishlisted="in_array($tour->id, $wishlistedIds ?? [])" :slider="false" />
+        {{-- Slider for all screen sizes --}}
+        <div class="mt-2">
+            <div class="overflow-x-auto scrollbar-hide cursor-grab select-none"
+                 x-ref="track"
+                 @mousedown="startDrag($event)" @mousemove="onDrag($event)" @mouseup="stopDrag()" @mouseleave="stopDrag()"
+                 style="scrollbar-width:none;-ms-overflow-style:none;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;touch-action:pan-x;">
+                <div class="flex gap-4 pb-2 pr-4 sm:pr-6">
+                    @foreach($featuredTours as $tour)
+                    <div class="flex-shrink-0 w-[82vw] sm:w-72 lg:w-80" style="scroll-snap-align:start;">
+                        <x-tour-card :tour="$tour" :queryParams="[]" :wishlisted="in_array($tour->id, $wishlistedIds ?? [])" :slider="false" />
+                    </div>
+                    @endforeach
                 </div>
-                @endforeach
             </div>
         </div>
     </div>
 </section>
 @endif
 
-{{-- Things to do wherever you're going (6 per view) --}}
+{{-- Things to do wherever you're going (5 per view) --}}
 @if(isset($destinationCities) && $destinationCities->isNotEmpty())
-<section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16" x-data="homeSlider({ fixedSlideBy: 6 })">
+<section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16" x-data="homeSlider({ fixedSlideBy: 5 })">
     <h2 class="text-2xl md:text-3xl font-bold text-slate-800 mb-8">Things to do wherever you're going</h2>
     <div class="relative flex items-stretch">
         <div class="flex-1 overflow-x-auto scroll-smooth scrollbar-hide" x-ref="track" style="scrollbar-width: none; -ms-overflow-style: none;">

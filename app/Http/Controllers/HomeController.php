@@ -22,7 +22,6 @@ class HomeController extends Controller
         $featuredTours = Tour::where('is_active', true)->where('is_featured', true)
             ->with(['category', 'images', 'approvedReviews'])
             ->orderBy('sort_order')
-            ->limit(12)
             ->get();
 
         $wishlistedIds = auth()->user()?->wishlistTours()->pluck('tours.id')->toArray() ?? [];
@@ -31,11 +30,10 @@ class HomeController extends Controller
             ->whereHas('tours', fn ($q) => $q->where('is_active', true))
             ->withCount(['tours' => fn ($q) => $q->where('is_active', true)])
             ->orderByDesc('tours_count')
-            ->limit(12)
             ->get();
 
         if ($destinationCities->isEmpty()) {
-            $destinationCities = City::active()->orderBy('name')->limit(12)->get();
+            $destinationCities = City::active()->orderBy('name')->get();
         }
 
         $categories = TourCategory::orderBy('sort_order')->get();
