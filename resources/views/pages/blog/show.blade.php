@@ -3,25 +3,13 @@
 @section('title', $post->meta_title ?: $post->title . ' — ' . config('app.name'))
 @section('description', $post->meta_description ?: Str::limit(strip_tags($post->excerpt ?? ''), 160))
 
-@section('hero')
-<section class="relative overflow-hidden">
-    <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('https://albaniatravelbysonilakosta.com/storage/heroes/breadcrumb.jpg');"></div>
-    <div class="absolute inset-0 bg-black/60"></div>
-    <div class="relative z-10 max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
-        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight">{{ $post->title }}</h1>
-        @if($post->excerpt)
-        <p class="mt-3 text-white/75 text-base leading-relaxed">{{ Str::limit(strip_tags($post->excerpt), 200) }}</p>
-        @endif
-    </div>
-</section>
-@endsection
-
 @section('content')
+<div class="bg-gray-100 -mt-px">
 
 {{-- Featured image --}}
 @if($post->featured_image)
-<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 -mt-0 pt-10">
-    <div class="w-full rounded-2xl overflow-hidden aspect-[16/7] bg-gray-100">
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
+    <div class="rounded-2xl overflow-hidden shadow-md" style="aspect-ratio: 16/9;">
         <img src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($post->featured_image) }}"
              alt="{{ $post->title }}"
              class="w-full h-full object-cover">
@@ -29,57 +17,72 @@
 </div>
 @endif
 
-{{-- Article body --}}
-<div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
-    <div class="prose prose-lg max-w-none
-                prose-headings:font-bold prose-headings:text-gray-900
-                prose-p:text-gray-600 prose-p:leading-relaxed
-                prose-a:text-[#CC1021] prose-a:no-underline hover:prose-a:underline
-                prose-strong:text-gray-900
-                prose-img:rounded-xl prose-img:shadow-md
-                prose-blockquote:border-l-[#CC1021] prose-blockquote:text-gray-500 prose-blockquote:not-italic
-                prose-code:text-[#CC1021] prose-code:bg-brand-50 prose-code:px-1 prose-code:rounded">
-        {!! $post->content !!}
-    </div>
+{{-- White content card --}}
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div class="bg-white rounded-2xl px-6 sm:px-10 lg:px-8 py-10 sm:py-8 shadow-sm">
+        {{-- Meta --}}
+        <div class="flex items-center gap-3 text-sm text-gray-400 mb-5">
+            <span>{{ $post->published_at?->format('d M Y') }}</span>
+        </div>
 
-    {{-- Tags & category --}}
-    @if($post->category || $post->tags->isNotEmpty())
-    <div class="mt-12 pt-8 border-t border-gray-100 flex flex-wrap gap-4 items-center">
-        @if($post->category)
-        <div class="flex items-center gap-2">
-            <span class="text-xs font-semibold uppercase tracking-wider text-gray-400">Category</span>
-            <a href="{{ route('blog.index', ['category' => $post->category->slug]) }}"
-               class="px-3 py-1 rounded-full bg-brand-50 text-brand-700 text-xs font-semibold hover:bg-brand-100 transition">
-                {{ $post->category->name }}
-            </a>
+        {{-- Title --}}
+        <h1 class="text-3xl sm:text-4xl font-bold text-gray-900 leading-tight">{{ $post->title }}</h1>
+
+        {{-- Divider --}}
+        <!-- <div class="mt-8 mb-8 border-t border-gray-100"></div> -->
+
+        {{-- Article body --}}
+        <div class="mt-8 prose prose-lg max-w-none
+                    prose-headings:font-bold prose-headings:text-gray-900
+                    prose-p:text-gray-600 prose-p:leading-relaxed
+                    prose-a:text-[#CC1021] prose-a:no-underline hover:prose-a:underline
+                    prose-strong:text-gray-900
+                    prose-img:rounded-xl prose-img:shadow-md
+                    prose-blockquote:border-l-[#CC1021] prose-blockquote:text-gray-500 prose-blockquote:not-italic
+                    prose-code:text-[#CC1021] prose-code:bg-brand-50 prose-code:px-1 prose-code:rounded">
+            {!! $post->content !!}
+        </div>
+
+        {{-- Tags & category --}}
+        @if($post->category || $post->tags->isNotEmpty())
+        <div class="mt-12 pt-8 border-t border-gray-100 flex flex-wrap gap-4 items-center">
+            @if($post->category)
+            <div class="flex items-center gap-2">
+                <span class="text-xs font-semibold uppercase tracking-wider text-gray-400">Category</span>
+                <a href="{{ route('blog.index', ['category' => $post->category->slug]) }}"
+                   class="px-3 py-1 rounded-full bg-brand-50 text-brand-700 text-xs font-semibold hover:bg-brand-100 transition">
+                    {{ $post->category->name }}
+                </a>
+            </div>
+            @endif
+            @if($post->tags->isNotEmpty())
+            <div class="flex items-center gap-2 flex-wrap">
+                <span class="text-xs font-semibold uppercase tracking-wider text-gray-400">Tags</span>
+                @foreach($post->tags as $tag)
+                <a href="{{ route('blog.index', ['tag' => $tag->slug]) }}"
+                   class="px-3 py-1 rounded-full bg-gray-100 text-gray-600 text-xs font-semibold hover:bg-gray-200 transition">
+                    {{ $tag->name }}
+                </a>
+                @endforeach
+            </div>
+            @endif
         </div>
         @endif
-        @if($post->tags->isNotEmpty())
-        <div class="flex items-center gap-2 flex-wrap">
-            <span class="text-xs font-semibold uppercase tracking-wider text-gray-400">Tags</span>
-            @foreach($post->tags as $tag)
-            <a href="{{ route('blog.index', ['tag' => $tag->slug]) }}"
-               class="px-3 py-1 rounded-full bg-gray-100 text-gray-600 text-xs font-semibold hover:bg-gray-200 transition">
-                {{ $tag->name }}
-            </a>
-            @endforeach
-        </div>
-        @endif
-    </div>
-    @endif
 
-    {{-- Back to blog --}}
-    <div class="mt-10">
-        <a href="{{ route('blog.index') }}"
-           class="inline-flex items-center gap-2 text-sm font-semibold text-[#CC1021] hover:gap-3 transition-all">
-            <i class="fa-solid fa-arrow-left text-xs"></i> Back to Blog
-        </a>
+        {{-- Back to blog --}}
+        <div class="mt-10">
+            <a href="{{ route('blog.index') }}"
+               class="inline-flex items-center gap-2 text-sm font-semibold text-[#CC1021] hover:gap-3 transition-all">
+                <i class="fa-solid fa-arrow-left text-xs"></i> Back to Blog
+            </a>
+        </div>
     </div>
+</div>
 </div>
 
 {{-- Related articles --}}
 @if($related->isNotEmpty())
-<section class="bg-gray-50 border-t border-gray-100 py-16">
+<section class="bg-gray-50 py-16">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between mb-10">
             <div>
