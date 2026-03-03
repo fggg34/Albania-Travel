@@ -55,7 +55,7 @@
     </div>
 
     {{-- Mobile/tablet: Swiper slider --}}
-    <div class="lg:hidden relative pl-4 sm:pl-6 pt-2 pr-4 sm:pr-6" x-data="swiperSlider({ slidesPerView: 1.2, spaceBetween: 16, breakpoints: { 640: { slidesPerView: 1.5 } } })">
+    <div class="lg:hidden relative pl-4 sm:pl-6 pt-2 pr-4 sm:pr-6" x-data="swiperSlider({ slidesPerView: 1.5, spaceBetween: 16, breakpoints: { 640: { slidesPerView: 1.5 } } })">
         <div class="swiper" x-ref="swiperEl">
             <div class="swiper-wrapper">
                 @foreach($tourInfoPoints as $point)
