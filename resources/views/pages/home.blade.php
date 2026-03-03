@@ -54,17 +54,13 @@
         @endforeach
     </div>
 
-    {{-- Mobile/tablet: drag slider --}}
-    <div class="lg:hidden relative" x-data="dragSlider()">
-        {{-- Arrows: absolute top-right --}}
-        <div class="pl-4 sm:pl-6 pt-2">
-            <div class="overflow-x-auto scrollbar-hide cursor-grab select-none"
-                 x-ref="track"
-                 @mousedown="startDrag($event)" @mousemove="onDrag($event)" @mouseup="stopDrag()" @mouseleave="stopDrag()"
-                 style="scrollbar-width:none;-ms-overflow-style:none;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;touch-action:pan-x;">
-                <div class="flex gap-4 pb-1 pr-4 sm:pr-6">
-                    @foreach($tourInfoPoints as $point)
-                    <div class="flex-shrink-0 flex items-start gap-4 w-[82vw] sm:w-80" style="scroll-snap-align:start;">
+    {{-- Mobile/tablet: Swiper slider --}}
+    <div class="lg:hidden relative pl-4 sm:pl-6 pt-2 pr-4 sm:pr-6" x-data="swiperSlider({ slidesPerView: 1.2, spaceBetween: 16, breakpoints: { 640: { slidesPerView: 1.5 } } })">
+        <div class="swiper" x-ref="swiperEl">
+            <div class="swiper-wrapper">
+                @foreach($tourInfoPoints as $point)
+                <div class="swiper-slide">
+                    <div class="flex items-start gap-4">
                         <div class="flex-shrink-0 w-14 h-14 flex items-center justify-center overflow-hidden">
                             @if($point->icon)
                             <img src="{{ $point->icon_url }}" alt="" class="w-full h-full object-contain pointer-events-none" />
@@ -77,8 +73,8 @@
                             <p class="text-slate-500 text-sm mt-1 leading-relaxed">{{ $point->description }}</p>
                         </div>
                     </div>
-                    @endforeach
                 </div>
+                @endforeach
             </div>
         </div>
     </div>
@@ -88,7 +84,7 @@
 
 {{-- Featured Tours --}}
 @if($featuredTours->isNotEmpty())
-<section class="py-16" x-data="dragSlider()">
+<section class="py-16" x-data="swiperSlider({ slidesPerView: 1.3, spaceBetween: 16, navigation: true, breakpoints: { 640: { slidesPerView: 2 }, 1024: { slidesPerView: 4 } } })">
     <div class="max-w-7xl mx-auto pl-4 pr-0 sm:px-6 lg:px-8">
         {{-- Title row — arrows on both mobile and desktop --}}
         <div class="relative mb-8">
@@ -100,28 +96,23 @@
                 @endif
             </h2>
             <div class="absolute right-4 top-1/2 -translate-y-1/2 flex items-center gap-1.5">
-                <button @click="scrollPrev()" class="w-8 h-8 rounded-full border border-gray-200 bg-white text-gray-500 flex items-center justify-center shadow-sm hover:bg-gray-50">
+                <button x-ref="prevBtn" class="swiper-prev w-8 h-8 rounded-full border border-gray-200 bg-white text-gray-500 flex items-center justify-center shadow-sm hover:bg-gray-50" aria-label="Previous">
                     <i class="fa-solid fa-chevron-left text-[10px]"></i>
                 </button>
-                <button @click="scrollNext()" class="w-8 h-8 rounded-full border border-gray-200 bg-white text-gray-500 flex items-center justify-center shadow-sm hover:bg-gray-50">
+                <button x-ref="nextBtn" class="swiper-next w-8 h-8 rounded-full border border-gray-200 bg-white text-gray-500 flex items-center justify-center shadow-sm hover:bg-gray-50" aria-label="Next">
                     <i class="fa-solid fa-chevron-right text-[10px]"></i>
                 </button>
             </div>
         </div>
 
-        {{-- Slider for all screen sizes --}}
-        <div class="mt-2">
-            <div class="overflow-x-auto scrollbar-hide cursor-grab select-none"
-                 x-ref="track"
-                 @pointerdown="startDrag($event)" @pointermove="onDrag($event)" @pointerup="stopDrag()" @pointerleave="stopDrag()" @pointercancel="stopDrag()"
-                 style="scrollbar-width:none;-ms-overflow-style:none;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;touch-action:pan-x;">
-                <div class="flex gap-4 pb-2 pr-4 sm:pr-6">
-                    @foreach($featuredTours as $tour)
-                    <div class="flex-shrink-0 w-[71vw] sm:w-64 lg:w-[292px]" style="scroll-snap-align:start;">
-                        <x-tour-card :tour="$tour" :queryParams="[]" :wishlisted="in_array($tour->id, $wishlistedIds ?? [])" :slider="false" />
-                    </div>
-                    @endforeach
+        {{-- Swiper slider for all screen sizes --}}
+        <div class="mt-2 swiper pr-4 sm:pr-6" x-ref="swiperEl">
+            <div class="swiper-wrapper pb-2">
+                @foreach($featuredTours as $tour)
+                <div class="swiper-slide">
+                    <x-tour-card :tour="$tour" :queryParams="[]" :wishlisted="in_array($tour->id, $wishlistedIds ?? [])" :slider="false" />
                 </div>
+                @endforeach
             </div>
         </div>
     </div>
@@ -130,33 +121,28 @@
 
 {{-- Things to do wherever you're going --}}
 @if(isset($destinationCities) && $destinationCities->isNotEmpty())
-<section class="max-w-7xl mx-auto px-4 sm:py-8 sm:px-6 lg:px-8 lg:py-16 mb-5 md:mb-0" x-data="dragSlider()">
+<section class="max-w-7xl mx-auto px-4 sm:py-8 sm:px-6 lg:px-8 lg:py-16 mb-5 md:mb-0" x-data="swiperSlider({ slidesPerView: 2, spaceBetween: 16, navigation: true, breakpoints: { 640: { slidesPerView: 4 }, 1024: { slidesPerView: 5 } } })">
     {{-- Title row — arrows on all screen sizes --}}
     <div class="relative mb-8">
         <h2 class="text-2xl md:text-3xl font-bold text-slate-800 lg:pr-20 max-w-[calc(100%-5rem)] lg:max-w-none">Things to do wherever you're going</h2>
         <div class="absolute right-0 top-1/2 -translate-y-1/2 flex items-center gap-1.5">
-            <button @click="scrollPrev()" class="w-8 h-8 rounded-full border border-gray-200 bg-white text-gray-500 flex items-center justify-center shadow-sm hover:bg-gray-50" aria-label="Scroll left">
+            <button x-ref="prevBtn" class="w-8 h-8 rounded-full border border-gray-200 bg-white text-gray-500 flex items-center justify-center shadow-sm hover:bg-gray-50" aria-label="Scroll left">
                 <i class="fa-solid fa-chevron-left text-[10px]"></i>
             </button>
-            <button @click="scrollNext()" class="w-8 h-8 rounded-full border border-gray-200 bg-white text-gray-500 flex items-center justify-center shadow-sm hover:bg-gray-50" aria-label="Scroll right">
+            <button x-ref="nextBtn" class="w-8 h-8 rounded-full border border-gray-200 bg-white text-gray-500 flex items-center justify-center shadow-sm hover:bg-gray-50" aria-label="Scroll right">
                 <i class="fa-solid fa-chevron-right text-[10px]"></i>
             </button>
         </div>
     </div>
 
-    {{-- Slider on all screen sizes — 5 per view on desktop --}}
-    <div class="mt-2">
-        <div class="overflow-x-auto scrollbar-hide cursor-grab select-none"
-             x-ref="track"
-             @pointerdown="startDrag($event)" @pointermove="onDrag($event)" @pointerup="stopDrag()" @pointerleave="stopDrag()" @pointercancel="stopDrag()"
-             style="scrollbar-width:none;-ms-overflow-style:none;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;touch-action:pan-x;">
-            <div class="flex gap-4 pb-2 pr-4 sm:pr-6 lg:pr-8">
-                @foreach($destinationCities as $city)
-                <div class="flex-shrink-0 w-[calc((100vw-3rem)/2)] sm:w-44 lg:w-[230px]" style="scroll-snap-align:start;">
-                    <x-destination-card :city="$city" :slider="true" />
-                </div>
-                @endforeach
+    {{-- Swiper on all screen sizes — 5 per view on desktop --}}
+    <div class="mt-2 swiper pr-4 sm:pr-6 lg:pr-8" x-ref="swiperEl">
+        <div class="swiper-wrapper pb-2">
+            @foreach($destinationCities as $city)
+            <div class="swiper-slide">
+                <x-destination-card :city="$city" :slider="true" />
             </div>
+            @endforeach
         </div>
     </div>
 </section>
@@ -311,7 +297,7 @@
 {{-- Testimonials --}}
 @php $reviewCount = $featuredReviews->count(); @endphp
 <section class="py-12 bg-[#f3f4f6] relative overflow-hidden"
-         x-data="testimonialsSlider({{ $reviewCount }})">
+         x-data="swiperSlider({ slidesPerView: 1, spaceBetween: 24, navigation: true, pagination: {{ $reviewCount > 3 ? 'true' : 'false' }}, breakpoints: { 640: { slidesPerView: 2 }, 1024: { slidesPerView: 3 } } })">
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
 
@@ -331,10 +317,10 @@
                 </div>
                 @if($reviewCount > 3)
                 <div class="flex items-center gap-2">
-                    <button @click="prev()" class="w-10 h-10 rounded-full border border-gray-200 bg-white hover:bg-brand-50 hover:border-brand-300 text-gray-500 hover:text-brand-600 transition flex items-center justify-center shadow-sm">
+                    <button x-ref="prevBtn" class="w-10 h-10 rounded-full border border-gray-200 bg-white hover:bg-brand-50 hover:border-brand-300 text-gray-500 hover:text-brand-600 transition flex items-center justify-center shadow-sm">
                         <i class="fa-solid fa-chevron-left text-xs"></i>
                     </button>
-                    <button @click="next()" class="w-10 h-10 rounded-full border border-gray-200 bg-white hover:bg-brand-50 hover:border-brand-300 text-gray-500 hover:text-brand-600 transition flex items-center justify-center shadow-sm">
+                    <button x-ref="nextBtn" class="w-10 h-10 rounded-full border border-gray-200 bg-white hover:bg-brand-50 hover:border-brand-300 text-gray-500 hover:text-brand-600 transition flex items-center justify-center shadow-sm">
                         <i class="fa-solid fa-chevron-right text-xs"></i>
                     </button>
                 </div>
@@ -342,56 +328,57 @@
             </div>
         </div>
 
-        {{-- Slider track --}}
-        <div class="overflow-hidden">
-            <div class="flex transition-transform duration-500 ease-in-out gap-6"
-                 :style="`transform: translateX(calc(-${current} * (100% / ${perView} + ${gap}px / ${perView}) - ${current} * ${gap}px / ${perView}))`">
+        {{-- Swiper slider --}}
+        <div class="swiper overflow-hidden -mx-4 px-4" x-ref="swiperEl">
+            <div class="swiper-wrapper">
                 @foreach($featuredReviews as $review)
                 @php
                     $reviewerName = $review->user?->name ?? 'Guest';
                     $initial = mb_strtoupper(mb_substr($reviewerName, 0, 1));
                     $tourTitle = $review->tour?->title ?? '';
                 @endphp
-                <div class="flex-shrink-0 w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] relative group rounded-3xl p-8 border border-gray-100 bg-white hover:shadow-lg transition-all duration-300 flex flex-col min-h-[260px]">
-                    <span class="absolute top-5 right-7 text-6xl font-serif text-brand-600/10 leading-none select-none">"</span>
+                <div class="swiper-slide">
+                    <div class="relative group rounded-3xl p-8 border border-gray-100 bg-white hover:shadow-lg transition-all duration-300 flex flex-col min-h-[260px]">
+                        <span class="absolute top-5 right-7 text-6xl font-serif text-brand-600/10 leading-none select-none">"</span>
 
-                    {{-- Tour tag --}}
-                    @if($tourTitle)
-                    <div class="inline-flex items-center gap-2 bg-brand-50 text-brand-700 text-xs font-semibold px-3 py-1.5 rounded-full mb-5 self-start max-w-full truncate">
-                        <i class="fa-solid fa-compass text-[10px] flex-shrink-0"></i>
-                        <span class="truncate">{{ Str::limit($tourTitle, 30) }}</span>
-                    </div>
-                    @endif
-
-                    {{-- Stars --}}
-                    <div class="flex items-center gap-0.5 mb-4">
-                        @for($i = 0; $i < $review->rating; $i++)
-                            <i class="fa-solid fa-star text-amber-400 text-xs"></i>
-                        @endfor
-                        @for($i = $review->rating; $i < 5; $i++)
-                            <i class="fa-regular fa-star text-gray-200 text-xs"></i>
-                        @endfor
-                    </div>
-
-                    {{-- Title --}}
-                    @if($review->title)
-                    <p class="text-gray-900 text-sm font-semibold mb-2">{{ $review->title }}</p>
-                    @endif
-
-                    {{-- Comment --}}
-                    <p class="text-gray-500 text-sm leading-relaxed flex-1 mb-6">{{ Str::limit($review->comment, 180) }}</p>
-
-                    {{-- Reviewer --}}
-                    <div class="flex items-center gap-3 mt-auto pt-5 border-t border-gray-100">
-                        <div class="w-10 h-10 rounded-full bg-gradient-to-br from-brand-600 to-brand-700 flex items-center justify-center text-white text-sm font-bold flex-shrink-0 shadow-md">
-                            {{ $initial }}
+                        {{-- Tour tag --}}
+                        @if($tourTitle)
+                        <div class="inline-flex items-center gap-2 bg-brand-50 text-brand-700 text-xs font-semibold px-3 py-1.5 rounded-full mb-5 self-start max-w-full truncate">
+                            <i class="fa-solid fa-compass text-[10px] flex-shrink-0"></i>
+                            <span class="truncate">{{ Str::limit($tourTitle, 30) }}</span>
                         </div>
-                        <div class="min-w-0">
-                            <p class="text-gray-900 text-sm font-semibold truncate">{{ $reviewerName }}</p>
-                            <p class="text-gray-400 text-xs">{{ $review->created_at->format('M Y') }}</p>
+                        @endif
+
+                        {{-- Stars --}}
+                        <div class="flex items-center gap-0.5 mb-4">
+                            @for($i = 0; $i < $review->rating; $i++)
+                                <i class="fa-solid fa-star text-amber-400 text-xs"></i>
+                            @endfor
+                            @for($i = $review->rating; $i < 5; $i++)
+                                <i class="fa-regular fa-star text-gray-200 text-xs"></i>
+                            @endfor
                         </div>
-                        <div class="ml-auto w-7 h-7 rounded-full bg-green-50 flex items-center justify-center flex-shrink-0">
-                            <i class="fa-solid fa-check text-green-500 text-[10px]"></i>
+
+                        {{-- Title --}}
+                        @if($review->title)
+                        <p class="text-gray-900 text-sm font-semibold mb-2">{{ $review->title }}</p>
+                        @endif
+
+                        {{-- Comment --}}
+                        <p class="text-gray-500 text-sm leading-relaxed flex-1 mb-6">{{ Str::limit($review->comment, 180) }}</p>
+
+                        {{-- Reviewer --}}
+                        <div class="flex items-center gap-3 mt-auto pt-5 border-t border-gray-100">
+                            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-brand-600 to-brand-700 flex items-center justify-center text-white text-sm font-bold flex-shrink-0 shadow-md">
+                                {{ $initial }}
+                            </div>
+                            <div class="min-w-0">
+                                <p class="text-gray-900 text-sm font-semibold truncate">{{ $reviewerName }}</p>
+                                <p class="text-gray-400 text-xs">{{ $review->created_at->format('M Y') }}</p>
+                            </div>
+                            <div class="ml-auto w-7 h-7 rounded-full bg-green-50 flex items-center justify-center flex-shrink-0">
+                                <i class="fa-solid fa-check text-green-500 text-[10px]"></i>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -399,58 +386,17 @@
             </div>
         </div>
 
-        {{-- Dot indicators --}}
+        {{-- Dot indicators (Swiper pagination) --}}
         @if($reviewCount > 3)
-        <div class="flex items-center justify-center gap-2 mt-10">
-            @for($d = 0; $d < $reviewCount; $d++)
-            <button @click="goTo({{ $d }})"
-                :class="current === {{ $d }} ? 'bg-brand-600 w-6' : 'bg-gray-300 w-2'"
-                class="h-2 rounded-full transition-all duration-300"></button>
-            @endfor
-        </div>
+        <div class="swiper-pagination !relative !mt-10 flex items-center justify-center gap-2" x-ref="paginationEl"></div>
         @endif
 
     </div>
 </section>
-
-@push('scripts')
-<script>
-function testimonialsSlider(total) {
-    return {
-        current: 0,
-        total: total,
-        perView: 3,
-        gap: 24,
-        init() {
-            this.updatePerView();
-            window.addEventListener('resize', () => this.updatePerView());
-        },
-        updatePerView() {
-            if (window.innerWidth < 640) this.perView = 1;
-            else if (window.innerWidth < 1024) this.perView = 2;
-            else this.perView = 3;
-            const max = Math.max(0, this.total - this.perView);
-            if (this.current > max) this.current = max;
-        },
-        next() {
-            const max = Math.max(0, this.total - this.perView);
-            this.current = this.current >= max ? 0 : this.current + 1;
-        },
-        prev() {
-            const max = Math.max(0, this.total - this.perView);
-            this.current = this.current <= 0 ? max : this.current - 1;
-        },
-        goTo(index) {
-            this.current = index;
-        }
-    }
-}
-</script>
-@endpush
 @endif
 
 @if($galleryImages->isNotEmpty())
-<section class="bg-white py-20" x-data="gallerySlider({{ $galleryImages->count() }}, {{ $galleryImages->map(fn($img) => ['url' => $img->image_url, 'title' => $img->title ?? '', 'caption' => $img->caption ?? ''])->toJson() }})">
+<section class="bg-white py-20" x-data="gallerySwiperSlider({{ $galleryImages->count() }}, {{ $galleryImages->map(fn($img) => ['url' => $img->image_url, 'title' => $img->title ?? '', 'caption' => $img->caption ?? ''])->toJson() }})">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-end justify-between gap-4 mb-10">
             <div>
@@ -458,10 +404,10 @@ function testimonialsSlider(total) {
                 <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 leading-tight">Explore Albania</h2>
             </div>
             <div class="flex items-center gap-3">
-                <button @click="prev()" class="w-10 h-10 rounded-full border border-gray-200 bg-white hover:bg-brand-50 hover:border-brand-300 text-gray-500 hover:text-brand-600 transition flex items-center justify-center shadow-sm">
+                <button x-ref="prevBtn" class="w-10 h-10 rounded-full border border-gray-200 bg-white hover:bg-brand-50 hover:border-brand-300 text-gray-500 hover:text-brand-600 transition flex items-center justify-center shadow-sm">
                     <i class="fa-solid fa-arrow-left text-sm"></i>
                 </button>
-                <button @click="next()" class="w-10 h-10 rounded-full border border-gray-200 bg-white hover:bg-brand-50 hover:border-brand-300 text-gray-500 hover:text-brand-600 transition flex items-center justify-center shadow-sm">
+                <button x-ref="nextBtn" class="w-10 h-10 rounded-full border border-gray-200 bg-white hover:bg-brand-50 hover:border-brand-300 text-gray-500 hover:text-brand-600 transition flex items-center justify-center shadow-sm">
                     <i class="fa-solid fa-arrow-right text-sm"></i>
                 </button>
                 <a href="{{ route('gallery') }}"
@@ -471,20 +417,11 @@ function testimonialsSlider(total) {
             </div>
         </div>
 
-        <div class="overflow-hidden" x-ref="galleryViewport">
-            <div class="flex transition-transform duration-500 ease-out cursor-grab select-none"
-                 :style="`transform: translateX(-${offset}px)`"
-                 x-ref="galleryTrack"
-                 @mousedown="startDrag($event)"
-                 @mousemove.window="onDrag($event)"
-                 @mouseup.window="stopDrag()"
-                 @touchstart.passive="startDrag($event)"
-                 @touchmove.passive="onDrag($event)"
-                 @touchend="stopDrag()">
+        <div class="swiper overflow-hidden" x-ref="swiperEl">
+            <div class="swiper-wrapper">
                 @foreach($galleryImages as $image)
-                <div class="flex-shrink-0 px-2" :style="`width: ${itemWidth}px`">
-                    <div class="group relative overflow-hidden rounded-xl cursor-pointer" style="aspect-ratio: 4/3;"
-                         @click="openLightbox({{ $loop->index }})">
+                <div class="swiper-slide px-1">
+                    <div class="group relative overflow-hidden rounded-xl cursor-pointer" style="aspect-ratio: 4/3;">
                         <img src="{{ $image->image_url }}" alt="{{ $image->title ?? 'Gallery photo' }}"
                              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
@@ -547,7 +484,7 @@ function testimonialsSlider(total) {
 @endif
 
 @if($latestPosts->isNotEmpty())
-<section class="bg-gray-50 py-12" x-data="dragSlider()">
+<section class="bg-gray-50 py-12" x-data="swiperSlider({ slidesPerView: 1.2, spaceBetween: 20, breakpoints: { 640: { slidesPerView: 1.5 } } })">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-end justify-between gap-4 mb-10">
             <div>
@@ -568,15 +505,12 @@ function testimonialsSlider(total) {
         </div>
     </div>
 
-    {{-- Mobile/tablet: drag slider --}}
-    <div class="lg:hidden pl-4 sm:pl-6 mt-2">
-        <div class="overflow-x-auto scrollbar-hide cursor-grab select-none"
-             x-ref="track"
-             @mousedown="startDrag($event)" @mousemove="onDrag($event)" @mouseup="stopDrag()" @mouseleave="stopDrag()"
-             style="scrollbar-width:none;-ms-overflow-style:none;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;touch-action:pan-x;">
-            <div class="flex gap-5 pb-2 pr-4 sm:pr-6">
+    {{-- Mobile/tablet: Swiper slider --}}
+    <div class="lg:hidden pl-4 sm:pl-6 pr-4 sm:pr-6 mt-2">
+        <div class="swiper" x-ref="swiperEl">
+            <div class="swiper-wrapper pb-2">
                 @foreach($latestPosts as $post)
-                <div class="flex-shrink-0 w-[82vw] sm:w-80" style="scroll-snap-align:start;">
+                <div class="swiper-slide">
                     <x-blog-card :post="$post" />
                 </div>
                 @endforeach
@@ -591,101 +525,5 @@ function testimonialsSlider(total) {
     <p class="text-gray-600 mb-6">Browse our tours and find your next adventure.</p>
     <a href="{{ route('tours.index') }}" class="inline-flex items-center px-6 py-3 bg-amber-600 text-white font-medium rounded-lg hover:bg-amber-700">View all tours</a>
 </section> -->
-
-@push('scripts')
-<script>
-function gallerySlider(total, images) {
-    return {
-        total,
-        images,
-        current: 0,
-        perView: 4,
-        itemWidth: 0,
-        offset: 0,
-        isDragging: false,
-        dragStartX: 0,
-        dragStartOffset: 0,
-        dragMoved: false,
-        lightboxOpen: false,
-        lightboxIndex: 0,
-
-        init() {
-            this.calcSizes();
-            window.addEventListener('resize', () => this.calcSizes());
-        },
-
-        calcSizes() {
-            const vw = this.$refs.galleryViewport.offsetWidth;
-            if (vw < 640) this.perView = 1;
-            else if (vw < 1024) this.perView = 2;
-            else this.perView = 3;
-            this.itemWidth = vw / this.perView;
-            const max = Math.max(0, this.total - this.perView);
-            if (this.current > max) this.current = max;
-            this.offset = this.current * this.itemWidth;
-        },
-
-        next() {
-            const max = Math.max(0, this.total - this.perView);
-            this.current = this.current >= max ? 0 : this.current + 1;
-            this.offset = this.current * this.itemWidth;
-        },
-
-        prev() {
-            const max = Math.max(0, this.total - this.perView);
-            this.current = this.current <= 0 ? max : this.current - 1;
-            this.offset = this.current * this.itemWidth;
-        },
-
-        startDrag(e) {
-            this.isDragging = true;
-            this.dragMoved = false;
-            this.dragStartX = e.touches ? e.touches[0].clientX : e.clientX;
-            this.dragStartOffset = this.offset;
-            this.$refs.galleryTrack.style.transition = 'none';
-        },
-
-        onDrag(e) {
-            if (!this.isDragging) return;
-            const x = e.touches ? e.touches[0].clientX : e.clientX;
-            const diff = this.dragStartX - x;
-            if (Math.abs(diff) > 5) this.dragMoved = true;
-            const maxOffset = Math.max(0, this.total - this.perView) * this.itemWidth;
-            this.offset = Math.max(0, Math.min(maxOffset, this.dragStartOffset + diff));
-        },
-
-        stopDrag() {
-            if (!this.isDragging) return;
-            this.isDragging = false;
-            this.$refs.galleryTrack.style.transition = '';
-            this.current = Math.round(this.offset / this.itemWidth);
-            const max = Math.max(0, this.total - this.perView);
-            this.current = Math.max(0, Math.min(max, this.current));
-            this.offset = this.current * this.itemWidth;
-        },
-
-        openLightbox(index) {
-            if (this.dragMoved) return;
-            this.lightboxIndex = index;
-            this.lightboxOpen = true;
-            document.body.style.overflow = 'hidden';
-        },
-
-        closeLightbox() {
-            this.lightboxOpen = false;
-            document.body.style.overflow = '';
-        },
-
-        lightboxPrev() {
-            this.lightboxIndex = this.lightboxIndex === 0 ? this.images.length - 1 : this.lightboxIndex - 1;
-        },
-
-        lightboxNext() {
-            this.lightboxIndex = this.lightboxIndex === this.images.length - 1 ? 0 : this.lightboxIndex + 1;
-        }
-    };
-}
-</script>
-@endpush
 
 @endsection

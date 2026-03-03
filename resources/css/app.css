@@ -144,3 +144,16 @@
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }
+
+/* Testimonials Swiper pagination - match previous custom dot style */
+.swiper-pagination .swiper-pagination-bullet {
+  width: 0.5rem;
+  height: 0.5rem;
+  background: #d1d5db;
+  transition: all 0.3s;
+}
+.swiper-pagination .swiper-pagination-bullet-active {
+  width: 1.5rem;
+  border-radius: 9999px;
+  background: #CC1021;
+}

@@ -4,8 +4,10 @@ import Alpine from 'alpinejs';
 import collapse from '@alpinejs/collapse';
 import flatpickr from 'flatpickr';
 import TomSelect from 'tom-select';
+import Swiper from 'swiper/bundle';
 import 'flatpickr/dist/flatpickr.min.css';
 import 'tom-select/dist/css/tom-select.css';
+import 'swiper/css/bundle';
 
 Alpine.plugin(collapse);
 window.Alpine = Alpine;
@@ -255,68 +257,82 @@ function homeSlider(config) {
 Alpine.data('homeSlider', homeSlider);
 window.homeSlider = homeSlider;
 
-function dragSlider() {
+function swiperSlider(config = {}) {
   return {
-    isDragging: false,
-    startX: 0,
-    startScrollLeft: 0,
-    velX: 0,
-    lastX: 0,
-    rafId: null,
-    pointerId: null,
-    startDrag(e) {
-      if (e.pointerType === 'touch') return;
-      if (window.innerWidth >= 1024) return;
-      this.isDragging = true;
-      this.pointerId = e.pointerId;
-      this.startX = e.clientX;
-      this.startScrollLeft = this.$refs.track.scrollLeft;
-      this.velX = 0;
-      this.lastX = e.clientX;
-      cancelAnimationFrame(this.rafId);
-      this.$refs.track.style.cursor = 'grabbing';
-      this.$refs.track.style.userSelect = 'none';
-      this.$refs.track.setPointerCapture(e.pointerId);
-    },
-    onDrag(e) {
-      if (!this.isDragging || e.pointerType === 'touch') return;
-      e.preventDefault();
-      this.velX = e.clientX - this.lastX;
-      this.lastX = e.clientX;
-      const walk = this.startX - e.clientX;
-      this.$refs.track.scrollLeft = this.startScrollLeft + walk;
-    },
-    stopDrag() {
-      if (!this.isDragging) return;
-      this.isDragging = false;
-      this.$refs.track.style.cursor = 'grab';
-      this.$refs.track.style.userSelect = '';
-      try { if (this.pointerId != null) this.$refs.track.releasePointerCapture(this.pointerId); } catch (_) {}
-      let vel = this.velX * -1;
-      const glide = () => {
-        if (Math.abs(vel) < 0.5) return;
-        this.$refs.track.scrollLeft += vel;
-        vel *= 0.92;
-        this.rafId = requestAnimationFrame(glide);
-      };
-      this.rafId = requestAnimationFrame(glide);
-    },
-    scrollPrev() {
-      const track = this.$refs.track;
-      const item = track.querySelector('[style*="scroll-snap-align"]');
-      const step = item ? item.offsetWidth + 16 : track.clientWidth * 0.85;
-      track.scrollBy({ left: -step, behavior: 'smooth' });
-    },
-    scrollNext() {
-      const track = this.$refs.track;
-      const item = track.querySelector('[style*="scroll-snap-align"]');
-      const step = item ? item.offsetWidth + 16 : track.clientWidth * 0.85;
-      track.scrollBy({ left: step, behavior: 'smooth' });
+    init() {
+      this.$nextTick(() => {
+        const el = this.$refs.swiperEl;
+        if (!el) return;
+        const opts = {
+          grabCursor: true,
+          allowTouchMove: true,
+          simulateTouch: true,
+          spaceBetween: config.spaceBetween ?? 16,
+          slidesPerView: config.slidesPerView ?? 1,
+          breakpoints: config.breakpoints,
+          ...config,
+        };
+        opts.navigation = (config.navigation && this.$refs.prevBtn && this.$refs.nextBtn)
+          ? { prevEl: this.$refs.prevBtn, nextEl: this.$refs.nextBtn }
+          : false;
+        opts.pagination = (config.pagination && this.$refs.paginationEl)
+          ? { el: this.$refs.paginationEl, clickable: true }
+          : false;
+        new Swiper(el, opts);
+      });
     },
   };
 }
-Alpine.data('dragSlider', dragSlider);
-window.dragSlider = dragSlider;
+Alpine.data('swiperSlider', swiperSlider);
+
+function gallerySwiperSlider(total, images) {
+  return {
+    total,
+    images: Array.isArray(images) ? images : [],
+    lightboxOpen: false,
+    lightboxIndex: 0,
+    init() {
+      this.$nextTick(() => {
+        const el = this.$refs.swiperEl;
+        if (!el) return;
+        const self = this;
+        new Swiper(el, {
+          grabCursor: true,
+          allowTouchMove: true,
+          simulateTouch: true,
+          spaceBetween: 8,
+          slidesPerView: 1,
+          breakpoints: { 640: { slidesPerView: 2 }, 1024: { slidesPerView: 3 } },
+          navigation: (this.$refs.prevBtn && this.$refs.nextBtn)
+            ? { prevEl: this.$refs.prevBtn, nextEl: this.$refs.nextBtn }
+            : false,
+          on: {
+            click(swiper, e) {
+              const idx = swiper.clickedIndex;
+              if (idx >= 0 && idx < self.images.length) self.openLightbox(idx);
+            },
+          },
+        });
+      });
+    },
+    openLightbox(index) {
+      this.lightboxIndex = index;
+      this.lightboxOpen = true;
+      document.body.style.overflow = 'hidden';
+    },
+    closeLightbox() {
+      this.lightboxOpen = false;
+      document.body.style.overflow = '';
+    },
+    lightboxPrev() {
+      this.lightboxIndex = this.lightboxIndex === 0 ? this.images.length - 1 : this.lightboxIndex - 1;
+    },
+    lightboxNext() {
+      this.lightboxIndex = this.lightboxIndex === this.images.length - 1 ? 0 : this.lightboxIndex + 1;
+    },
+  };
+}
+Alpine.data('gallerySwiperSlider', gallerySwiperSlider);
 
 Alpine.data('stickySidebar', () => ({
   fixed: false,
