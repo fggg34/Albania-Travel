@@ -12,16 +12,13 @@
 @endphp
 
 {{-- Hero confirmation banner --}}
-<div class="bg-[#CC1021] py-14 px-4 text-center">
-    <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-white/20 text-white mb-5 backdrop-blur-sm">
-        <i class="fa-solid fa-circle-check text-3xl"></i>
-    </div>
+<div class="bg-green-600 py-8 px-4 text-center">
     <h1 class="text-2xl sm:text-3xl font-bold text-white">Booking Confirmed!</h1>
-    <p class="mt-2 text-brand-100 text-sm max-w-md mx-auto">
+    <p class="mt-2 text-green-100 text-sm max-w-md mx-auto">
         A confirmation email has been sent to <strong class="text-white">{{ $booking->guest_email }}</strong>.
     </p>
     <div class="mt-4 inline-flex items-center gap-2 bg-white/15 text-white text-sm font-mono px-5 py-2 rounded-full">
-        <i class="fa-solid fa-hashtag text-brand-200 text-xs"></i>
+        <i class="fa-solid fa-hashtag text-green-200 text-xs"></i>
         {{ $booking->reference }}
     </div>
 </div>
