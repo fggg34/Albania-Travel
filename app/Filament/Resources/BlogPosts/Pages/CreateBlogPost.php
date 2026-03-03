@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\BlogPosts\Pages;
 
 use App\Filament\Resources\BlogPosts\BlogPostResource;
+use App\Models\BlogTag;
 use Filament\Resources\Pages\CreateRecord;
 
 class CreateBlogPost extends CreateRecord
@@ -17,9 +18,15 @@ class CreateBlogPost extends CreateRecord
 
     protected function afterCreate(): void
     {
-        $tags = $this->form->getState()['tags'] ?? [];
-        if (! empty($tags)) {
-            $this->record->tags()->sync($tags);
+        $tagNames = $this->form->getState()['tags'] ?? [];
+        if (! empty($tagNames)) {
+            $tagIds = collect($tagNames)
+                ->map(fn ($name) => trim((string) $name))
+                ->filter()
+                ->map(fn ($name) => BlogTag::firstOrCreate(['name' => $name])->id)
+                ->values()
+                ->all();
+            $this->record->tags()->sync($tagIds);
         }
     }
 }

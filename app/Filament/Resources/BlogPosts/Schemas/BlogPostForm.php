@@ -3,10 +3,12 @@
 namespace App\Filament\Resources\BlogPosts\Schemas;
 
 use App\Models\BlogCategory;
+use App\Models\BlogTag;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TagsInput;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Schema;
@@ -21,14 +23,6 @@ class BlogPostForm
                     ->label('Category')
                     ->options(BlogCategory::pluck('name', 'id'))
                     ->searchable()
-                    ->nullable(),
-                Select::make('tags')
-                    ->label('Tags')
-                    ->relationship('tags', 'name')
-                    ->multiple()
-                    ->searchable()
-                    ->preload()
-                    ->dehydrated(true)
                     ->nullable(),
                 Select::make('user_id')
                     ->relationship('user', 'name')
@@ -64,6 +58,12 @@ class BlogPostForm
                 Toggle::make('is_published')
                     ->required(),
                 DateTimePicker::make('published_at'),
+                TagsInput::make('tags')
+                    ->label('Tags')
+                    ->placeholder('Type a tag and press Enter to add')
+                    ->helperText('Add tags one by one. Each tag appears below and you can add more.')
+                    ->suggestions(fn () => BlogTag::pluck('name')->toArray())
+                    ->columnSpanFull(),
             ]);
     }
 }

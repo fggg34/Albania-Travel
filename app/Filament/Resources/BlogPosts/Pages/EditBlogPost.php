@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\BlogPosts\Pages;
 
 use App\Filament\Resources\BlogPosts\BlogPostResource;
+use App\Models\BlogTag;
 use Filament\Actions\DeleteAction;
 use Filament\Resources\Pages\EditRecord;
 
@@ -10,7 +11,7 @@ class EditBlogPost extends EditRecord
 {
     protected static string $resource = BlogPostResource::class;
 
-    protected array $tagsToSync = [];
+    protected array $tagNamesToSync = [];
 
     protected function getHeaderActions(): array
     {
@@ -21,21 +22,25 @@ class EditBlogPost extends EditRecord
 
     protected function mutateFormDataBeforeFill(array $data): array
     {
-        $data['tags'] = $this->record->tags->pluck('id')->toArray();
+        $data['tags'] = $this->record->tags->pluck('name')->toArray();
         return $data;
     }
 
     protected function mutateFormDataBeforeSave(array $data): array
     {
-        $this->tagsToSync = $data['tags'] ?? [];
+        $this->tagNamesToSync = $data['tags'] ?? [];
         unset($data['tags']);
         return $data;
     }
 
     protected function afterSave(): void
     {
-        $this->record->tags()->sync(
-            collect($this->tagsToSync)->map(fn ($id) => (int) $id)->filter()->values()->all()
-        );
+        $tagIds = collect($this->tagNamesToSync)
+            ->map(fn ($name) => trim((string) $name))
+            ->filter()
+            ->map(fn ($name) => BlogTag::firstOrCreate(['name' => $name])->id)
+            ->values()
+            ->all();
+        $this->record->tags()->sync($tagIds);
     }
 }
