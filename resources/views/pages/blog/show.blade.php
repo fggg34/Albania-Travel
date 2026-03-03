@@ -53,7 +53,7 @@
         </div>
 
         {{-- Tags & category --}}
-        @if($post->category || $post->tags->isNotEmpty())
+        <!-- @if($post->category || $post->tags->isNotEmpty())
         <div class="mt-12 pt-8 border-t border-gray-100 flex flex-wrap gap-4 items-center">
             @if($post->category)
             <div class="flex items-center gap-2">
@@ -76,7 +76,7 @@
             </div>
             @endif
         </div>
-        @endif
+        @endif -->
 
         {{-- Back to blog --}}
         <div class="mt-10">

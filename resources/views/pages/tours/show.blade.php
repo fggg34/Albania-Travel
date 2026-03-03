@@ -114,7 +114,7 @@
                     ? \Carbon\Carbon::parse($tour->start_time)->format('g:i A')
                     : null;
             @endphp
-            <div class="flex flex-wrap gap-4 sm:gap-6" style="margin-top: 20px;">
+            <div class="grid grid-cols-3 gap-4 sm:gap-6" style="margin-top: 20px;">
                 <div class="flex gap-2">
                     <div class="flex-shrink-0 w-9 h-9 rounded-lg bg-brand-50 flex items-center justify-center">
                         <i class="fa-solid fa-flag text-brand-600 text-sm"></i>
@@ -151,6 +151,17 @@
                         <p class="text-sm text-gray-900 truncate" title="{{ $tour->end_location ?? '' }}">{{ $tour->end_location ?? ($tour->start_location ?: '—') }}</p>
                     </div>
                 </div>
+                @if($tour->category)
+                <div class="flex gap-2">
+                    <div class="flex-shrink-0 w-9 h-9 rounded-lg bg-brand-50 flex items-center justify-center">
+                        <i class="fa-solid fa-tag text-brand-600 text-sm"></i>
+                    </div>
+                    <div class="min-w-0">
+                        <p class="text-xs font-bold text-gray-500">Tour type</p>
+                        <p class="text-sm text-gray-900">{{ $tour->category->name }}</p>
+                    </div>
+                </div>
+                @endif
                 @if(!empty($tour->languages))
                 <div class="flex gap-2">
                     <div class="flex-shrink-0 w-9 h-9 rounded-lg bg-brand-50 flex items-center justify-center">

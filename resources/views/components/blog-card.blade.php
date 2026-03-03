@@ -23,8 +23,6 @@
 
     <div class="p-5 flex flex-col flex-1">
         <div class="flex items-center gap-2 text-xs text-gray-400 mb-3">
-            <span>{{ $post->published_at?->format('d M Y') }}</span>
-            <span class="w-1 h-1 rounded-full bg-gray-300"></span>
             <span>{{ $readTime }} min read</span>
         </div>
 
