@@ -152,7 +152,7 @@
              style="scrollbar-width:none;-ms-overflow-style:none;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;touch-action:pan-x;">
             <div class="flex gap-4 pb-2 pr-4 sm:pr-6 lg:pr-8">
                 @foreach($destinationCities as $city)
-                <div class="flex-shrink-0 w-[47vw] sm:w-44 lg:w-[230px]" style="scroll-snap-align:start;">
+                <div class="flex-shrink-0 w-[calc((100vw-3rem)/2)] sm:w-44 lg:w-[230px]" style="scroll-snap-align:start;">
                     <x-destination-card :city="$city" :slider="true" />
                 </div>
                 @endforeach
