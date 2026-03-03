@@ -172,7 +172,7 @@
 @if(count($team) > 0)
 <section class="py-24 bg-[#F0F6F3]/50">
     <div class="max-w-7xl mx-auto px-6">
-        @if(count($team) === 1)
+        @if(true)
         {{-- Single member: split layout (matches Story section) --}}
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
         <div class="order-1 lg:order-2 lg:pl-6">
