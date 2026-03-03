@@ -399,6 +399,13 @@
                                     </button>
                                 </div>
                             </form>
+                    @else
+                        <div class="mt-6 p-6 bg-white border border-gray-200 rounded-lg shadow-sm">
+                            <p class="text-gray-600 mb-4">To leave a review you need to log in.</p>
+                            <a href="{{ route('login') }}" class="inline-flex items-center gap-2 px-6 py-3 bg-[#CC1021] hover:bg-[#a00d1a] text-white font-semibold rounded-lg transition">
+                                Log in to your account
+                            </a>
+                        </div>
                     @endauth
                 </div>
             @else
