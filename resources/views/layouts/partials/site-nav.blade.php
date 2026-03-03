@@ -1,15 +1,24 @@
+@php
+    $siteLogo = \App\Models\Setting::get('logo', '');
+    $siteLogoUrl = $siteLogo ? \Illuminate\Support\Facades\Storage::disk('public')->url($siteLogo) : null;
+    $siteName = \App\Models\Setting::get('site_name', config('app.name'));
+@endphp
 <header class="z-50 bg-white border-b border-gray-200 shadow-sm">
     @include('layouts.partials.topbar')
     <nav x-data="{ open: false }" class="bg-white">
 
         {{-- Main navbar bar --}}
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16">
+            <div class="flex justify-between h-[95px]">
 
                 {{-- Logo --}}
                 <div class="flex items-center">
-                    <a href="{{ route('home') }}" class="text-xl font-bold text-brand-600 hover:text-brand-700 transition">
-                        {{ \App\Models\Setting::get('site_name', config('app.name')) }}
+                    <a href="{{ route('home') }}" class="flex items-center gap-2">
+                        @if($siteLogoUrl)
+                            <img src="{{ $siteLogoUrl }}" alt="{{ $siteName }}" class="h-[80px] w-auto object-contain">
+                        @else
+                            <span class="text-xl font-bold text-brand-600 hover:text-brand-700 transition">{{ $siteName }}</span>
+                        @endif
                     </a>
                 </div>
 
@@ -75,8 +84,12 @@
 
             {{-- Drawer header --}}
             <div class="flex items-center justify-between px-5 h-16 border-b border-gray-100 flex-shrink-0">
-                <a href="{{ route('home') }}" class="text-lg font-bold text-brand-600" @click="open = false">
-                    {{ \App\Models\Setting::get('site_name', config('app.name')) }}
+                <a href="{{ route('home') }}" class="flex items-center" @click="open = false">
+                    @if($siteLogoUrl)
+                        <img src="{{ $siteLogoUrl }}" alt="{{ $siteName }}" class="h-7 w-auto object-contain">
+                    @else
+                        <span class="text-lg font-bold text-brand-600">{{ $siteName }}</span>
+                    @endif
                 </a>
                 <button @click="open = false" class="p-2 rounded-md text-gray-400 hover:bg-gray-100 transition">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

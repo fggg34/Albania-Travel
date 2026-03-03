@@ -34,6 +34,7 @@ class Settings extends Page
     public function mount(): void
     {
         $this->getSchema('form')->fill([
+            'logo' => Setting::get('logo', ''),
             'site_name' => Setting::get('site_name', ''),
             'site_tagline' => Setting::get('site_tagline', ''),
             'contact_email' => Setting::get('contact_email', ''),
@@ -54,6 +55,15 @@ class Settings extends Page
             ->components([
                 \Filament\Schemas\Components\Section::make('General')
                     ->schema([
+                        \Filament\Forms\Components\FileUpload::make('logo')
+                            ->label('Logo')
+                            ->image()
+                            ->disk('public')
+                            ->directory('settings')
+                            ->visibility('public')
+                            ->imagePreviewHeight(80)
+                            ->helperText('Site logo shown in the header. Recommended: transparent PNG or SVG.')
+                            ->columnSpanFull(),
                         \Filament\Forms\Components\TextInput::make('site_name')->label('Site Name'),
                         \Filament\Forms\Components\TextInput::make('site_tagline')->label('Tagline'),
                         \Filament\Forms\Components\TextInput::make('currency')->label('Currency')->maxLength(10),
