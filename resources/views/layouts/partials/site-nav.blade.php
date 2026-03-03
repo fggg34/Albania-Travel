@@ -34,9 +34,6 @@
                         <a href="{{ route('dashboard') }}" class="p-2 rounded-full text-gray-500 hover:bg-gray-100 hover:text-[#CC1021] transition" title="Dashboard">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
                         </a>
-                        <a href="{{ route('profile.edit') }}" class="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium text-gray-600 hover:text-[#CC1021] hover:bg-[#CC1021]/5 transition" title="Profile settings">
-                            Profile
-                        </a>
                     @else
                         <a href="{{ route('login') }}" class="p-2 rounded-full text-gray-500 hover:bg-gray-100 hover:text-[#CC1021] transition" title="Account / Login">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
