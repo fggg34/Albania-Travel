@@ -394,6 +394,11 @@
                                         @error('comment')<p class="mt-1 text-sm text-red-600">{{ $message }}</p>@enderror
                                     </div>
 
+                                    @if(config('services.recaptcha.site_key'))
+                                    <div class="g-recaptcha" data-sitekey="{{ config('services.recaptcha.site_key') }}"></div>
+                                    @error('g-recaptcha-response')<p class="mt-1 text-sm text-red-600">{{ $message }}</p>@enderror
+                                    @endif
+
                                     <button type="submit" class="px-6 py-3 bg-[#CC1021] hover:bg-[#a00d1a] text-white font-semibold rounded-lg transition">
                                         Submit Review
                                     </button>
@@ -448,6 +453,10 @@
                                             class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#CC1021] focus:border-[#CC1021] resize-y">{{ old('comment') }}</textarea>
                                         @error('comment')<p class="mt-1 text-sm text-red-600">{{ $message }}</p>@enderror
                                     </div>
+                                    @if(config('services.recaptcha.site_key'))
+                                    <div class="g-recaptcha" data-sitekey="{{ config('services.recaptcha.site_key') }}"></div>
+                                    @error('g-recaptcha-response')<p class="mt-1 text-sm text-red-600">{{ $message }}</p>@enderror
+                                    @endif
                                     <button type="submit" class="px-6 py-3 bg-[#CC1021] hover:bg-[#a00d1a] text-white font-semibold rounded-lg transition">Submit Review</button>
                                 </div>
                             </form>
@@ -491,5 +500,8 @@
 @endsection
 
 @push('scripts')
+@if(config('services.recaptcha.site_key'))
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+@endif
 @vite(['resources/js/tour-gallery.js'])
 @endpush

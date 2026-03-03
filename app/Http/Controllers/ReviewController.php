@@ -7,12 +7,31 @@ use App\Models\Review;
 use App\Models\Tour;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Mail;
 
 class ReviewController extends Controller
 {
     public function store(Request $request, Tour $tour): RedirectResponse
     {
+        $recaptchaSecret = config('services.recaptcha.secret_key');
+        if ($recaptchaSecret) {
+            $request->validate(['g-recaptcha-response' => 'required'], [
+                'g-recaptcha-response.required' => 'Please complete the reCAPTCHA verification.',
+            ]);
+
+            $response = Http::asForm()->post('https://www.google.com/recaptcha/api/siteverify', [
+                'secret' => $recaptchaSecret,
+                'response' => $request->input('g-recaptcha-response'),
+                'remoteip' => $request->ip(),
+            ]);
+
+            $result = $response->json();
+            if (! ($result['success'] ?? false)) {
+                return back()->with('error', 'reCAPTCHA verification failed. Please try again.')->withInput()->withFragment('reviews');
+            }
+        }
+
         $validated = $request->validate([
             'rating' => 'required|integer|min:1|max:5',
             'title' => 'required|string|max:255',
