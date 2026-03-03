@@ -166,16 +166,17 @@
 @php
     $team = [
         ['img' => $aboutPage->team_1_image_url, 'name' => $aboutPage->team_1_name, 'role' => $aboutPage->team_1_role, 'region' => $aboutPage->team_1_region],
+        ['img' => $aboutPage->team_2_image_url, 'name' => $aboutPage->team_2_name, 'role' => $aboutPage->team_2_role, 'region' => $aboutPage->team_2_region],
     ];
     $team = array_filter($team, fn($t) => !empty($t['name']) || !empty($t['role']));
 @endphp
 @if(count($team) > 0)
 <section class="py-24 bg-[#F0F6F3]/50">
     <div class="max-w-7xl mx-auto px-6">
-        @if(true)
-        {{-- Single member: split layout (matches Story section) --}}
+        @if(count($team) === 1)
+        {{-- Single member: split layout — text left, image right --}}
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-        <div class="order-1 lg:order-2 lg:pl-6">
+            <div class="relative lg:pr-6">
                 @if($aboutPage->team_eyebrow)
                     <span class="text-sm font-bold tracking-[0.2em] uppercase text-[#CC1021] mb-4 block">{{ $aboutPage->team_eyebrow }}</span>
                 @endif
@@ -197,7 +198,7 @@
                     {{ $siteName }} is built by people who live and breathe Albania. Every tour is designed and guided by locals who know the hidden gems, the best stories, and the warmest welcomes.
                 </p>
             </div>
-            <div class="relative order-2 lg:order-1">
+            <div class="relative">
                 <div class="relative w-full aspect-[4/5] max-h-[55vh] overflow-hidden rounded-[2rem] bg-slate-200 shadow-xl">
                     @if(!empty($team[0]['img']))
                         <img src="{{ $team[0]['img'] }}" alt="{{ $team[0]['name'] ?? '' }}" class="absolute inset-0 w-full h-full object-cover" />
@@ -251,14 +252,7 @@
 <section class="py-24 bg-[#F0F6F3]/50">
     <div class="max-w-7xl mx-auto px-6">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            <div class="relative">
-                <div class="relative w-full aspect-[4/5] max-h-[55vh] overflow-hidden rounded-[2rem] bg-slate-200 shadow-xl">
-                    <div class="absolute inset-0 flex items-center justify-center bg-slate-300">
-                        <i class="fa-solid fa-user text-white text-6xl opacity-30"></i>
-                    </div>
-                </div>
-            </div>
-            <div class="lg:pl-6">
+            <div class="relative lg:pr-6">
                 <span class="text-sm font-bold tracking-[0.2em] uppercase text-[#CC1021] mb-4 block">The Expert</span>
                 <h2 class="text-4xl font-bold text-slate-800 mb-6 leading-tight">Meet Your Local Guide</h2>
                 <h3 class="text-2xl font-bold text-slate-800 mb-3">Sonila Kosta</h3>
@@ -271,6 +265,13 @@
                 <p class="text-slate-600 leading-relaxed max-w-lg">
                     {{ $siteName }} is built by people who live and breathe Albania. Every tour is designed and guided by locals who know the hidden gems, the best stories, and the warmest welcomes.
                 </p>
+            </div>
+            <div class="relative">
+                <div class="relative w-full aspect-[4/5] max-h-[55vh] overflow-hidden rounded-[2rem] bg-slate-200 shadow-xl">
+                    <div class="absolute inset-0 flex items-center justify-center bg-slate-300">
+                        <i class="fa-solid fa-user text-white text-6xl opacity-30"></i>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
