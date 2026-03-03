@@ -115,7 +115,7 @@
     <div class="border-t border-white/5">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-white">
             <span>&copy; {{ date('Y') }} {{ $siteName }}. All rights reserved.</span>
-            <a href="https://impactdigitalagency.com" target="_blank" rel="noopener" class="inline-flex items-center gap-2 text-white hover:text-white/80 transition">
+            <a href="https://impactstudio.al" target="_blank" rel="noopener" class="inline-flex items-center gap-2 text-white hover:text-white/80 transition">
                 <span>Powered by</span>
                 <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 30.32 36.12" class="flex-shrink-0">
                     <defs>
