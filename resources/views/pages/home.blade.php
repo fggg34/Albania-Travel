@@ -700,9 +700,10 @@ function dragSlider() {
         rafId: null,
         pointerId: null,
 
-        // Use pointer capture for smooth desktop drag; touch uses native scroll
+        // Drag only on mobile/tablet; on desktop, clicks work normally
         startDrag(e) {
             if (e.pointerType === 'touch') return;
+            if (window.innerWidth >= 1024) return;
             this.isDragging = true;
             this.pointerId = e.pointerId;
             this.startX = e.clientX;
