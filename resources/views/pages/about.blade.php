@@ -166,7 +166,6 @@
 @php
     $team = [
         ['img' => $aboutPage->team_1_image_url, 'name' => $aboutPage->team_1_name, 'role' => $aboutPage->team_1_role, 'region' => $aboutPage->team_1_region],
-        ['img' => $aboutPage->team_2_image_url, 'name' => $aboutPage->team_2_name, 'role' => $aboutPage->team_2_role, 'region' => $aboutPage->team_2_region],
     ];
     $team = array_filter($team, fn($t) => !empty($t['name']) || !empty($t['role']));
 @endphp
