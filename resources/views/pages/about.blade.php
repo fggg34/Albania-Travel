@@ -176,18 +176,7 @@
         @if(count($team) === 1)
         {{-- Single member: split layout (matches Story section) --}}
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            <div class="relative order-2 lg:order-1">
-                <div class="relative w-full aspect-[4/5] max-h-[55vh] overflow-hidden rounded-[2rem] bg-slate-200 shadow-xl">
-                    @if(!empty($team[0]['img']))
-                        <img src="{{ $team[0]['img'] }}" alt="{{ $team[0]['name'] ?? '' }}" class="absolute inset-0 w-full h-full object-cover" />
-                    @else
-                        <div class="absolute inset-0 flex items-center justify-center bg-slate-300">
-                            <i class="fa-solid fa-user text-white text-6xl opacity-30"></i>
-                        </div>
-                    @endif
-                </div>
-            </div>
-            <div class="order-1 lg:order-2 lg:pl-6">
+        <div class="order-1 lg:order-2 lg:pl-6">
                 @if($aboutPage->team_eyebrow)
                     <span class="text-sm font-bold tracking-[0.2em] uppercase text-[#CC1021] mb-4 block">{{ $aboutPage->team_eyebrow }}</span>
                 @endif
@@ -208,6 +197,17 @@
                 <p class="text-slate-600 leading-relaxed max-w-lg">
                     {{ $siteName }} is built by people who live and breathe Albania. Every tour is designed and guided by locals who know the hidden gems, the best stories, and the warmest welcomes.
                 </p>
+            </div>
+            <div class="relative order-2 lg:order-1">
+                <div class="relative w-full aspect-[4/5] max-h-[55vh] overflow-hidden rounded-[2rem] bg-slate-200 shadow-xl">
+                    @if(!empty($team[0]['img']))
+                        <img src="{{ $team[0]['img'] }}" alt="{{ $team[0]['name'] ?? '' }}" class="absolute inset-0 w-full h-full object-cover" />
+                    @else
+                        <div class="absolute inset-0 flex items-center justify-center bg-slate-300">
+                            <i class="fa-solid fa-user text-white text-6xl opacity-30"></i>
+                        </div>
+                    @endif
+                </div>
             </div>
         </div>
         @else
