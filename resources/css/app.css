@@ -144,3 +144,10 @@
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }
+
+/* Custom height: 300px on mobile only */
+@media (max-width: 639px) {
+  .custom-height {
+    height: 300px;
+  }
+}
