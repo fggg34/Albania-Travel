@@ -1,10 +1,11 @@
-@props(['city'])
+@props(['city', 'slider' => false])
 
 @php
     $imageUrl = $city->city_image_url ?? 'https://placehold.co/400x400/e5e7eb/6b7280?text=' . urlencode($city->name);
     $cityUrl = route('cities.show', $city->slug);
+    $cardWidth = $slider ? 'w-full' : 'w-[165px] sm:w-[180px] lg:w-full';
 @endphp
-<a href="{{ $cityUrl }}" class="flex-shrink-0 w-[165px] sm:w-[180px] lg:w-full block group" data-slider-card>
+<a href="{{ $cityUrl }}" class="flex-shrink-0 {{ $cardWidth }} block group" data-slider-card>
     <div class="aspect-square rounded-xl overflow-hidden bg-gray-200 shadow-sm group-hover:shadow-md transition-shadow duration-300">
         <img src="{{ $imageUrl }}" alt="{{ $city->name }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
     </div>

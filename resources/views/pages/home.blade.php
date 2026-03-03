@@ -89,7 +89,7 @@
 {{-- Featured Tours --}}
 @if($featuredTours->isNotEmpty())
 <section class="py-16" x-data="dragSlider()">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto pl-4 pr-0 sm:px-6 lg:px-8">
         {{-- Title row — arrows on both mobile and desktop --}}
         <div class="relative mb-8">
             <h2 class="text-2xl md:text-3xl font-bold text-slate-800">
@@ -99,7 +99,7 @@
                     Featured Tours
                 @endif
             </h2>
-            <div class="absolute right-0 top-1/2 -translate-y-1/2 flex items-center gap-1.5">
+            <div class="absolute right-4 top-1/2 -translate-y-1/2 flex items-center gap-1.5">
                 <button @click="scrollPrev()" class="w-8 h-8 rounded-full border border-gray-200 bg-white text-gray-500 flex items-center justify-center shadow-sm hover:bg-gray-50">
                     <i class="fa-solid fa-chevron-left text-[10px]"></i>
                 </button>
@@ -113,11 +113,11 @@
         <div class="mt-2">
             <div class="overflow-x-auto scrollbar-hide cursor-grab select-none"
                  x-ref="track"
-                 @mousedown="startDrag($event)" @mousemove="onDrag($event)" @mouseup="stopDrag()" @mouseleave="stopDrag()"
+                 @pointerdown="startDrag($event)" @pointermove="onDrag($event)" @pointerup="stopDrag()" @pointerleave="stopDrag()" @pointercancel="stopDrag()"
                  style="scrollbar-width:none;-ms-overflow-style:none;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;touch-action:pan-x;">
                 <div class="flex gap-4 pb-2 pr-4 sm:pr-6">
                     @foreach($featuredTours as $tour)
-                    <div class="flex-shrink-0 w-[82vw] sm:w-64 lg:w-[292px]" style="scroll-snap-align:start;">
+                    <div class="flex-shrink-0 w-[71vw] sm:w-64 lg:w-[292px]" style="scroll-snap-align:start;">
                         <x-tour-card :tour="$tour" :queryParams="[]" :wishlisted="in_array($tour->id, $wishlistedIds ?? [])" :slider="false" />
                     </div>
                     @endforeach
@@ -130,30 +130,34 @@
 
 {{-- Things to do wherever you're going --}}
 @if(isset($destinationCities) && $destinationCities->isNotEmpty())
-<section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-    <h2 class="text-2xl md:text-3xl font-bold text-slate-800 mb-8">Things to do wherever you're going</h2>
-
-    {{-- Desktop: 5-column grid, no overflow --}}
-    <div class="hidden lg:grid grid-cols-5 gap-5">
-        @foreach($destinationCities as $city)
-            <x-destination-card :city="$city" />
-        @endforeach
+<section class="max-w-7xl mx-auto px-4 sm:py-8 sm:px-6 lg:px-8 lg:py-16 mb-5 md:mb-0" x-data="dragSlider()">
+    {{-- Title row — arrows on all screen sizes --}}
+    <div class="relative mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-slate-800 lg:pr-20 max-w-[calc(100%-5rem)] lg:max-w-none">Things to do wherever you're going</h2>
+        <div class="absolute right-0 top-1/2 -translate-y-1/2 flex items-center gap-1.5">
+            <button @click="scrollPrev()" class="w-8 h-8 rounded-full border border-gray-200 bg-white text-gray-500 flex items-center justify-center shadow-sm hover:bg-gray-50" aria-label="Scroll left">
+                <i class="fa-solid fa-chevron-left text-[10px]"></i>
+            </button>
+            <button @click="scrollNext()" class="w-8 h-8 rounded-full border border-gray-200 bg-white text-gray-500 flex items-center justify-center shadow-sm hover:bg-gray-50" aria-label="Scroll right">
+                <i class="fa-solid fa-chevron-right text-[10px]"></i>
+            </button>
+        </div>
     </div>
 
-    {{-- Mobile/tablet: horizontal slider with arrow --}}
-    <div class="lg:hidden relative flex items-stretch" x-data="homeSlider({ fixedSlideBy: 5 })">
-        <div class="flex-1 overflow-x-auto scroll-smooth scrollbar-hide" x-ref="track" style="scrollbar-width: none; -ms-overflow-style: none;">
-            <div class="flex gap-5 pb-4 pr-4" style="scroll-snap-type: x mandatory;" data-slider-gap="20">
+    {{-- Slider on all screen sizes — 5 per view on desktop --}}
+    <div class="mt-2">
+        <div class="overflow-x-auto scrollbar-hide cursor-grab select-none"
+             x-ref="track"
+             @pointerdown="startDrag($event)" @pointermove="onDrag($event)" @pointerup="stopDrag()" @pointerleave="stopDrag()" @pointercancel="stopDrag()"
+             style="scrollbar-width:none;-ms-overflow-style:none;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;touch-action:pan-x;">
+            <div class="flex gap-4 pb-2 pr-4 sm:pr-6 lg:pr-8">
                 @foreach($destinationCities as $city)
-                    <div class="flex-shrink-0" style="scroll-snap-align: start;">
-                        <x-destination-card :city="$city" />
-                    </div>
+                <div class="flex-shrink-0 w-[47vw] sm:w-44 lg:w-[230px]" style="scroll-snap-align:start;">
+                    <x-destination-card :city="$city" :slider="true" />
+                </div>
                 @endforeach
             </div>
         </div>
-        <button type="button" @click="scrollNext()" class="flex-shrink-0 w-12 h-12 rounded-full bg-brand-50 text-brand-600 flex items-center justify-center ml-4 hover:bg-brand-100 transition-colors self-center shadow-sm" aria-label="Scroll right">
-            <i class="fa-solid fa-chevron-right"></i>
-        </button>
     </div>
 </section>
 @endif
@@ -306,7 +310,7 @@
 @if($featuredReviews->isNotEmpty())
 {{-- Testimonials --}}
 @php $reviewCount = $featuredReviews->count(); @endphp
-<section class="py-24 bg-[#f3f4f6] relative overflow-hidden"
+<section class="py-12 bg-[#f3f4f6] relative overflow-hidden"
          x-data="testimonialsSlider({{ $reviewCount }})">
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -543,7 +547,7 @@ function testimonialsSlider(total) {
 @endif
 
 @if($latestPosts->isNotEmpty())
-<section class="bg-gray-50 py-20" x-data="dragSlider()">
+<section class="bg-gray-50 py-12" x-data="dragSlider()">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-end justify-between gap-4 mb-10">
             <div>
@@ -578,12 +582,6 @@ function testimonialsSlider(total) {
                 @endforeach
             </div>
         </div>
-    </div>
-
-    <div class="sm:hidden max-w-7xl mx-auto px-4 mt-8 text-center">
-        <a href="{{ route('blog.index') }}" class="inline-flex items-center gap-2 text-sm font-semibold text-brand-600">
-            View all articles <i class="fa-solid fa-arrow-right text-xs"></i>
-        </a>
     </div>
 </section>
 @endif
@@ -700,11 +698,13 @@ function dragSlider() {
         velX: 0,
         lastX: 0,
         rafId: null,
+        pointerId: null,
 
-        // Mouse-only drag — touch is handled by native iOS scroll
+        // Use pointer capture for smooth desktop drag; touch uses native scroll
         startDrag(e) {
-            if (e.touches) return;
+            if (e.pointerType === 'touch') return;
             this.isDragging = true;
+            this.pointerId = e.pointerId;
             this.startX = e.clientX;
             this.startScrollLeft = this.$refs.track.scrollLeft;
             this.velX = 0;
@@ -712,10 +712,11 @@ function dragSlider() {
             cancelAnimationFrame(this.rafId);
             this.$refs.track.style.cursor = 'grabbing';
             this.$refs.track.style.userSelect = 'none';
+            this.$refs.track.setPointerCapture(e.pointerId);
         },
 
         onDrag(e) {
-            if (!this.isDragging || e.touches) return;
+            if (!this.isDragging || e.pointerType === 'touch') return;
             e.preventDefault();
             this.velX = e.clientX - this.lastX;
             this.lastX = e.clientX;
@@ -728,6 +729,7 @@ function dragSlider() {
             this.isDragging = false;
             this.$refs.track.style.cursor = 'grab';
             this.$refs.track.style.userSelect = '';
+            try { if (this.pointerId != null) this.$refs.track.releasePointerCapture(this.pointerId); } catch (_) {}
             // Momentum glide after mouse release
             let vel = this.velX * -1;
             const glide = () => {
