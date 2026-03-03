@@ -2,15 +2,21 @@
 
     {{-- Hero bar --}}
     <div class="bg-[#111111] py-10 px-4 sm:px-6 lg:px-8">
-        <div class="max-w-2xl mx-auto flex items-center gap-5">
-            <div class="w-14 h-14 rounded-2xl bg-[#CC1021]/20 border border-[#CC1021]/30 flex items-center justify-center flex-shrink-0">
-                <i class="fa-solid fa-user text-[#CC1021] text-xl"></i>
+        <div class="max-w-2xl mx-auto flex flex-col sm:flex-row sm:items-center sm:justify-between gap-5">
+            <div class="flex items-center gap-5">
+                <div class="w-14 h-14 rounded-2xl bg-[#CC1021]/20 border border-[#CC1021]/30 flex items-center justify-center flex-shrink-0">
+                    <i class="fa-solid fa-user text-[#CC1021] text-xl"></i>
+                </div>
+                <div>
+                    <p class="text-xs font-semibold text-[#CC1021]/80 uppercase tracking-widest mb-1">Account Settings</p>
+                    <h1 class="text-xl sm:text-2xl font-bold text-white">Your Profile</h1>
+                    <p class="text-gray-400 text-sm mt-0.5">Manage your personal information and account security.</p>
+                </div>
             </div>
-            <div>
-                <p class="text-xs font-semibold text-brand-400 uppercase tracking-widest mb-1">Account Settings</p>
-                <h1 class="text-xl sm:text-2xl font-bold text-white">Your Profile</h1>
-                <p class="text-gray-400 text-sm mt-0.5">Manage your personal information and account security.</p>
-            </div>
+            <a href="{{ route('dashboard') }}" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium text-[#CC1021] hover:text-white hover:bg-[#CC1021] transition border border-[#CC1021] self-start sm:self-auto">
+                <i class="fa-solid fa-arrow-left"></i>
+                Back to Dashboard
+            </a>
         </div>
     </div>
 

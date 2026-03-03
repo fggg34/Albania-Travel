@@ -31,17 +31,14 @@
                     <a href="{{ route('blog.index') }}" class="inline-flex items-center px-4 py-2 text-sm font-medium rounded-md {{ request()->routeIs('blog.*') ? 'text-brand-600 bg-brand-50' : 'text-gray-700 hover:text-brand-600 hover:bg-gray-50' }}">Blog</a>
                     <a href="{{ route('contact') }}" class="inline-flex items-center px-4 py-2 text-sm font-medium rounded-md {{ request()->routeIs('contact') ? 'text-brand-600 bg-brand-50' : 'text-gray-700 hover:text-brand-600 hover:bg-gray-50' }}">Contact Us</a>
                     @auth
-                        <a href="{{ route('dashboard') }}" class="p-2 rounded-full text-gray-500 hover:bg-gray-100 hover:text-brand-600 transition" title="Wishlist & bookings">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
-                        </a>
-                        <a href="{{ route('profile.edit') }}" class="p-2 rounded-full text-gray-500 hover:bg-gray-100 hover:text-brand-600 transition" title="Account">
+                        <a href="{{ route('dashboard') }}" class="p-2 rounded-full text-gray-500 hover:bg-gray-100 hover:text-[#CC1021] transition" title="Dashboard">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
                         </a>
-                    @else
-                        <a href="{{ route('dashboard') }}" class="p-2 rounded-full text-gray-500 hover:bg-gray-100 hover:text-brand-600 transition" title="Wishlist">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+                        <a href="{{ route('profile.edit') }}" class="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium text-gray-600 hover:text-[#CC1021] hover:bg-[#CC1021]/5 transition" title="Profile settings">
+                            Profile
                         </a>
-                        <a href="{{ route('login') }}" class="p-2 rounded-full text-gray-500 hover:bg-gray-100 hover:text-brand-600 transition" title="Account / Login">
+                    @else
+                        <a href="{{ route('login') }}" class="p-2 rounded-full text-gray-500 hover:bg-gray-100 hover:text-[#CC1021] transition" title="Account / Login">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
                         </a>
                     @endauth
@@ -136,14 +133,14 @@
             <div class="flex-shrink-0 border-t border-gray-100 px-3 py-4 space-y-0.5">
                 @auth
                     <a href="{{ route('dashboard') }}" @click="open = false"
-                       class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-brand-600 transition">
-                        <i class="fa-solid fa-heart w-4 text-center text-gray-400"></i>
-                        My Bookings
+                       class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-[#CC1021] transition">
+                        <i class="fa-solid fa-gauge-high w-4 text-center text-gray-400"></i>
+                        Dashboard
                     </a>
                     <a href="{{ route('profile.edit') }}" @click="open = false"
-                       class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-brand-600 transition">
-                        <i class="fa-solid fa-user w-4 text-center text-gray-400"></i>
-                        Profile
+                       class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-[#CC1021] transition">
+                        <i class="fa-solid fa-user-gear w-4 text-center text-gray-400"></i>
+                        Profile Settings
                     </a>
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
@@ -155,12 +152,12 @@
                     </form>
                 @else
                     <a href="{{ route('login') }}" @click="open = false"
-                       class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-brand-600 hover:bg-brand-50 transition">
+                       class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-[#CC1021] hover:bg-[#CC1021]/5 transition">
                         <i class="fa-solid fa-right-to-bracket w-4 text-center"></i>
                         Login
                     </a>
                     <a href="{{ route('register') }}" @click="open = false"
-                       class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-brand-600 transition">
+                       class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-[#CC1021] transition">
                         <i class="fa-solid fa-user-plus w-4 text-center text-gray-400"></i>
                         Register
                     </a>
