@@ -112,7 +112,6 @@
             {{-- Right: Contact form (3/5) --}}
             <div class="lg:col-span-3">
                 <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 lg:p-10">
-                    <p class="text-xs font-bold tracking-[0.2em] uppercase text-[#CC1021] mb-3">Drop us a line</p>
                     <h3 class="text-xl font-bold text-gray-900 mb-6">Send Us a Message</h3>
 
                     @if(session('success'))
@@ -157,13 +156,8 @@
                         <div class="flex items-center gap-6">
                             <button type="submit"
                                 class="inline-flex items-center gap-2 px-8 py-3 bg-[#CC1021] text-white font-semibold rounded-xl hover:bg-[#a50d18] transition text-sm shadow-sm">
-                                <i class="fa-solid fa-paper-plane text-xs"></i>
                                 Send Message
                             </button>
-                            <p class="text-xs text-gray-400 flex items-center gap-1.5">
-                                <i class="fa-solid fa-shield-halved text-[#CC1021]"></i>
-                                Your info is safe with us
-                            </p>
                         </div>
                     </form>
                 </div>
