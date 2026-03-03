@@ -391,7 +391,7 @@
 @endif
 
 @if($galleryImages->isNotEmpty())
-<section class="bg-white py-20" x-data="gallerySwiperSlider({{ $galleryImages->count() }}, {{ $galleryImages->map(fn($img) => ['url' => $img->image_url, 'title' => $img->title ?? '', 'caption' => $img->caption ?? ''])->toJson() }})">
+<section class="bg-white py-12" x-data="gallerySwiperSlider({{ $galleryImages->count() }}, {{ $galleryImages->map(fn($img) => ['url' => $img->image_url, 'title' => $img->title ?? '', 'caption' => $img->caption ?? ''])->toJson() }})">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-end justify-between gap-4 mb-10">
             <div>
