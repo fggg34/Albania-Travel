@@ -9,13 +9,13 @@
 
         {{-- Main navbar bar --}}
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-[95px]">
+            <div class="flex justify-between h-[90px]">
 
                 {{-- Logo --}}
                 <div class="flex items-center">
                     <a href="{{ route('home') }}" class="flex items-center gap-2">
                         @if($siteLogoUrl)
-                            <img src="{{ $siteLogoUrl }}" alt="{{ $siteName }}" class="h-[80px] w-auto object-contain">
+                            <img src="{{ $siteLogoUrl }}" alt="{{ $siteName }}" class="h-[75px] w-auto object-contain">
                         @else
                             <span class="text-xl font-bold text-brand-600 hover:text-brand-700 transition">{{ $siteName }}</span>
                         @endif
