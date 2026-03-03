@@ -171,7 +171,7 @@
     $team = array_filter($team, fn($t) => !empty($t['name']) || !empty($t['role']));
 @endphp
 @if(count($team) > 0)
-<section class="py-24 bg-[#F0F6F3]/50">
+<section class="py-12 bg-[#F0F6F3]/50">
     <div class="max-w-7xl mx-auto px-6">
         @if(count($team) === 1)
         {{-- Single member: split layout — text left, image right --}}
