@@ -134,16 +134,11 @@
                     <h3 class="font-bold text-gray-900 text-base leading-snug">{{ $booking->tour->title }}</h3>
                     <p class="text-xs text-gray-500 mt-1">{{ $durationLabel }}</p>
 
-                    <div class="mt-5 pt-4 border-t border-gray-200 flex items-center justify-between">
-                        <span class="text-sm font-semibold text-gray-600">Total paid</span>
-                        <span class="text-xl font-bold text-[#CC1021]">
+                    <div class="mt-5 pt-4 border-t border-gray-200">
+                        <span class="text-sm font-semibold text-gray-600">Total amount</span>
+                        <span class="block mt-1 text-xl font-bold text-[#CC1021]">
                             {{ (strtoupper($booking->currency ?? '') === 'EUR' ? '€' : ($booking->currency ?? '')) }}{{ number_format($booking->total_amount, 2) }}
                         </span>
-                    </div>
-
-                    <div class="mt-4 flex items-center gap-2 text-xs text-green-700 bg-green-50 border border-green-100 rounded-lg px-3 py-2.5">
-                        <i class="fa-solid fa-circle-check text-green-500 flex-shrink-0"></i>
-                        <span class="font-medium">Payment confirmed &amp; booking secured</span>
                     </div>
                 </div>
             </div>
