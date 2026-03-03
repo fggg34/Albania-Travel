@@ -365,7 +365,7 @@
                         @endif
 
                         {{-- Comment --}}
-                        <p class="text-gray-500 text-sm leading-relaxed flex-1 mb-6">{{ Str::limit($review->comment, 180) }}</p>
+                        <p class="text-gray-500 text-sm leading-relaxed flex-1 mb-6 min-h-[68px]">{{ Str::limit($review->comment, 180) }}</p>
 
                         {{-- Reviewer --}}
                         <div class="flex items-center gap-3 mt-auto pt-5 border-t border-gray-100">
