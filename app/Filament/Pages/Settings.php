@@ -35,6 +35,7 @@ class Settings extends Page
     {
         $this->getSchema('form')->fill([
             'logo' => Setting::get('logo', ''),
+            'site_icon' => Setting::get('site_icon', ''),
             'site_name' => Setting::get('site_name', ''),
             'site_tagline' => Setting::get('site_tagline', ''),
             'contact_email' => Setting::get('contact_email', ''),
@@ -63,6 +64,15 @@ class Settings extends Page
                             ->visibility('public')
                             ->imagePreviewHeight(80)
                             ->helperText('Site logo shown in the header. Recommended: transparent PNG or SVG.')
+                            ->columnSpanFull(),
+                        \Filament\Forms\Components\FileUpload::make('site_icon')
+                            ->label('Site Icon (Favicon)')
+                            ->image()
+                            ->disk('public')
+                            ->directory('settings')
+                            ->visibility('public')
+                            ->imagePreviewHeight(32)
+                            ->helperText('Browser tab icon (favicon). Use a square image (e.g. 32×32 or 64×64 PNG).')
                             ->columnSpanFull(),
                         \Filament\Forms\Components\TextInput::make('site_name')->label('Site Name'),
                         \Filament\Forms\Components\TextInput::make('site_tagline')->label('Tagline'),

@@ -4,6 +4,14 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    @php
+        $siteIcon = \App\Models\Setting::get('site_icon', '');
+        $siteIconUrl = $siteIcon ? \Illuminate\Support\Facades\Storage::disk('public')->url($siteIcon) : null;
+    @endphp
+    @if($siteIconUrl)
+    <link rel="icon" href="{{ $siteIconUrl }}" sizes="any">
+    <link rel="apple-touch-icon" href="{{ $siteIconUrl }}">
+    @endif
     @stack('meta')
     <title>@yield('title', config('app.name'))</title>
     <meta name="description" content="@yield('description', \App\Models\Setting::get('site_tagline', 'Discover your next adventure'))">
