@@ -351,7 +351,7 @@
             @endif
         </div>
 
-        <div class="lg:col-span-1 space-y-6" style="padding-top: 83px;">
+        <div class="lg:col-span-1 space-y-6 pt-0 lg:pt-[83px]">
             <!-- @auth
                 @php $inWishlist = auth()->user()->wishlistTours()->where('tour_id', $tour->id)->exists(); @endphp
                 @if($inWishlist)
