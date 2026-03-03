@@ -207,11 +207,11 @@
             {{-- Right column (50%): 2 sub-columns - left: main image, right: highlight box + image --}}
             <div class="grid grid-cols-2 gap-4" style="grid-template-rows: auto 1fr;">
                 {{-- Main image: full-width on mobile, spans both rows on desktop --}}
-                <div class="col-span-2 lg:col-span-1 lg:row-span-2 min-h-[300px]">
+                <div class="col-span-2 lg:col-span-1 lg:row-span-2 min-h-[200px] lg:min-h-[300px]">
                     @if($homepageAbout->image_1)
-                    <img src="{{ $homepageAbout->image_1_url }}" alt="" class="w-full h-full min-h-[300px] object-cover rounded-xl" />
+                    <img src="{{ $homepageAbout->image_1_url }}" alt="" class="w-full h-full min-h-[200px] lg:min-h-[300px] object-cover rounded-xl" />
                     @else
-                    <div class="w-full h-full min-h-[300px] bg-gray-200 rounded-xl flex items-center justify-center text-gray-400">Main image</div>
+                    <div class="w-full h-full min-h-[200px] lg:min-h-[300px] bg-gray-200 rounded-xl flex items-center justify-center text-gray-400">Main image</div>
                     @endif
                 </div>
                 {{-- Highlight box --}}
@@ -226,9 +226,9 @@
                 {{-- Secondary image --}}
                 <div class="col-span-2 lg:col-span-1 self-end">
                     @if($homepageAbout->image_2)
-                    <img src="{{ $homepageAbout->image_2_url }}" alt="" class="w-full h-40 sm:h-48 object-cover rounded-xl" />
+                    <img src="{{ $homepageAbout->image_2_url }}" alt="" class="w-full h-52 sm:h-48 object-cover rounded-xl" />
                     @else
-                    <div class="w-full h-40 sm:h-48 bg-gray-200 rounded-xl flex items-center justify-center text-gray-400">Image 2</div>
+                    <div class="w-full h-52 sm:h-48 bg-gray-200 rounded-xl flex items-center justify-center text-gray-400">Image 2</div>
                     @endif
                 </div>
             </div>
