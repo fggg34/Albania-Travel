@@ -297,7 +297,7 @@
 {{-- Testimonials --}}
 @php $reviewCount = $featuredReviews->count(); @endphp
 <section class="py-12 bg-[#f3f4f6] relative overflow-hidden"
-         x-data="swiperSlider({ slidesPerView: 1, spaceBetween: 24, navigation: true, pagination: {{ $reviewCount > 3 ? 'true' : 'false' }}, breakpoints: { 640: { slidesPerView: 2 }, 1024: { slidesPerView: 3 } } })">
+         x-data="swiperSlider({ slidesPerView: 1, spaceBetween: 24, navigation: true, breakpoints: { 640: { slidesPerView: 2 }, 1024: { slidesPerView: 3 } } })">
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
 
@@ -385,11 +385,6 @@
                 @endforeach
             </div>
         </div>
-
-        {{-- Dot indicators (Swiper pagination) --}}
-        @if($reviewCount > 3)
-        <div class="swiper-pagination !relative !mt-10 flex items-center justify-center gap-2" x-ref="paginationEl"></div>
-        @endif
 
     </div>
 </section>
