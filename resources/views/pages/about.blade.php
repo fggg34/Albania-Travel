@@ -172,20 +172,60 @@
 @endphp
 @if(count($team) > 0)
 <section class="py-24 bg-[#F0F6F3]/50">
-    <div class="max-w-7xl mx-auto px-6 text-center">
-        @if($aboutPage->team_eyebrow)
-            <span class="text-sm font-bold tracking-[0.2em] uppercase text-[#CC1021] mb-4 block">{{ $aboutPage->team_eyebrow }}</span>
-        @endif
-        @if($aboutPage->team_heading)
-            <h2 class="text-4xl font-bold text-slate-800 mb-16">{{ $aboutPage->team_heading }}</h2>
-        @endif
-
+    <div class="max-w-7xl mx-auto px-6">
+        @if(count($team) === 1)
+        {{-- Single member: split layout (matches Story section) --}}
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            <div class="relative order-2 lg:order-1">
+                <div class="relative w-full aspect-[4/5] max-h-[55vh] overflow-hidden rounded-[2rem] bg-slate-200 shadow-xl">
+                    @if(!empty($team[0]['img']))
+                        <img src="{{ $team[0]['img'] }}" alt="{{ $team[0]['name'] ?? '' }}" class="absolute inset-0 w-full h-full object-cover" />
+                    @else
+                        <div class="absolute inset-0 flex items-center justify-center bg-slate-300">
+                            <i class="fa-solid fa-user text-white text-6xl opacity-30"></i>
+                        </div>
+                    @endif
+                </div>
+            </div>
+            <div class="order-1 lg:order-2 lg:pl-6">
+                @if($aboutPage->team_eyebrow)
+                    <span class="text-sm font-bold tracking-[0.2em] uppercase text-[#CC1021] mb-4 block">{{ $aboutPage->team_eyebrow }}</span>
+                @endif
+                @if($aboutPage->team_heading)
+                    <h2 class="text-4xl font-bold text-slate-800 mb-6 leading-tight">{{ $aboutPage->team_heading }}</h2>
+                @endif
+                <h3 class="text-2xl font-bold text-slate-800 mb-3">{{ $team[0]['name'] ?? '' }}</h3>
+                @if(!empty($team[0]['role']))
+                    <p class="text-base text-[#CC1021] font-semibold mb-4">{{ $team[0]['role'] }}</p>
+                @endif
+                @if(!empty($team[0]['region']))
+                    <p class="text-slate-500 flex items-center gap-2 mb-6">
+                        <i class="fa-solid fa-location-dot text-slate-400"></i>
+                        Expert of {{ $team[0]['region'] }}
+                    </p>
+                @endif
+                <div class="h-px bg-slate-200/80 w-16 mb-6"></div>
+                <p class="text-slate-600 leading-relaxed max-w-lg">
+                    {{ $siteName }} is built by people who live and breathe Albania. Every tour is designed and guided by locals who know the hidden gems, the best stories, and the warmest welcomes.
+                </p>
+            </div>
+        </div>
+        @else
+        {{-- Multiple members: grid --}}
+        <div class="text-center mb-16">
+            @if($aboutPage->team_eyebrow)
+                <span class="text-sm font-bold tracking-[0.2em] uppercase text-[#CC1021] mb-4 block">{{ $aboutPage->team_eyebrow }}</span>
+            @endif
+            @if($aboutPage->team_heading)
+                <h2 class="text-4xl font-bold text-slate-800">{{ $aboutPage->team_heading }}</h2>
+            @endif
+        </div>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
             @foreach($team as $m)
-            <div class="text-left group">
+            <div class="group">
                 <div class="relative overflow-hidden rounded-2xl mb-6 aspect-[4/3] bg-slate-200">
                     @if(!empty($m['img']))
-                        <img src="{{ $m['img'] }}" alt="{{ $m['name'] ?? '' }}" class="absolute inset-0 w-full h-full object-cover" />
+                        <img src="{{ $m['img'] }}" alt="{{ $m['name'] ?? '' }}" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                     @else
                         <div class="absolute inset-0 bg-slate-300 flex items-center justify-center">
                             <i class="fa-solid fa-user text-white text-5xl opacity-30"></i>
@@ -205,29 +245,34 @@
             </div>
             @endforeach
         </div>
+        @endif
     </div>
 </section>
 @else
 <section class="py-24 bg-[#F0F6F3]/50">
-    <div class="max-w-7xl mx-auto px-6 text-center">
-        <span class="text-sm font-bold tracking-[0.2em] uppercase text-[#CC1021] mb-4 block">The Experts</span>
-        <h2 class="text-4xl font-bold text-slate-800 mb-16">Meet Your Local Guides</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-            @foreach([['Sonila Kosta', 'Founder & Lead Guide', 'Albanian Riviera'], ['Artan Berisha', 'Senior Mountain Expert', 'Valbona Valley']] as $m)
-            <div class="text-left group">
-                <div class="relative overflow-hidden rounded-2xl mb-6 aspect-[4/3] bg-slate-200">
-                    <div class="absolute inset-0 bg-slate-300 flex items-center justify-center">
-                        <i class="fa-solid fa-user text-white text-5xl opacity-30"></i>
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            <div class="relative">
+                <div class="relative w-full aspect-[4/5] max-h-[55vh] overflow-hidden rounded-[2rem] bg-slate-200 shadow-xl">
+                    <div class="absolute inset-0 flex items-center justify-center bg-slate-300">
+                        <i class="fa-solid fa-user text-white text-6xl opacity-30"></i>
                     </div>
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                 </div>
-                <h3 class="text-xl font-bold text-slate-800">{{ $m[0] }}</h3>
-                <p class="text-sm text-brand-600 font-semibold mb-2">{{ $m[1] }}</p>
-                <p class="text-xs text-slate-400 flex items-center gap-2">
-                    <i class="fa-solid fa-location-dot"></i> Expert of {{ $m[2] }}
+            </div>
+            <div class="lg:pl-6">
+                <span class="text-sm font-bold tracking-[0.2em] uppercase text-[#CC1021] mb-4 block">The Expert</span>
+                <h2 class="text-4xl font-bold text-slate-800 mb-6 leading-tight">Meet Your Local Guide</h2>
+                <h3 class="text-2xl font-bold text-slate-800 mb-3">Sonila Kosta</h3>
+                <p class="text-base text-[#CC1021] font-semibold mb-4">Founder & Lead Guide</p>
+                <p class="text-slate-500 flex items-center gap-2 mb-6">
+                    <i class="fa-solid fa-location-dot text-slate-400"></i>
+                    Expert of Albanian Riviera
+                </p>
+                <div class="h-px bg-slate-200/80 w-16 mb-6"></div>
+                <p class="text-slate-600 leading-relaxed max-w-lg">
+                    {{ $siteName }} is built by people who live and breathe Albania. Every tour is designed and guided by locals who know the hidden gems, the best stories, and the warmest welcomes.
                 </p>
             </div>
-            @endforeach
         </div>
     </div>
 </section>
