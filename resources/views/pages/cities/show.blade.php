@@ -241,21 +241,25 @@
             @endif
         </div>
 
-        {{-- Desktop: grid --}}
-        <div class="hidden lg:grid grid-cols-4 gap-6">
-            @foreach($city->tours->take(8) as $tour)
-            <x-tour-card :tour="$tour" :queryParams="[]" :wishlisted="false" :slider="false" />
-            @endforeach
+        {{-- Desktop: grid (hidden below lg) --}}
+        <div class="hidden lg:block">
+            <div class="grid grid-cols-4 gap-6">
+                @foreach($city->tours->take(8) as $tour)
+                <x-tour-card :tour="$tour" :queryParams="[]" :wishlisted="false" :slider="false" />
+                @endforeach
+            </div>
         </div>
 
-        {{-- Mobile/tablet: Swiper slider (1.3 slides per view) --}}
-        <div class="lg:hidden mt-2 swiper pr-4 sm:pr-6" x-ref="swiperEl">
-            <div class="swiper-wrapper pb-2">
-                @foreach($city->tours->take(8) as $tour)
-                <div class="swiper-slide">
-                    <x-tour-card :tour="$tour" :queryParams="[]" :wishlisted="false" :slider="false" />
+        {{-- Mobile/tablet: Swiper slider (hidden on lg+) --}}
+        <div class="lg:hidden mt-2">
+            <div class="swiper pr-4 sm:pr-6" x-ref="swiperEl">
+                <div class="swiper-wrapper pb-2">
+                    @foreach($city->tours->take(8) as $tour)
+                    <div class="swiper-slide">
+                        <x-tour-card :tour="$tour" :queryParams="[]" :wishlisted="false" :slider="false" />
+                    </div>
+                    @endforeach
                 </div>
-                @endforeach
             </div>
         </div>
 
