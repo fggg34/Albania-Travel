@@ -80,7 +80,7 @@
             <div class="flex items-center justify-between px-5 h-16 border-b border-gray-100 flex-shrink-0">
                 <a href="{{ route('home') }}" class="flex items-center" @click="open = false">
                     @if($siteLogoUrl)
-                        <img src="{{ $siteLogoUrl }}" alt="{{ $siteName }}" class="h-7 w-auto object-contain">
+                        <img style="height: 55px;" src="{{ $siteLogoUrl }}" alt="{{ $siteName }}" class="h-7 w-auto object-contain">
                     @else
                         <span class="text-lg font-bold text-brand-600">{{ $siteName }}</span>
                     @endif
