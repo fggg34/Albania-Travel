@@ -149,7 +149,7 @@
 .swiper-pagination .swiper-pagination-bullet {
   width: 0.5rem;
   height: 0.5rem;
-  background: #d1d5db;
+  background: #fff;
   transition: all 0.3s;
 }
 .swiper-pagination .swiper-pagination-bullet-active {
