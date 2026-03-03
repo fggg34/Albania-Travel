@@ -210,11 +210,10 @@
 
 {{-- ── TOURS ─────────────────────────────────────────────────────────────── --}}
 @if($city->tours->isNotEmpty())
-<section class="py-16 bg-white">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-
-        <div class="flex items-end justify-between gap-4 mb-10">
-            <div>
+<section class="py-16 bg-white" x-data="dragSlider()">
+    <div class="max-w-7xl mx-auto pl-4 pr-0 sm:px-6 lg:px-8">
+        <div class="relative mb-8">
+            <div class="pr-20 lg:pr-32 max-w-[calc(100%-5rem)] lg:max-w-none">
                 <div class="flex items-center gap-3 mb-3">
                     <div class="w-8 h-px bg-[#CC1021]/70"></div>
                     <p class="text-xs font-bold tracking-[0.25em] uppercase text-[#CC1021]">Explore</p>
@@ -223,9 +222,17 @@
                     Tours in {{ $city->name }}
                 </h2>
             </div>
+            <div class="absolute right-4 top-1/2 -translate-y-1/2 flex items-center gap-1.5 lg:hidden">
+                <button @click="scrollPrev()" class="w-8 h-8 rounded-full border border-gray-200 bg-white text-gray-500 flex items-center justify-center shadow-sm hover:bg-gray-50" aria-label="Scroll left">
+                    <i class="fa-solid fa-chevron-left text-[10px]"></i>
+                </button>
+                <button @click="scrollNext()" class="w-8 h-8 rounded-full border border-gray-200 bg-white text-gray-500 flex items-center justify-center shadow-sm hover:bg-gray-50" aria-label="Scroll right">
+                    <i class="fa-solid fa-chevron-right text-[10px]"></i>
+                </button>
+            </div>
             @if($city->tours->count() > 3)
             <a href="{{ route('tours.index', ['city' => $city->slug]) }}"
-               class="flex-shrink-0 inline-flex items-center gap-2 text-sm font-semibold text-[#CC1021] group">
+               class="hidden lg:flex flex-shrink-0 absolute right-0 top-1/2 -translate-y-1/2 items-center gap-2 text-sm font-semibold text-[#CC1021] group">
                 View all
                 <span class="w-6 h-6 rounded-full bg-[#CC1021]/10 group-hover:bg-[#CC1021] group-hover:text-white flex items-center justify-center transition-all duration-300">
                     <i class="fa-solid fa-arrow-right text-[10px]"></i>
@@ -234,12 +241,37 @@
             @endif
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        {{-- Desktop: grid --}}
+        <div class="hidden lg:grid grid-cols-4 gap-6">
             @foreach($city->tours->take(8) as $tour)
             <x-tour-card :tour="$tour" :queryParams="[]" :wishlisted="false" :slider="false" />
             @endforeach
         </div>
 
+        {{-- Mobile/tablet: slider (1.3 slides per view) --}}
+        <div class="lg:hidden mt-2">
+            <div class="overflow-x-auto scrollbar-hide cursor-grab select-none"
+                 x-ref="track"
+                 @pointerdown="startDrag($event)" @pointermove="onDrag($event)" @pointerup="stopDrag()" @pointerleave="stopDrag()" @pointercancel="stopDrag()"
+                 style="scrollbar-width:none;-ms-overflow-style:none;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;touch-action:pan-x;">
+                <div class="flex gap-4 pb-2 pr-4 sm:pr-6">
+                    @foreach($city->tours->take(8) as $tour)
+                    <div class="flex-shrink-0 w-[77vw] sm:w-64" style="scroll-snap-align:start;">
+                        <x-tour-card :tour="$tour" :queryParams="[]" :wishlisted="false" :slider="false" />
+                    </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+
+        @if($city->tours->count() > 3)
+        <div class="lg:hidden text-center mt-8">
+            <a href="{{ route('tours.index', ['city' => $city->slug]) }}"
+               class="inline-flex items-center gap-2 text-sm font-semibold text-[#CC1021]">
+                View all tours <i class="fa-solid fa-arrow-right text-xs"></i>
+            </a>
+        </div>
+        @endif
     </div>
 </section>
 @endif
