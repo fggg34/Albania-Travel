@@ -9,7 +9,7 @@
     $tripadvisor = \App\Models\Setting::get('tripadvisor_url', '');
 @endphp
 
-<footer class="bg-[#111111] text-gray-400 mt-0">
+<footer class="bg-[#081929] text-white mt-0">
 
     {{-- Main grid --}}
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
@@ -20,34 +20,34 @@
                 <a href="{{ route('home') }}" class="text-white text-xl font-bold tracking-tight">
                     {{ $siteName }}
                 </a>
-                <p class="mt-4 text-sm leading-relaxed max-w-xs">{{ $tagline }}</p>
+                <p class="mt-4 text-sm leading-relaxed max-w-xs text-white/90">{{ $tagline }}</p>
 
                 {{-- Social --}}
                 <div class="flex gap-3 mt-6">
                     @if($facebook)
                     <a href="{{ $facebook }}" target="_blank" rel="noopener"
-                       class="w-9 h-9 rounded-full border border-white/10 flex items-center justify-center text-gray-400 hover:border-brand-500 hover:text-brand-400 transition">
+                       class="w-9 h-9 rounded-full border border-white/30 flex items-center justify-center text-white hover:border-white hover:text-white transition">
                         <i class="fa-brands fa-facebook-f text-xs"></i>
                     </a>
                     @endif
                     @if($instagram)
                     <a href="{{ $instagram }}" target="_blank" rel="noopener"
-                       class="w-9 h-9 rounded-full border border-white/10 flex items-center justify-center text-gray-400 hover:border-brand-500 hover:text-brand-400 transition">
+                       class="w-9 h-9 rounded-full border border-white/30 flex items-center justify-center text-white hover:border-white hover:text-white transition">
                         <i class="fa-brands fa-instagram text-xs"></i>
                     </a>
                     @endif
                     @if($tripadvisor)
                     <a href="{{ $tripadvisor }}" target="_blank" rel="noopener"
-                       class="w-9 h-9 rounded-full border border-white/10 flex items-center justify-center text-gray-400 hover:border-brand-500 hover:text-brand-400 transition">
+                       class="w-9 h-9 rounded-full border border-white/30 flex items-center justify-center text-white hover:border-white hover:text-white transition">
                         <i class="fa-brands fa-tripadvisor text-xs"></i>
                     </a>
                     @endif
                     {{-- Fallback: always show placeholder icons if no settings --}}
                     @if(!$facebook && !$instagram && !$tripadvisor)
-                    <a href="#" class="w-9 h-9 rounded-full border border-white/10 flex items-center justify-center text-gray-500 hover:border-brand-500 hover:text-brand-400 transition">
+                    <a href="#" class="w-9 h-9 rounded-full border border-white/30 flex items-center justify-center text-white hover:border-white hover:text-white transition">
                         <i class="fa-brands fa-facebook-f text-xs"></i>
                     </a>
-                    <a href="#" class="w-9 h-9 rounded-full border border-white/10 flex items-center justify-center text-gray-500 hover:border-brand-500 hover:text-brand-400 transition">
+                    <a href="#" class="w-9 h-9 rounded-full border border-white/30 flex items-center justify-center text-white hover:border-white hover:text-white transition">
                         <i class="fa-brands fa-instagram text-xs"></i>
                     </a>
                     @endif
@@ -56,54 +56,54 @@
 
             {{-- Explore links --}}
             <div class="lg:col-span-2">
-                <p class="text-xs font-bold tracking-[0.18em] uppercase text-gray-500 mb-5">Explore</p>
+                <p class="text-xs font-bold tracking-[0.18em] uppercase text-white mb-5">Explore</p>
                 <ul class="space-y-3 text-sm">
-                    <li><a href="{{ route('home') }}"         class="hover:text-white transition">Home</a></li>
-                    <li><a href="{{ route('tours.index') }}"  class="hover:text-white transition">Our Tours</a></li>
-                    <li><a href="{{ route('blog.index') }}"   class="hover:text-white transition">Blog</a></li>
+                    <li><a href="{{ route('home') }}"         class="text-white hover:text-white/80 transition">Home</a></li>
+                    <li><a href="{{ route('tours.index') }}"  class="text-white hover:text-white/80 transition">Our Tours</a></li>
+                    <li><a href="{{ route('blog.index') }}"   class="text-white hover:text-white/80 transition">Blog</a></li>
                 </ul>
             </div>
 
             {{-- Company links --}}
             <div class="lg:col-span-2">
-                <p class="text-xs font-bold tracking-[0.18em] uppercase text-gray-500 mb-5">Company</p>
+                <p class="text-xs font-bold tracking-[0.18em] uppercase text-white mb-5">Company</p>
                 <ul class="space-y-3 text-sm">
-                    <li><a href="{{ route('about') }}"   class="hover:text-white transition">About Us</a></li>
-                    <li><a href="{{ route('faq') }}"     class="hover:text-white transition">FAQ</a></li>
-                    <li><a href="{{ route('contact') }}" class="hover:text-white transition">Contact Us</a></li>
+                    <li><a href="{{ route('about') }}"   class="text-white hover:text-white/80 transition">About Us</a></li>
+                    <li><a href="{{ route('faq') }}"     class="text-white hover:text-white/80 transition">FAQ</a></li>
+                    <li><a href="{{ route('contact') }}" class="text-white hover:text-white/80 transition">Contact Us</a></li>
                 </ul>
             </div>
 
             {{-- Contact --}}
             <div class="lg:col-span-4">
-                <p class="text-xs font-bold tracking-[0.18em] uppercase text-gray-500 mb-5">Get in Touch</p>
+                <p class="text-xs font-bold tracking-[0.18em] uppercase text-white mb-5">Get in Touch</p>
                 <ul class="space-y-4 text-sm">
                     @if($email)
                     <li class="flex items-start gap-3">
                         <span class="flex-shrink-0 w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center">
-                            <i class="fa-solid fa-envelope text-[#CC1021] text-xs"></i>
+                            <i class="fa-solid fa-envelope text-white text-xs"></i>
                         </span>
-                        <a href="mailto:{{ $email }}" class="hover:text-white transition pt-1.5">{{ $email }}</a>
+                        <a href="mailto:{{ $email }}" class="text-white hover:text-white/80 transition pt-1.5">{{ $email }}</a>
                     </li>
                     @endif
                     @if($phone)
                     <li class="flex items-start gap-3">
                         <span class="flex-shrink-0 w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center">
-                            <i class="fa-solid fa-phone text-[#CC1021] text-xs"></i>
+                            <i class="fa-solid fa-phone text-white text-xs"></i>
                         </span>
-                        <a href="tel:{{ $phone }}" class="hover:text-white transition pt-1.5">{{ $phone }}</a>
+                        <a href="tel:{{ $phone }}" class="text-white hover:text-white/80 transition pt-1.5">{{ $phone }}</a>
                     </li>
                     @endif
                     @if($address)
                     <li class="flex items-start gap-3">
                         <span class="flex-shrink-0 w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center">
-                            <i class="fa-solid fa-location-dot text-[#CC1021] text-xs"></i>
+                            <i class="fa-solid fa-location-dot text-white text-xs"></i>
                         </span>
-                        <span class="pt-1.5">{{ $address }}</span>
+                        <span class="text-white pt-1.5">{{ $address }}</span>
                     </li>
                     @endif
                     @if(!$email && !$phone && !$address)
-                    <li class="text-gray-600 text-xs italic">Contact details coming soon</li>
+                    <li class="text-white/80 text-xs italic">Contact details coming soon</li>
                     @endif
                 </ul>
             </div>
@@ -113,9 +113,9 @@
 
     {{-- Bottom bar --}}
     <div class="border-t border-white/5">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-gray-600">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-white">
             <span>&copy; {{ date('Y') }} {{ $siteName }}. All rights reserved.</span>
-            <a href="https://impactdigitalagency.com" target="_blank" rel="noopener" class="inline-flex items-center gap-2 hover:text-gray-400 transition">
+            <a href="https://impactdigitalagency.com" target="_blank" rel="noopener" class="inline-flex items-center gap-2 text-white hover:text-white/80 transition">
                 <span>Powered by</span>
                 <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 30.32 36.12" class="flex-shrink-0">
                     <defs>
