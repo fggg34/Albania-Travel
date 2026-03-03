@@ -18,6 +18,8 @@ class Highlight extends Model
         'description',
         'image',
         'sort_order',
+        'meta_title',
+        'meta_description',
     ];
 
     protected function casts(): array

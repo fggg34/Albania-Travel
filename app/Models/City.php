@@ -22,6 +22,8 @@ class City extends Model
         'city_highlights',
         'city_image',
         'gallery',
+        'meta_title',
+        'meta_description',
     ];
 
     protected function casts(): array

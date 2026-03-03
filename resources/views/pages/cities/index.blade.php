@@ -1,7 +1,7 @@
 @extends('layouts.site')
 
-@section('title', 'All Cities - ' . $siteName)
-@section('description', 'Explore cities and find hotels and tours.')
+@section('title', \App\Models\Setting::get('seo_cities_index_meta_title') ?: 'All Cities - ' . $siteName)
+@section('description', \App\Models\Setting::get('seo_cities_index_meta_description') ?: 'Explore cities and find hotels and tours.')
 
 @section('content')
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">

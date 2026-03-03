@@ -1,7 +1,7 @@
 @extends('layouts.site')
 
-@section('title', 'Gallery - ' . $siteName)
-@section('description', 'Browse our photo gallery of Albania tours, landscapes, culture, and travel experiences.')
+@section('title', \App\Models\Setting::get('seo_gallery_meta_title') ?: 'Gallery - ' . $siteName)
+@section('description', \App\Models\Setting::get('seo_gallery_meta_description') ?: 'Browse our photo gallery of Albania tours, landscapes, culture, and travel experiences.')
 
 @section('hero')
 <section class="relative overflow-hidden">

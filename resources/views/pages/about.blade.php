@@ -1,7 +1,16 @@
 @extends('layouts.site')
 
-@section('title', 'About Us — ' . $siteName)
-@section('description', 'Learn about ' . $siteName . ' – your trusted Albania travel partner.')
+@section('title', $aboutPage->meta_title ?: 'About Us — ' . $siteName)
+@section('description', $aboutPage->meta_description ?: 'Learn about ' . $siteName . ' – your trusted Albania travel partner.')
+
+@push('meta')
+<meta property="og:title" content="{{ $aboutPage->meta_title ?: 'About Us — ' . $siteName }}">
+<meta property="og:description" content="{{ $aboutPage->meta_description ?: 'Learn about ' . $siteName . ' – your trusted Albania travel partner.' }}">
+<meta property="og:url" content="{{ request()->url() }}">
+@if($aboutPage->hero_image_url)
+<meta property="og:image" content="{{ request()->getSchemeAndHttpHost() . $aboutPage->hero_image_url }}">
+@endif
+@endpush
 
 @section('hero')
 @php $heroBg = $aboutPage->hero_image_url ?: asset('storage/heroes/breadcrumb.jpg'); @endphp

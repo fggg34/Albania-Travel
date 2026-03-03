@@ -4,9 +4,16 @@
 @section('description', $tour->meta_description ?: Str::limit($tour->short_description, 160))
 
 @push('meta')
-@if($tour->meta_title)<meta property="og:title" content="{{ $tour->meta_title }}">@endif
+<meta property="og:title" content="{{ $tour->meta_title ?: $tour->title . ' - ' . $siteName }}">
 <meta property="og:description" content="{{ $tour->meta_description ?: $tour->short_description }}">
 <meta property="og:url" content="{{ request()->url() }}">
+@php
+    $tourImage = $tour->images->first();
+    $tourOgImage = $tourImage && $tourImage->path ? $tourImage->url : null;
+@endphp
+@if($tourOgImage)
+<meta property="og:image" content="{{ request()->getSchemeAndHttpHost() . $tourOgImage }}">
+@endif
 @endpush
 
 @section('content')
@@ -267,7 +274,7 @@
                     $avgRating = (float) $tour->average_rating;
                     $reviewCount = $tour->approvedReviews->count();
                 @endphp
-                <div class="">
+                <div id="reviews" class="">
                     <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-6 mb-6">
                         <div>
                             <h2 class="text-2xl font-bold text-gray-900">Customer reviews</h2>
@@ -347,6 +354,104 @@
                             </div>
                         @endforeach
                     </div>
+
+                    @auth
+                        @if(session('success'))
+                            <div class="mt-6 p-4 bg-green-50 border border-green-200 text-green-800 rounded-lg text-sm">{{ session('success') }}</div>
+                        @endif
+                        @if(session('error'))
+                            <div class="mt-6 p-4 bg-red-50 border border-red-200 text-red-800 rounded-lg text-sm">{{ session('error') }}</div>
+                        @endif
+                        <form action="{{ route('reviews.store', $tour) }}" method="POST" class="mt-6 p-6 bg-white border border-gray-200 rounded-lg shadow-sm">
+                            @csrf
+                            <h3 class="text-lg font-bold text-gray-900 mb-4">Leave a review</h3>
+
+                            <div class="space-y-4">
+                                    <div x-data="{ rating: {{ old('rating', 0) }} }">
+                                        <label class="block text-sm font-bold text-gray-700 mb-2">Your overall rating <span class="text-red-500">*</span></label>
+                                        <div class="flex gap-1">
+                                            @for($i = 1; $i <= 5; $i++)
+                                                <button type="button" @click="rating = {{ $i }}" class="p-1 focus:outline-none" :class="rating >= {{ $i }} ? 'text-yellow-400' : 'text-gray-300'" aria-label="Rate {{ $i }} star{{ $i > 1 ? 's' : '' }}">
+                                                    <svg class="w-8 h-8 fill-current transition-colors" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                                </button>
+                                            @endfor
+                                        </div>
+                                        <input type="hidden" name="rating" x-model="rating" required>
+                                        @error('rating')<p class="mt-1 text-sm text-red-600">{{ $message }}</p>@enderror
+                                    </div>
+
+                                    <div>
+                                        <label for="review_title" class="block text-sm font-bold text-gray-700 mb-2">Title of your review <span class="text-red-500">*</span></label>
+                                        <input type="text" id="review_title" name="title" value="{{ old('title') }}" placeholder="Summarize your review or highlight an interesting detail" required
+                                            class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#CC1021] focus:border-[#CC1021]">
+                                        @error('title')<p class="mt-1 text-sm text-red-600">{{ $message }}</p>@enderror
+                                    </div>
+
+                                    <div>
+                                        <label for="review_comment" class="block text-sm font-bold text-gray-700 mb-2">Your review <span class="text-red-500">*</span></label>
+                                        <textarea id="review_comment" name="comment" rows="5" placeholder="Tell people your review" required
+                                            class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#CC1021] focus:border-[#CC1021] resize-y">{{ old('comment') }}</textarea>
+                                        @error('comment')<p class="mt-1 text-sm text-red-600">{{ $message }}</p>@enderror
+                                    </div>
+
+                                    <button type="submit" class="px-6 py-3 bg-[#CC1021] hover:bg-[#a00d1a] text-white font-semibold rounded-lg transition">
+                                        Submit Review
+                                    </button>
+                                </div>
+                            </form>
+                    @endauth
+                </div>
+            @else
+                <div id="reviews" class="">
+                    <h2 class="text-2xl font-bold text-gray-900">Customer reviews</h2>
+                    <p class="mt-1 text-base text-gray-600">No reviews yet. Be the first to share your experience.</p>
+
+                    @auth
+                        @if(session('success'))
+                            <div class="mt-6 p-4 bg-green-50 border border-green-200 text-green-800 rounded-lg text-sm">{{ session('success') }}</div>
+                        @endif
+                        @if(session('error'))
+                            <div class="mt-6 p-4 bg-red-50 border border-red-200 text-red-800 rounded-lg text-sm">{{ session('error') }}</div>
+                        @endif
+                        <form action="{{ route('reviews.store', $tour) }}" method="POST" class="mt-6 p-6 bg-white border border-gray-200 rounded-lg shadow-sm">
+                            @csrf
+                            <h3 class="text-lg font-bold text-gray-900 mb-4">Leave a review</h3>
+                            <div class="space-y-4">
+                                    <div x-data="{ rating: {{ old('rating', 0) }} }">
+                                        <label class="block text-sm font-bold text-gray-700 mb-2">Your overall rating <span class="text-red-500">*</span></label>
+                                        <div class="flex gap-1">
+                                            @for($i = 1; $i <= 5; $i++)
+                                                <button type="button" @click="rating = {{ $i }}" class="p-1 focus:outline-none" :class="rating >= {{ $i }} ? 'text-yellow-400' : 'text-gray-300'" aria-label="Rate {{ $i }} star{{ $i > 1 ? 's' : '' }}">
+                                                    <svg class="w-8 h-8 fill-current transition-colors" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                                </button>
+                                            @endfor
+                                        </div>
+                                        <input type="hidden" name="rating" x-model="rating" required>
+                                        @error('rating')<p class="mt-1 text-sm text-red-600">{{ $message }}</p>@enderror
+                                    </div>
+                                    <div>
+                                        <label for="review_title_empty" class="block text-sm font-bold text-gray-700 mb-2">Title of your review <span class="text-red-500">*</span></label>
+                                        <input type="text" id="review_title_empty" name="title" value="{{ old('title') }}" placeholder="Summarize your review or highlight an interesting detail" required
+                                            class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#CC1021] focus:border-[#CC1021]">
+                                        @error('title')<p class="mt-1 text-sm text-red-600">{{ $message }}</p>@enderror
+                                    </div>
+                                    <div>
+                                        <label for="review_comment_empty" class="block text-sm font-bold text-gray-700 mb-2">Your review <span class="text-red-500">*</span></label>
+                                        <textarea id="review_comment_empty" name="comment" rows="5" placeholder="Tell people your review" required
+                                            class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#CC1021] focus:border-[#CC1021] resize-y">{{ old('comment') }}</textarea>
+                                        @error('comment')<p class="mt-1 text-sm text-red-600">{{ $message }}</p>@enderror
+                                    </div>
+                                    <button type="submit" class="px-6 py-3 bg-[#CC1021] hover:bg-[#a00d1a] text-white font-semibold rounded-lg transition">Submit Review</button>
+                                </div>
+                            </form>
+                    @else
+                        <div class="mt-6 p-6 bg-white border border-gray-200 rounded-lg shadow-sm">
+                            <p class="text-gray-600 mb-4">To leave a review you need to log in.</p>
+                            <a href="{{ route('login') }}" class="inline-flex items-center gap-2 px-6 py-3 bg-[#CC1021] hover:bg-[#a00d1a] text-white font-semibold rounded-lg transition">
+                                Log in to your account
+                            </a>
+                        </div>
+                    @endauth
                 </div>
             @endif
         </div>
@@ -367,11 +472,8 @@
                     </form>
                 @endif
             @endauth -->
-            <div id="booking-form" class="lg:sticky lg:top-12 scroll-mt-12" x-data="stickySidebar()" x-init="init()">
-                <div x-show="fixed" x-ref="placeholder" class="w-full" :style="`height: ${placeholderHeight}px;`" aria-hidden="true"></div>
-                <div x-ref="stickyWrap" :class="fixed ? 'fixed z-30' : ''" :style="fixed ? `top: ${topOffset}px; left: ${left}px; width: ${width}px;` : ''">
-                    <x-booking-sidebar :tour="$tour" :defaultDate="request('date')" :defaultGuests="request('adults', 2)" />
-                </div>
+            <div id="booking-form" class="lg:sticky lg:top-12 scroll-mt-12 self-start">
+                <x-booking-sidebar :tour="$tour" :defaultDate="request('date')" :defaultGuests="request('adults', 2)" />
             </div>
         </div>
     </div>

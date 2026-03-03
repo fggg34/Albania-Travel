@@ -3,6 +3,15 @@
 @section('title', $post->meta_title ?: $post->title . ' — ' . $siteName)
 @section('description', $post->meta_description ?: Str::limit(strip_tags($post->excerpt ?? ''), 160))
 
+@push('meta')
+<meta property="og:title" content="{{ $post->meta_title ?: $post->title . ' — ' . $siteName }}">
+<meta property="og:description" content="{{ $post->meta_description ?: Str::limit(strip_tags($post->excerpt ?? ''), 160) }}">
+<meta property="og:url" content="{{ request()->url() }}">
+@if($post->featured_image)
+<meta property="og:image" content="{{ request()->getSchemeAndHttpHost() . \Illuminate\Support\Facades\Storage::disk('public')->url($post->featured_image) }}">
+@endif
+@endpush
+
 @section('content')
 <div class="bg-gray-100 -mt-px">
 

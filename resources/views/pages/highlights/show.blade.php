@@ -1,11 +1,11 @@
 @extends('layouts.site')
 
-@section('title', $highlight->title . ' - ' . $city->name . ' - ' . $siteName)
-@section('description', Str::limit(strip_tags($highlight->description), 160))
+@section('title', $highlight->meta_title ?: $highlight->title . ' - ' . $city->name . ' - ' . $siteName)
+@section('description', $highlight->meta_description ?: Str::limit(strip_tags($highlight->description ?? ''), 160))
 
 @push('meta')
-<meta property="og:title" content="{{ $highlight->title }} - {{ $city->name }}">
-<meta property="og:description" content="{{ Str::limit(strip_tags($highlight->description), 200) }}">
+<meta property="og:title" content="{{ $highlight->meta_title ?: $highlight->title . ' - ' . $city->name }}">
+<meta property="og:description" content="{{ $highlight->meta_description ?: Str::limit(strip_tags($highlight->description ?? ''), 200) }}">
 <meta property="og:url" content="{{ request()->url() }}">
 @if($highlight->image_url)
 <meta property="og:image" content="{{ request()->getSchemeAndHttpHost() . $highlight->image_url }}">

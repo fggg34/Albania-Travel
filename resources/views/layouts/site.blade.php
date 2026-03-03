@@ -13,6 +13,12 @@
     <link rel="apple-touch-icon" href="{{ $siteIconUrl }}">
     @endif
     @stack('meta')
+    @php
+        $ogImagePath = \App\Models\Setting::get('seo_og_image');
+    @endphp
+    @if($ogImagePath)
+    <meta property="og:image" content="{{ url(\Illuminate\Support\Facades\Storage::disk('public')->url($ogImagePath)) }}">
+    @endif
     <title>@yield('title', config('app.name'))</title>
     <meta name="description" content="@yield('description', \App\Models\Setting::get('site_tagline', 'Discover your next adventure'))">
     <link rel="canonical" href="{{ request()->url() }}">

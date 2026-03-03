@@ -54,6 +54,7 @@ Route::middleware(['auth'])->prefix('admin-qr')->group(function () {
 });
 
 Route::middleware('auth')->group(function () {
+    Route::post('/tours/{tour:slug}/reviews', [\App\Http\Controllers\ReviewController::class, 'store'])->name('reviews.store')->middleware('throttle:5,1');
     Route::resource('amenities', AmenityController::class)->except(['show']);
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

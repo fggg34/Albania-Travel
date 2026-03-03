@@ -52,8 +52,15 @@ class BlogPostForm
                     ->imagePreviewHeight('260')
                     ->panelAspectRatio('16/10')
                     ->panelLayout('integrated'),
-                TextInput::make('meta_title'),
-                TextInput::make('meta_description'),
+                TextInput::make('meta_title')
+                    ->label('Meta title')
+                    ->maxLength(70)
+                    ->helperText('Best practice: 50–60 characters. Leave blank to use post title.'),
+                \Filament\Forms\Components\Textarea::make('meta_description')
+                    ->label('Meta description')
+                    ->rows(2)
+                    ->maxLength(170)
+                    ->helperText('Best practice: 150–160 characters. Leave blank to use excerpt.'),
                 Toggle::make('is_published')
                     ->required(),
                 DateTimePicker::make('published_at'),

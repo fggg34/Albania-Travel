@@ -29,6 +29,8 @@ class Hotel extends Model
         'phone',
         'email',
         'website',
+        'meta_title',
+        'meta_description',
     ];
 
     public function getSlugOptions(): SlugOptions

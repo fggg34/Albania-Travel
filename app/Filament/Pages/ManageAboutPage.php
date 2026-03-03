@@ -126,6 +126,14 @@ class ManageAboutPage extends Page
                                 TextInput::make('team_2_region')->label('Member 2 – Region')->maxLength(100),
                             ])
                             ->columns(2),
+                        SchemaSection::make('SEO')
+                            ->description('Meta title and description for search engines. Best practice: title 50–60 chars, description 150–160 chars.')
+                            ->collapsible()
+                            ->schema([
+                                TextInput::make('meta_title')->label('Meta title')->maxLength(70)->placeholder('e.g. About Us — ' . \App\Models\Setting::get('site_name', config('app.name'))),
+                                Textarea::make('meta_description')->label('Meta description')->rows(2)->maxLength(170),
+                            ])
+                            ->columns(1),
                         SchemaSection::make('CTA')
                             ->collapsible()
                             ->schema([

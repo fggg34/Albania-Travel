@@ -1,7 +1,7 @@
 @extends('layouts.site')
 
-@section('title', 'Blog — ' . $siteName)
-@section('description', 'Travel tips, destination guides and stories from Albania.')
+@section('title', \App\Models\Setting::get('seo_blog_index_meta_title') ?: 'Blog — ' . $siteName)
+@section('description', \App\Models\Setting::get('seo_blog_index_meta_description') ?: 'Travel tips, destination guides and stories from Albania.')
 
 @section('hero')
 <section class="relative overflow-hidden">

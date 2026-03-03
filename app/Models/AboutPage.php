@@ -21,6 +21,7 @@ class AboutPage extends Model
         'team_1_image', 'team_1_name', 'team_1_role', 'team_1_region',
         'team_2_image', 'team_2_name', 'team_2_role', 'team_2_region',
         'cta_heading', 'cta_text', 'cta_btn_1_text', 'cta_btn_1_url', 'cta_btn_2_text', 'cta_btn_2_url',
+        'meta_title', 'meta_description',
     ];
 
     public function getHeroImageUrlAttribute(): ?string

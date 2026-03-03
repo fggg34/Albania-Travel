@@ -46,6 +46,21 @@ class Settings extends Page
             'hero_subtitle' => Setting::get('hero_subtitle', ''),
             'facebook_url' => Setting::get('facebook_url', ''),
             'instagram_url' => Setting::get('instagram_url', ''),
+            'seo_home_meta_title' => Setting::get('seo_home_meta_title', ''),
+            'seo_home_meta_description' => Setting::get('seo_home_meta_description', ''),
+            'seo_contact_meta_title' => Setting::get('seo_contact_meta_title', ''),
+            'seo_contact_meta_description' => Setting::get('seo_contact_meta_description', ''),
+            'seo_faq_meta_title' => Setting::get('seo_faq_meta_title', ''),
+            'seo_faq_meta_description' => Setting::get('seo_faq_meta_description', ''),
+            'seo_gallery_meta_title' => Setting::get('seo_gallery_meta_title', ''),
+            'seo_gallery_meta_description' => Setting::get('seo_gallery_meta_description', ''),
+            'seo_tours_index_meta_title' => Setting::get('seo_tours_index_meta_title', ''),
+            'seo_tours_index_meta_description' => Setting::get('seo_tours_index_meta_description', ''),
+            'seo_blog_index_meta_title' => Setting::get('seo_blog_index_meta_title', ''),
+            'seo_blog_index_meta_description' => Setting::get('seo_blog_index_meta_description', ''),
+            'seo_cities_index_meta_title' => Setting::get('seo_cities_index_meta_title', ''),
+            'seo_cities_index_meta_description' => Setting::get('seo_cities_index_meta_description', ''),
+            'seo_og_image' => Setting::get('seo_og_image', ''),
         ]);
     }
 
@@ -97,6 +112,59 @@ class Settings extends Page
                         \Filament\Forms\Components\TextInput::make('instagram_url')->label('Instagram URL')->url(),
                     ])
                     ->columns(2),
+                \Filament\Schemas\Components\Section::make('SEO – Meta title & description')
+                    ->description('Best practice: title 50–60 chars, description 150–160 chars. Leave blank to use defaults.')
+                    ->schema([
+                        \Filament\Forms\Components\FileUpload::make('seo_og_image')
+                            ->label('Default og:image (Open Graph share image)')
+                            ->image()
+                            ->disk('public')
+                            ->directory('settings')
+                            ->visibility('public')
+                            ->imagePreviewHeight(120)
+                            ->helperText('Default image for social sharing (Facebook, LinkedIn, etc.). Recommended: 1200×630 px. Used when a page has no specific image.')
+                            ->columnSpanFull(),
+                        \Filament\Schemas\Components\Tabs::make('SEO Pages')
+                            ->tabs([
+                                \Filament\Schemas\Components\Tabs\Tab::make('Home')
+                                    ->schema([
+                                        \Filament\Forms\Components\TextInput::make('seo_home_meta_title')->label('Meta title')->maxLength(70)->placeholder('e.g. ' . config('app.name') . ' - Albania Tours'),
+                                        \Filament\Forms\Components\Textarea::make('seo_home_meta_description')->label('Meta description')->rows(2)->maxLength(170),
+                                    ]),
+                                \Filament\Schemas\Components\Tabs\Tab::make('Contact')
+                                    ->schema([
+                                        \Filament\Forms\Components\TextInput::make('seo_contact_meta_title')->label('Meta title')->maxLength(70),
+                                        \Filament\Forms\Components\Textarea::make('seo_contact_meta_description')->label('Meta description')->rows(2)->maxLength(170),
+                                    ]),
+                                \Filament\Schemas\Components\Tabs\Tab::make('FAQ')
+                                    ->schema([
+                                        \Filament\Forms\Components\TextInput::make('seo_faq_meta_title')->label('Meta title')->maxLength(70),
+                                        \Filament\Forms\Components\Textarea::make('seo_faq_meta_description')->label('Meta description')->rows(2)->maxLength(170),
+                                    ]),
+                                \Filament\Schemas\Components\Tabs\Tab::make('Gallery')
+                                    ->schema([
+                                        \Filament\Forms\Components\TextInput::make('seo_gallery_meta_title')->label('Meta title')->maxLength(70),
+                                        \Filament\Forms\Components\Textarea::make('seo_gallery_meta_description')->label('Meta description')->rows(2)->maxLength(170),
+                                    ]),
+                                \Filament\Schemas\Components\Tabs\Tab::make('Tours (list)')
+                                    ->schema([
+                                        \Filament\Forms\Components\TextInput::make('seo_tours_index_meta_title')->label('Meta title')->maxLength(70),
+                                        \Filament\Forms\Components\Textarea::make('seo_tours_index_meta_description')->label('Meta description')->rows(2)->maxLength(170),
+                                    ]),
+                                \Filament\Schemas\Components\Tabs\Tab::make('Blog (list)')
+                                    ->schema([
+                                        \Filament\Forms\Components\TextInput::make('seo_blog_index_meta_title')->label('Meta title')->maxLength(70),
+                                        \Filament\Forms\Components\Textarea::make('seo_blog_index_meta_description')->label('Meta description')->rows(2)->maxLength(170),
+                                    ]),
+                                \Filament\Schemas\Components\Tabs\Tab::make('Cities (list)')
+                                    ->schema([
+                                        \Filament\Forms\Components\TextInput::make('seo_cities_index_meta_title')->label('Meta title')->maxLength(70),
+                                        \Filament\Forms\Components\Textarea::make('seo_cities_index_meta_description')->label('Meta description')->rows(2)->maxLength(170),
+                                    ]),
+                            ])
+                            ->columnSpanFull(),
+                    ])
+                    ->collapsible(),
             ]);
     }
 
@@ -120,7 +188,11 @@ class Settings extends Page
     public function save(): void
     {
         $data = $this->getSchema('form')->getState();
+        $fileFields = ['logo', 'site_icon', 'seo_og_image'];
         foreach ($data as $key => $value) {
+            if (in_array($key, $fileFields)) {
+                $value = is_array($value) ? ($value[0] ?? null) : $value;
+            }
             Setting::set($key, $value ?? '');
         }
         Notification::make()->title('Settings saved.')->success()->send();

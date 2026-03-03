@@ -1,7 +1,7 @@
 @extends('layouts.site')
 
-@section('title', 'Our Tours - ' . $siteName)
-@section('description', 'Browse our handcrafted selection of Albanian tours — day trips, multi-day adventures, private & group experiences.')
+@section('title', \App\Models\Setting::get('seo_tours_index_meta_title') ?: 'Our Tours - ' . $siteName)
+@section('description', \App\Models\Setting::get('seo_tours_index_meta_description') ?: 'Browse our handcrafted selection of Albanian tours — day trips, multi-day adventures, private & group experiences.')
 
 @section('hero')
 <section class="relative overflow-hidden">

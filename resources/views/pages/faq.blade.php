@@ -1,7 +1,7 @@
 @extends('layouts.site')
 
-@section('title', 'FAQ - ' . $siteName)
-@section('description', 'Frequently asked questions about tours, bookings, payments, and travel in Albania.')
+@section('title', \App\Models\Setting::get('seo_faq_meta_title') ?: 'FAQ - ' . $siteName)
+@section('description', \App\Models\Setting::get('seo_faq_meta_description') ?: 'Frequently asked questions about tours, bookings, payments, and travel in Albania.')
 
 @section('hero')
 <section class="relative overflow-hidden">

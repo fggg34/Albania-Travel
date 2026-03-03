@@ -81,6 +81,15 @@ class HotelForm
                                         RichEditor::make('description')
                                             ->label('Description')
                                             ->columnSpanFull(),
+                                        Section::make('SEO')
+                                            ->description('Meta title and description for search engines. Best practice: title 50–60 chars, description 150–160 chars.')
+                                            ->collapsible()
+                                            ->schema([
+                                                TextInput::make('meta_title')->label('Meta title')->maxLength(70),
+                                                Textarea::make('meta_description')->label('Meta description')->rows(2)->maxLength(170),
+                                            ])
+                                            ->columns(1)
+                                            ->columnSpanFull(),
                                     ])
                                     ->columns(2),
                                 Section::make('Location & map')

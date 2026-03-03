@@ -1,11 +1,11 @@
 @extends('layouts.site')
 
-@section('title', $hotel->name . ' - ' . $siteName)
-@section('description', Str::limit(strip_tags($hotel->description), 160))
+@section('title', $hotel->meta_title ?: $hotel->name . ' - ' . $siteName)
+@section('description', $hotel->meta_description ?: Str::limit(strip_tags($hotel->description ?? ''), 160))
 
 @push('meta')
-<meta property="og:title" content="{{ $hotel->name }}">
-<meta property="og:description" content="{{ Str::limit(strip_tags($hotel->description), 200) }}">
+<meta property="og:title" content="{{ $hotel->meta_title ?: $hotel->name }}">
+<meta property="og:description" content="{{ $hotel->meta_description ?: Str::limit(strip_tags($hotel->description ?? ''), 200) }}">
 <meta property="og:url" content="{{ request()->url() }}">
 @if($hotel->image_url)
 <meta property="og:image" content="{{ request()->getSchemeAndHttpHost() . $hotel->image_url }}">

@@ -1,7 +1,7 @@
 @extends('layouts.site')
 
-@section('title', $siteName . ' - ' . \App\Models\Setting::get('site_tagline', 'Discover your next adventure'))
-@section('description', \App\Models\Setting::get('hero_subtitle', 'Explore stunning destinations with expert guides.'))
+@section('title', \App\Models\Setting::get('seo_home_meta_title') ?: $siteName . ' - ' . \App\Models\Setting::get('site_tagline', 'Discover your next adventure'))
+@section('description', \App\Models\Setting::get('seo_home_meta_description') ?: \App\Models\Setting::get('hero_subtitle', 'Explore stunning destinations with expert guides.'))
 
 @section('hero')
 @php

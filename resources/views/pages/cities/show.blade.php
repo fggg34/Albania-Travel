@@ -1,11 +1,11 @@
 @extends('layouts.site')
 
-@section('title', $city->name . ' - ' . $siteName)
-@section('description', Str::limit(strip_tags($city->description ?? ''), 160))
+@section('title', $city->meta_title ?: $city->name . ' - ' . $siteName)
+@section('description', $city->meta_description ?: Str::limit(strip_tags($city->description ?? ''), 160))
 
 @push('meta')
-<meta property="og:title" content="{{ $city->name }}">
-<meta property="og:description" content="{{ Str::limit(strip_tags($city->description ?? ''), 200) }}">
+<meta property="og:title" content="{{ $city->meta_title ?: $city->name }}">
+<meta property="og:description" content="{{ $city->meta_description ?: Str::limit(strip_tags($city->description ?? ''), 200) }}">
 <meta property="og:url" content="{{ request()->url() }}">
 @if($city->city_image_url)
 <meta property="og:image" content="{{ request()->getSchemeAndHttpHost() . $city->city_image_url }}">
