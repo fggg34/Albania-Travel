@@ -117,7 +117,7 @@
             <span>&copy; {{ date('Y') }} {{ $siteName }}. All rights reserved.</span>
             <a href="https://impactdigitalagency.com" target="_blank" rel="noopener" class="inline-flex items-center gap-2 hover:text-gray-400 transition">
                 <span>Powered by</span>
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="28" viewBox="0 0 30.32 36.12" class="flex-shrink-0">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 30.32 36.12" class="flex-shrink-0">
                     <defs>
                         <style>.footer-logo-fill{fill:#fff;fill-rule:evenodd}.footer-logo-accent{fill:#f10066}</style>
                     </defs>
