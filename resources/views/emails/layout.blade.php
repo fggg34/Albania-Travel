@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>@yield('title', config('app.name'))</title>
+    <title>@yield('title', \App\Models\Setting::get('site_name', config('app.name')))</title>
     <style>
         * { box-sizing: border-box; }
         body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; line-height: 1.6; color: #374151; margin: 0; padding: 0; background: #f3f4f6; -webkit-font-smoothing: antialiased; }
@@ -33,7 +33,7 @@
                 @yield('footer')
             @else
                 <div class="footer">
-                    Best regards,<br><strong>{{ config('app.name') }}</strong>
+                    Best regards,<br><strong>{{ \App\Models\Setting::get('site_name', config('app.name')) }}</strong>
                 </div>
             @endif
         </div>

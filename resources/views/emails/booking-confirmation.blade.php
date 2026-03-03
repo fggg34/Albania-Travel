@@ -5,7 +5,7 @@
 @section('header')
 <div style="background: #CC1021; color: #ffffff; padding: 28px 24px; text-align: center;">
     <h1 style="margin: 0; font-size: 24px; font-weight: 700;">Booking Confirmed</h1>
-    <p style="margin: 8px 0 0; opacity: 0.95; font-size: 15px;">{{ config('app.name') }}</p>
+    <p style="margin: 8px 0 0; opacity: 0.95; font-size: 15px;">{{ \App\Models\Setting::get('site_name', config('app.name')) }}</p>
     <p style="margin: 16px 0 0; font-size: 13px; opacity: 0.9;">Reference: {{ $booking->reference }}</p>
 </div>
 @endsection
