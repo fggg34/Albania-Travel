@@ -55,7 +55,7 @@
     </div>
 
     {{-- Mobile/tablet: Swiper slider --}}
-    <div class="lg:hidden relative pl-4 sm:pl-6 pt-2 pr-4 sm:pr-6" x-data="swiperSlider({ slidesPerView: 1.5, spaceBetween: 16, breakpoints: { 640: { slidesPerView: 1.5 } } })">
+    <div class="lg:hidden relative pl-4 sm:pl-6 pt-0 pr-0 sm:pr-6" x-data="swiperSlider({ slidesPerView: 1.5, spaceBetween: 16, breakpoints: { 640: { slidesPerView: 1.5 } } })">
         <div class="swiper" x-ref="swiperEl">
             <div class="swiper-wrapper">
                 @foreach($tourInfoPoints as $point)
@@ -69,7 +69,7 @@
                             @endif
                         </div>
                         <div class="flex-1 min-w-0">
-                            <h3 class="font-bold text-base" style="color:#41235A;">{{ $point->title }}</h3>
+                            <h3 class="font-bold text-base" style="color:#41235A;font-size: 14px;">{{ $point->title }}</h3>
                             <p class="text-slate-500 text-sm mt-1 leading-relaxed">{{ $point->description }}</p>
                         </div>
                     </div>
