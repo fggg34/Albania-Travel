@@ -96,7 +96,7 @@
             Other places to visit in {{ $city->name }}
         </h2>
 
-        <div class="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-4 sm:gap-5">
+        <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 gap-4 sm:gap-5">
             @foreach($otherHighlights as $other)
             <a href="{{ route('cities.highlights.show', [$city->slug, $other->slug]) }}"
                class="group text-center">
