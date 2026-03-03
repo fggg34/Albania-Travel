@@ -16,8 +16,8 @@
         .detail-label { padding: 12px 16px; width: 140px; font-size: 13px; color: #6b7280; font-weight: 500; vertical-align: top; }
         .detail-value { padding: 12px 16px; font-size: 14px; color: #111827; }
         .footer { padding: 20px 24px; background: #f9fafb; font-size: 12px; color: #6b7280; text-align: center; border-top: 1px solid #e5e7eb; }
-        .btn { display: inline-block; padding: 12px 24px; background: #b45309; color: #ffffff !important; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 14px; margin-top: 8px; }
-        .btn:hover { background: #92400e; }
+        .btn { display: inline-block; padding: 12px 24px; background: #CC1021; color: #ffffff !important; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 14px; margin-top: 8px; }
+        .btn:hover { background: #a00d1a; }
         .muted { color: #6b7280; font-size: 13px; }
     </style>
     @stack('styles')

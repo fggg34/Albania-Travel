@@ -3,7 +3,7 @@
 @section('title', 'Booking Confirmation - ' . $booking->tour->title)
 
 @section('header')
-<div style="background: linear-gradient(135deg, #b45309 0%, #d97706 50%, #f59e0b 100%); color: #ffffff; padding: 28px 24px; text-align: center;">
+<div style="background: #CC1021; color: #ffffff; padding: 28px 24px; text-align: center;">
     <h1 style="margin: 0; font-size: 24px; font-weight: 700;">Booking Confirmed</h1>
     <p style="margin: 8px 0 0; opacity: 0.95; font-size: 15px;">{{ config('app.name') }}</p>
     <p style="margin: 16px 0 0; font-size: 13px; opacity: 0.9;">Reference: {{ $booking->reference }}</p>
@@ -47,13 +47,13 @@
     @endif
     <tr class="detail-row">
         <td class="detail-label">Status</td>
-        <td class="detail-value"><span style="background: #fef3c7; color: #92400e; padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: 600;">{{ ucfirst($booking->status) }}</span></td>
+        <td class="detail-value"><span style="background: #fff1f2; color: #CC1021; padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: 600;">{{ ucfirst($booking->status) }}</span></td>
     </tr>
 </table>
 
-<table cellpadding="0" cellspacing="0" border="0" width="100%" style="margin-top: 24px; padding: 20px; background: #fef3c7; border-radius: 12px; border-left: 4px solid #f59e0b;">
+<table cellpadding="0" cellspacing="0" border="0" width="100%" style="margin-top: 24px; padding: 20px; background: #fff1f2; border-radius: 12px; border-left: 4px solid #CC1021;">
     <tr>
-        <td style="font-size: 16px; font-weight: 600; color: #92400e; text-align: left; padding: 12px;">Total amount</td>
+        <td style="font-size: 16px; font-weight: 600; color: #CC1021; text-align: left; padding: 12px;">Total amount</td>
         <td style="font-size: 22px; font-weight: 700; color: #1f2937; text-align: right; padding: 12px;">{{ (strtoupper($booking->currency ?? '') === 'EUR' ? '€' : ($booking->currency ?? '')) }}{{ number_format($booking->total_amount, 2) }}</td>
     </tr>
 </table>
@@ -70,6 +70,6 @@
     <a href="{{ $booking->confirmation_url }}" class="btn">View booking confirmation</a>
 </div>
 <div style="margin-top: 12px; text-align: center;">
-    <a href="{{ route('tours.show', $booking->tour->slug) }}" style="color: #b45309; font-weight: 600; font-size: 14px;">View tour details</a>
+    <a href="{{ route('tours.show', $booking->tour->slug) }}" style="color: #CC1021; font-weight: 600; font-size: 14px;">View tour details</a>
 </div>
 @endsection
