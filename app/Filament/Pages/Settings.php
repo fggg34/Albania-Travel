@@ -116,3 +116,4 @@ class Settings extends Page
         Notification::make()->title('Settings saved.')->success()->send();
     }
 }
+
