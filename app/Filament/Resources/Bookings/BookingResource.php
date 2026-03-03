@@ -37,11 +37,13 @@ class BookingResource extends Resource
                     ->schema([
                         Select::make('user_id')
                             ->relationship('user', 'name')
-                            ->searchable(),
+                            ->searchable()
+                            ->disabledOn('edit'),
                         Select::make('tour_id')
                             ->relationship('tour', 'title')
                             ->required()
-                            ->searchable(),
+                            ->searchable()
+                            ->disabledOn('edit'),
                         Hidden::make('tour_date_id'),
                         TextInput::make('tour_date_formatted')
                             ->label('Tour date')
@@ -50,18 +52,22 @@ class BookingResource extends Resource
                         Select::make('status')
                             ->options(['pending' => 'Pending', 'confirmed' => 'Confirmed', 'cancelled' => 'Cancelled'])
                             ->required()
-                            ->default('pending'),
+                            ->default('pending')
+                            ->disabledOn('edit'),
                         TextInput::make('total_amount')
                             ->required()
                             ->numeric()
-                            ->default(0),
+                            ->default(0)
+                            ->disabledOn('edit'),
                         TextInput::make('currency')
                             ->required()
-                            ->default('EUR'),
+                            ->default('EUR')
+                            ->disabledOn('edit'),
                         TextInput::make('guest_count')
                             ->required()
                             ->numeric()
-                            ->default(1),
+                            ->default(1)
+                            ->disabledOn('edit'),
                         TextInput::make('confirmation_token')
                             ->disabled()
                             ->dehydrated(false)
@@ -72,21 +78,28 @@ class BookingResource extends Resource
                     ->schema([
                         TextInput::make('guest_name')
                             ->required()
-                            ->columnSpanFull(),
+                            ->columnSpanFull()
+                            ->disabledOn('edit'),
                         TextInput::make('first_name')
-                            ->label('First name'),
+                            ->label('First name')
+                            ->disabledOn('edit'),
                         TextInput::make('last_name')
-                            ->label('Last name'),
+                            ->label('Last name')
+                            ->disabledOn('edit'),
                         TextInput::make('guest_email')
                             ->email()
-                            ->required(),
+                            ->required()
+                            ->disabledOn('edit'),
                         TextInput::make('guest_phone')
-                            ->tel(),
+                            ->tel()
+                            ->disabledOn('edit'),
                         TextInput::make('pickup_location')
                             ->label('Pickup location')
-                            ->columnSpanFull(),
+                            ->columnSpanFull()
+                            ->disabledOn('edit'),
                         Textarea::make('special_requests')
-                            ->columnSpanFull(),
+                            ->columnSpanFull()
+                            ->disabledOn('edit'),
                     ])
                     ->columns(2),
                 Section::make('Billing address (submitted by user)')
@@ -106,10 +119,13 @@ class BookingResource extends Resource
                 Section::make('Payment')
                     ->schema([
                         TextInput::make('payment_status')
-                            ->default('pending'),
-                        TextInput::make('payment_method'),
+                            ->default('pending')
+                            ->disabledOn('edit'),
+                        TextInput::make('payment_method')
+                            ->disabledOn('edit'),
                         TextInput::make('stripe_session_id')
-                            ->columnSpanFull(),
+                            ->columnSpanFull()
+                            ->disabledOn('edit'),
                     ])
                     ->columns(2)
                     ->collapsed(),

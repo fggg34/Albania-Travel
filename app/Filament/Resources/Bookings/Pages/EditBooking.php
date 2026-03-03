@@ -10,6 +10,11 @@ class EditBooking extends EditRecord
 {
     protected static string $resource = BookingResource::class;
 
+    protected function getFormActions(): array
+    {
+        return [];
+    }
+
     public function mutateFormDataBeforeFill(array $data): array
     {
         $record = $this->getRecord();
