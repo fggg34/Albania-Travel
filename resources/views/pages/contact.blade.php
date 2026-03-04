@@ -120,6 +120,12 @@
                             {{ session('success') }}
                         </div>
                     @endif
+                    @if(session('error'))
+                        <div class="mb-6 p-4 bg-red-50 border border-red-100 text-red-800 rounded-xl flex items-center gap-3 text-sm">
+                            <i class="fa-solid fa-circle-exclamation text-red-500 flex-shrink-0"></i>
+                            {{ session('error') }}
+                        </div>
+                    @endif
 
                     <form action="{{ route('contact.store') }}" method="POST" class="space-y-5">
                         @csrf
@@ -178,4 +184,7 @@
 </section>
 @endif
 
+@if(config('services.recaptcha.site_key'))
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+@endif
 @endsection

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Setting;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\ValidationException;
 
@@ -16,6 +17,24 @@ class ContactController extends Controller
 
     public function store(Request $request)
     {
+        $recaptchaSecret = config('services.recaptcha.secret_key');
+        if ($recaptchaSecret) {
+            $request->validate(['g-recaptcha-response' => 'required'], [
+                'g-recaptcha-response.required' => 'Please complete the reCAPTCHA verification.',
+            ]);
+
+            $response = Http::asForm()->post('https://www.google.com/recaptcha/api/siteverify', [
+                'secret' => $recaptchaSecret,
+                'response' => $request->input('g-recaptcha-response'),
+                'remoteip' => $request->ip(),
+            ]);
+
+            $result = $response->json();
+            if (! ($result['success'] ?? false)) {
+                return back()->with('error', 'reCAPTCHA verification failed. Please try again.')->withInput();
+            }
+        }
+
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email',
