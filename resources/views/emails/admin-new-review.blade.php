@@ -37,7 +37,11 @@
     </tr>
 </table>
 
+@php
+    $adminBaseUrl = request()->getSchemeAndHttpHost() ?: config('app.url');
+    $adminReviewsUrl = rtrim($adminBaseUrl, '/') . '/' . trim(config('app.filament_admin_path', 'admin'), '/') . '/reviews';
+@endphp
 <div style="margin-top: 24px; text-align: center;">
-    <a href="{{ url(config('app.filament_admin_path', 'admin') . '/reviews') }}" class="btn">View in admin panel</a>
+    <a href="{{ $adminReviewsUrl }}" class="btn">View in admin panel</a>
 </div>
 @endsection

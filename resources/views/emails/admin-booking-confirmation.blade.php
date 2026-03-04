@@ -86,8 +86,12 @@
 <div style="margin-top: 24px; padding: 16px; background: #f9fafb; border-radius: 8px; font-size: 13px; color: #6b7280;">
     <strong>Quick actions:</strong> Reply to this email to contact the guest directly.
 </div>
+@php
+    $adminBaseUrl = request()->getSchemeAndHttpHost() ?: config('app.url');
+    $adminBookingUrl = rtrim($adminBaseUrl, '/') . '/' . trim(config('app.filament_admin_path', 'admin'), '/') . '/bookings/' . $booking->id . '/edit';
+@endphp
 <div style="margin-top: 12px; text-align: center;">
-    <a href="{{ url(config('app.filament_admin_path', 'admin') . '/bookings/' . $booking->id . '/edit') }}" class="btn">View in admin panel</a>
+    <a href="{{ $adminBookingUrl }}" class="btn">View in admin panel</a>
 </div>
 @endsection
 
