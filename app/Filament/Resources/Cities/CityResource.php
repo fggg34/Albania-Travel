@@ -86,7 +86,7 @@ class CityResource extends Resource
                     ->panelLayout('grid')
                     ->helperText('Add multiple images to the city gallery (up to 12).')
                     ->columnSpanFull(),
-                \Filament\Forms\Components\Section::make('SEO')
+                \Filament\Schemas\Components\Section::make('SEO')
                     ->description('Meta title and description for search engines. Best practice: title 50–60 chars, description 150–160 chars.')
                     ->collapsible()
                     ->schema([
