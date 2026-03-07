@@ -16,7 +16,14 @@
 <meta property="og:image" content="{{ request()->getSchemeAndHttpHost() . $tourOgImage }}">
 @endif
 @endpush
-
+<style>
+    @media(max-width: 767px) {
+        .whatsapp-float-btn{
+            bottom: 100px !important;
+        }
+    }
+    
+</style>
 @section('content')
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
     @php
