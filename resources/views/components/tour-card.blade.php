@@ -43,7 +43,7 @@
             @endauth
         </div>
         <div class="p-4">
-            <h3 class="text-base font-bold text-gray-900 line-clamp-2 leading-snug">{{ $tour->title }}</h3>
+            <h3 class="text-base font-bold text-gray-900 line-clamp-2 leading-snug min-h-[41px]">{{ $tour->title }}</h3>
 
             {{-- Tour details: 2x2 grid - Tour starts, Starting time, Duration, Ending place --}}
             <div class="mt-3 grid grid-cols-2 gap-3">
