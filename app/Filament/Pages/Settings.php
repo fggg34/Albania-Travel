@@ -40,6 +40,7 @@ class Settings extends Page
             'site_tagline' => Setting::get('site_tagline', ''),
             'contact_email' => Setting::get('contact_email', ''),
             'contact_phone' => Setting::get('contact_phone', ''),
+            'whatsapp_number' => Setting::get('whatsapp_number', ''),
             'contact_address' => Setting::get('contact_address', ''),
             'currency' => Setting::get('currency', 'EUR'),
             'hero_title' => Setting::get('hero_title', ''),
@@ -98,6 +99,11 @@ class Settings extends Page
                     ->schema([
                         \Filament\Forms\Components\TextInput::make('contact_email')->label('Email')->email(),
                         \Filament\Forms\Components\TextInput::make('contact_phone')->label('Phone')->tel(),
+                        \Filament\Forms\Components\TextInput::make('whatsapp_number')
+                            ->label('WhatsApp number')
+                            ->tel()
+                            ->placeholder('e.g. +355 69 123 4567')
+                            ->helperText('Number for the floating WhatsApp button. Leave blank to use the phone number above.'),
                         \Filament\Forms\Components\Textarea::make('contact_address')->label('Address')->rows(2),
                     ])
                     ->columns(1),
