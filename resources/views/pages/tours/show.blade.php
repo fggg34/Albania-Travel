@@ -20,7 +20,9 @@
 @push('styles')
 <style>
 @media (max-width: 767px) {
-    body.page-tour-show .whatsapp-float-btn { bottom: 100px !important; }
+    body.page-tour-show a.whatsapp-float-btn {
+        bottom: 8rem;
+    }
 }
 </style>
 @endpush
