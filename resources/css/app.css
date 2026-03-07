@@ -145,6 +145,11 @@
   display: none;
 }
 
+/* WhatsApp float: higher position on single tour page (booking sidebar) */
+body.page-tour-show .whatsapp-float-btn {
+  bottom: 8.5rem;
+}
+
 /* Custom height: 300px on mobile only */
 @media (max-width: 639px) {
   .custom-height {
