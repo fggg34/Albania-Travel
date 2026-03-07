@@ -16,16 +16,17 @@
 <meta property="og:image" content="{{ request()->getSchemeAndHttpHost() . $tourOgImage }}">
 @endif
 @endpush
+
+@push('styles')
 <style>
-    @media(max-width: 767px) {
-        .whatsapp-float-btn{
-            bottom: 100px !important;
-        }
-    }
-    
+@media (max-width: 767px) {
+    body.page-tour-show .whatsapp-float-btn { bottom: 100px !important; }
+}
 </style>
+@endpush
+
 @section('content')
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 pb-24 lg:pb-8 overflow-x-hidden">
     @php
         $images = $tour->images->isEmpty() ? collect([null]) : $tour->images;
         $firstImage = $images->first();
@@ -61,7 +62,8 @@
                 <a href="{{ $img1->url ?? $mainImageUrl }}" class="glightbox block overflow-hidden rounded-lg min-h-[220px] sm:min-h-[200px] lg:row-span-2" data-gallery="tour-gallery-{{ $tour->id }}" role="listitem">
                     <img src="{{ $img1->url ?? $mainImageUrl }}" alt="{{ $img1->alt ?? $tour->title }}" class="w-full h-full min-h-[220px] sm:min-h-[200px] object-cover cursor-pointer hover:opacity-95 transition-opacity" loading="eager" fetchpriority="high">
                 </a>
-                {{-- Right column: on mobile = 2 images 50/50 (130px). On sm+ = nested grid --}}
+                {{-- Right column: on mobile = 2 images 50/50 (130px). On sm+ = nested grid. Hide when no img2/img3 to avoid empty gap on single-image tours. --}}
+                @if($img2 || $img3 || $img4)
                 <div class="tour-gallery-right grid grid-cols-2 grid-rows-[130px] sm:grid-cols-2 sm:grid-rows-2 sm:min-h-0 gap-4">
                 @if($img2)
                     <a href="{{ $img2->url }}" class="glightbox block overflow-hidden rounded-lg h-[130px] sm:h-auto sm:min-h-0" data-gallery="tour-gallery-{{ $tour->id }}" role="listitem">
@@ -101,6 +103,7 @@
                     </div>
                 @endif
                 </div>
+                @endif
             </div>
             {{-- Hidden links for images 5+ so they appear in the lightbox --}}
             @if($totalImages > 4)
@@ -122,7 +125,7 @@
                     ? \Carbon\Carbon::parse($tour->start_time)->format('g:i A')
                     : null;
             @endphp
-            <div class="grid grid-cols-3 gap-4 sm:gap-6" style="margin-top: 20px;">
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 sm:gap-6" style="margin-top: 20px;">
                 <div class="flex gap-2">
                     <div class="flex-shrink-0 w-9 h-9 rounded-lg bg-brand-50 flex items-center justify-center">
                         <i class="fa-solid fa-flag text-brand-600 text-sm"></i>
