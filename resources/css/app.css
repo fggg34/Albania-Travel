@@ -150,15 +150,10 @@ body.page-tour-show .whatsapp-float-btn {
   bottom: 8.5rem;
 }
 
-/* Single tour page: mobile fixes - prevent overflow, ensure content clears fixed bar */
-@media (max-width: 1023px) {
-  body.page-tour-show {
-    overflow-x: hidden;
-  }
-  body.page-tour-show .prose {
-    overflow-wrap: break-word;
-    word-wrap: break-word;
-  }
+/* Single tour page: prose word-wrap. Do NOT use overflow-x:hidden on body - it breaks sticky sidebar. */
+body.page-tour-show .prose {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
 }
 
 /* Custom height: 300px on mobile only */

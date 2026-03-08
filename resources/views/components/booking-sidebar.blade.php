@@ -9,7 +9,7 @@
     $currency = '€';
 @endphp
 
-<div class="relative lg:sticky lg:top-12 lg:self-start bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden" x-data="bookingSidebar({
+<div class="relative bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden" x-data="bookingSidebar({
     priceUrl: @js($priceUrl),
     datesUrl: @js($datesUrl),
     slug: @js($slug),

@@ -512,7 +512,7 @@
                     </form>
                 @endif
             @endauth -->
-            <div id="booking-form" class="scroll-mt-12">
+            <div id="booking-form" class="scroll-mt-12 lg:sticky lg:top-8 lg:self-start">
                 <x-booking-sidebar :tour="$tour" :defaultDate="request('date')" :defaultGuests="request('adults', 2)" />
             </div>
         </div>
