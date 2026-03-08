@@ -28,14 +28,14 @@
 @endpush
 
 @section('content')
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 pb-24 lg:pb-8 overflow-x-hidden">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 pb-24 lg:pb-8">
     @php
         $images = $tour->images->isEmpty() ? collect([null]) : $tour->images;
         $firstImage = $images->first();
         $mainImageUrl = $firstImage && $firstImage->path ? $firstImage->url : 'https://placehold.co/1200x600?text=Tour';
     @endphp
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        <div class="lg:col-span-2 space-y-12">
+        <div class="lg:col-span-2 space-y-12 overflow-x-hidden">
             <div class="flex flex-col items-left">
                 <h1 class="text-3xl font-bold text-gray-900">{{ $tour->title }}</h1>
                 <!-- <p class="mt-2 text-gray-600">{{ $tour->short_description }}</p> -->
